@@ -1,0 +1,25 @@
+:host {
+  background-color: black;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.list-container {
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 90%;
+
+}
+
+.test-card {
+  background: rgba(197, 8, 8, 0.5);
+  width: 20%;
+  height: 300px;
+  border-radius: 8px;
+}
