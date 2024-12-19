@@ -8,11 +8,6 @@ import {MatIconButton} from '@angular/material/button';
 @Component({
   selector: 'app-header',
   imports: [
-    MatIcon,
-    MatFormField,
-    MatInput,
-    MatIconButton,
-    MatIcon
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

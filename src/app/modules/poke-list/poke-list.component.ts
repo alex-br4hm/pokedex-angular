@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../core/components/header/header.component';
 import {PokeCardComponent} from './poke-card/poke-card.component';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {ApiServiceService} from '../../core/services/api-service.service';
 
 @Component({
   selector: 'app-poke-list',
@@ -12,6 +12,17 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
 })
-export class PokeListComponent {
-  cards = Array(20).fill(0);
+export class PokeListComponent implements OnInit {
+  data:any;
+
+
+  constructor(private apiService: ApiServiceService) {
+  }
+
+  ngOnInit() {
+    this.apiService.getData().subscribe({
+      next: data => {this.data = data.results;},
+      error: error => {console.log(error);
+    }});
+  }
 }

@@ -2,3 +2,33 @@
   width: 25%;
   color:white;
 }
+
+mat-card {
+  justify-content: center;
+}
+
+mat-card:hover {
+  background-color: #3d383b;
+  cursor: pointer;
+
+  img {
+    scale:1;
+  }
+}
+
+.poke-img-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+
+}
+
+img {
+  transition: all 125ms ease-in-out;
+  height: 25vh;
+  scale:.9;
+  width: 100%;
+  padding: 4px;
+}

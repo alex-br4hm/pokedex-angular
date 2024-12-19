@@ -1,8 +1,10 @@
 <app-header></app-header>
 
-<div class="list-container">
-  @for (card of cards; track card.id) {
-    <app-poke-card></app-poke-card>
-  }
+@if (data) {
+  <div class="list-container">
+    @for (card of data; track $index) {
+      <app-poke-card [pokeData]="card" [index]="$index"></app-poke-card>
+    }
+  </div>
+}
 
-</div>

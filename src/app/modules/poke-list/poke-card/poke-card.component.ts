@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -8,6 +8,7 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
+import {ApiServiceService} from '../../../core/services/api-service.service';
 
 @Component({
   selector: 'app-poke-card',
@@ -24,6 +25,19 @@ import {MatButton} from '@angular/material/button';
   templateUrl: './poke-card.component.html',
   styleUrl: './poke-card.component.scss'
 })
-export class PokeCardComponent {
+export class PokeCardComponent implements OnInit {
+  @Input() pokeData: any;
+  @Input() index!: number;
+  data:any;
+
+  constructor(private apiService: ApiServiceService) {
+  }
+
+  ngOnInit() {
+    this.apiService.getSinglePokemon(this.index+1).subscribe({
+      next: data => {this.data = data},
+      error: error => {console.log(error);
+      }});
+  }
 
 }
