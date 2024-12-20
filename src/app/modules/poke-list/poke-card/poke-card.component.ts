@@ -8,7 +8,7 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
-import {ApiServiceService} from '../../../core/services/api-service.service';
+import {ApiService} from '../../../core/services/api.service';
 
 @Component({
   selector: 'app-poke-card',
@@ -30,7 +30,7 @@ export class PokeCardComponent implements OnInit {
   @Input() index!: number;
   data:any;
 
-  constructor(private apiService: ApiServiceService) {
+  constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
