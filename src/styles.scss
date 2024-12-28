@@ -1,4 +1,83 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  background-color: black;
+
+}
+body {
+  margin: 0; font-family:
+  Roboto, "Helvetica Neue", sans-serif; }
+
+// ####################
+// color codes for types
+// ####################
+
+.normal {
+  background: radial-gradient(circle at 50% 50%, rgba(168, 168, 120, 0.8), rgba(138, 138, 100, 0.5) 70%, rgba(198, 198, 150, 0.3) 90%);
+}
+
+.fire {
+  background: radial-gradient(circle at 50% 50%, rgba(240, 128, 48, 0.8), rgba(200, 100, 30, 0.5) 70%, rgba(255, 160, 70, 0.3) 90%);
+}
+
+.water {
+  background: radial-gradient(circle at 50% 50%, rgba(104, 144, 240, 0.8), rgba(74, 114, 210, 0.5) 70%, rgba(134, 174, 255, 0.3) 90%);
+}
+
+.electric {
+  background: radial-gradient(circle at 50% 50%, rgba(248, 208, 48, 0.8), rgba(218, 178, 38, 0.5) 70%, rgba(255, 238, 78, 0.3) 90%);
+}
+
+.grass {
+  background: radial-gradient(circle at 50% 50%, rgba(120, 200, 80, 0.8), rgba(90, 170, 60, 0.5) 70%, rgba(150, 230, 110, 0.3) 90%);
+}
+
+.flying {
+  background: radial-gradient(circle at 50% 20%, rgba(168, 144, 240, 0.8), rgba(138, 114, 210, 0.5) 70%, rgba(198, 174, 255, 0.3) 90%);
+}
+
+.bug {
+  background: radial-gradient(circle at 50% 50%, rgba(168, 184, 32, 0.8), rgba(138, 154, 22, 0.5) 70%, rgba(198, 214, 62, 0.3) 90%);
+}
+
+.poison {
+  background: radial-gradient(circle at 50% 50%, rgba(160, 64, 160, 0.8), rgba(130, 34, 130, 0.5) 70%, rgba(190, 94, 190, 0.3) 90%);
+}
+
+.rock {
+  background: radial-gradient(circle at 50% 50%, rgba(184, 160, 56, 0.8), rgba(154, 130, 46, 0.5) 70%, rgba(214, 190, 86, 0.3) 90%);
+}
+
+.ground {
+  background: radial-gradient(circle at 50% 50%, rgba(224, 192, 104, 0.8), rgba(194, 162, 84, 0.5) 70%, rgba(254, 222, 134, 0.3) 90%);
+}
+
+.fighting {
+  background: radial-gradient(circle at 50% 50%, rgba(192, 48, 40, 0.8), rgba(162, 28, 20, 0.5) 70%, rgba(222, 78, 70, 0.3) 90%);
+}
+
+.ice {
+  background: radial-gradient(circle at 50% 50%, rgba(152, 216, 216, 0.8), rgba(122, 186, 186, 0.5) 70%, rgba(182, 246, 246, 0.3) 90%);
+}
+
+.psychic {
+  background: radial-gradient(circle at 50% 50%, rgba(248, 88, 136, 0.8), rgba(218, 58, 106, 0.5) 70%, rgba(255, 118, 166, 0.3) 90%);
+}
+
+.ghost {
+  background: radial-gradient(circle at 50% 50%, rgba(112, 88, 152, 0.8), rgba(82, 58, 122, 0.5) 70%, rgba(142, 118, 182, 0.3) 90%);
+}
+
+.dragon {
+  background: radial-gradient(circle at 50% 50%, rgba(112, 56, 248, 0.8), rgba(82, 36, 218, 0.5) 70%, rgba(142, 86, 255, 0.3) 90%);
+}
+
+.fairy {
+  background: radial-gradient(circle at 50% 50%, rgba(238, 153, 238, 0.8), rgba(208, 123, 208, 0.5) 70%, rgba(255, 183, 255, 0.3) 90%);
+}
+
+.darkPU {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 0.5) 70%, rgba(80, 80, 80, 0.3) 90%);
+}
+
