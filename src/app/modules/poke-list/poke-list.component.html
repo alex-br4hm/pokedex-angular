@@ -1,6 +1,5 @@
-<app-header></app-header>
-
 @if (pokeList) {
+  <app-header></app-header>
   <div class="list-container">
     @for (card of pokeList; track $index) {
       <app-poke-card [pokeData]="card" [index]="$index"></app-poke-card>
@@ -8,7 +7,6 @@
   </div>
 } @else {
   <div class="spinner-container">
-
     <app-custom-loading-spinner></app-custom-loading-spinner>
   </div>
 

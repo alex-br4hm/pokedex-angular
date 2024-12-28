@@ -27,10 +27,7 @@ export class PokeListComponent implements OnInit {
   ngOnInit() {
     this.apiService.getData().subscribe({
       next: data => {
-        setTimeout(() => {
           this.pokeList = data.results;
-        }, 10000000000)
-
         },
 
       error: error => {console.log(error);
