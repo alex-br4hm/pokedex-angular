@@ -8,15 +8,22 @@ import {PokemonData} from '../models/pokemon';
 })
 export class ApiService {
   private readonly API_URL = 'https://pokeapi.co/api/v2/pokemon/';
+impl  private readonly species_API_URL = 'https://pokeapi.co/api/v2/pokemon-species/'
+  private readonly types_API_URL = 'https://pokeapi.co/api/v2/type/'
 
   constructor(private http: HttpClient) {
   }
 
   getData(): Observable<any> {
-   return this.http.get(this.API_URL + '?limit=251');
+   return this.http.get(this.API_URL + '?limit=151');
   }
 
   getSinglePokemon(index: number): Observable<any> {
     return this.http.get(this.API_URL + index);
   }
+
+  getGermanInfo(index: number): Observable<any> {
+    return this.http.get(this.species_API_URL + index);
+  }
+
 }
