@@ -1,38 +1,38 @@
-
+<div class="card-wrapper">
 @if (data) {
-  <mat-card class="example-card {{data?.types[0].type.name}}" appearance="raised">
+  <mat-card class="example-card {{data?.types[0].type.name}}">
     <mat-card-header>
       <div class="card-header-content">
-        <mat-card-title>{{ data.name}} </mat-card-title>
+        <mat-card-title> {{ germanName }} </mat-card-title>
         <mat-card-subtitle>{{ data?.id | pokeNumberPipe }}</mat-card-subtitle>
       </div>
     </mat-card-header>
     <div class="poke-img-wrapper">
-        <img
-          mat-card-image
-          ngSrc="{{data.sprites.other.dream_world.front_default}}"
-          height="280"
-          width="320"
-          alt="Photo of {{ data.name }}">
-
+      <img
+        mat-card-image
+        ngSrc="{{data.sprites.other.dream_world.front_default}}"
+        placeholder="placeholder"
+        fill
+        alt="Photo of {{ data.name }}">
     </div>
 
     <mat-card-content>
       <span class="poke-text">
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
+        {{ flavorText }}
       </span>
       <div class="poke-type-wrapper">
-        <span class="poke-type {{data?.types[0].type.name + '-chip' }}">{{data?.types[0].type.name}}</span>
+        <span class="poke-type {{data?.types[0].type.name + '-chip' }}">{{ germanTypes[0] }}</span>
         @if (data?.types[1]?.type?.name) {
-          <span class="poke-type {{data?.types[1].type.name + '-chip' }}">{{data?.types[1].type.name}}</span>
+          <span class="poke-type {{data?.types[1].type.name + '-chip' }}">{{ germanTypes[1] }}</span>
         }
       </div>
 
     </mat-card-content>
   </mat-card>
 } @else {
-  <app-custom-loading-spinner></app-custom-loading-spinner>
-}
+  <div class="loading-placeholder">
+      <app-custom-loading-spinner></app-custom-loading-spinner>
+  </div>
 
+}
+</div>
