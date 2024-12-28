@@ -8,7 +8,7 @@ import {PokemonData} from '../models/pokemon';
 })
 export class ApiService {
   private readonly API_URL = 'https://pokeapi.co/api/v2/pokemon/';
-impl  private readonly species_API_URL = 'https://pokeapi.co/api/v2/pokemon-species/'
+  private readonly species_API_URL = 'https://pokeapi.co/api/v2/pokemon-species/'
   private readonly types_API_URL = 'https://pokeapi.co/api/v2/type/'
 
   constructor(private http: HttpClient) {
