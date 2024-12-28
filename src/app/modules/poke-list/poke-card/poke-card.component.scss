@@ -1,9 +1,13 @@
 :host {
   width: 30%;
   min-width: 300px;
+  max-width: 360px;
   color:white;
   min-height: 300px;
 }
+
+
+
 
 .card-wrapper {
   height: 100%;
@@ -61,8 +65,6 @@ img {
   flex-direction: column;
   justify-content: space-between;
 }
-
-
 
 .poke-text {
   padding-top: 16px;
@@ -180,3 +182,28 @@ img {
   background-color: rgba(238, 153, 238, 0.9); /* Hellrosa für Fairy-Typ (später eingeführt) */
 }
 
+@media screen and (max-width: 1024px) {
+  :host {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  :host {
+    width: 45%;
+    min-width: unset;
+    min-height: unset;
+  }
+
+  .mat-mdc-card-content {
+    display: none;
+  }
+
+  .mat-mdc-card-subtitle {
+    display: none !important;
+  }
+
+  .poke-img-wrapper {
+    background-color: unset;
+  }
+}
