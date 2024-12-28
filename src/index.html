@@ -5,11 +5,41 @@
   <title>PokedexAngular</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://via.placeholder.com">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="mat-typography">
-  <app-root></app-root>
+  <app-root>
+    <style>
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        color: white;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      img {
+        border-radius: 15%;
+      }
+
+      h3 {
+        text-align: center;
+        letter-spacing: 1.1px;
+      }
+    </style>
+
+    <img src="/loading.gif" alt="">
+
+    <h3>I catch some pokemon ...</h3>
+
+
+  </app-root>
 </body>
 </html>
