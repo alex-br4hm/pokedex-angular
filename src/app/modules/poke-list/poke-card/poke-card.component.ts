@@ -9,6 +9,11 @@ import {
 } from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
 import {ApiService} from '../../../core/services/api.service';
+import {
+  CustomLoadingSpinnerComponent
+} from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
+import {NgOptimizedImage} from '@angular/common';
+import {PokeNumberPipePipe} from '../../../shared/utils/poke-number-pipe.pipe';
 
 @Component({
   selector: 'app-poke-card',
@@ -20,7 +25,10 @@ import {ApiService} from '../../../core/services/api.service';
     MatButton,
     MatCardImage,
     MatCardTitle,
-    MatCardSubtitle
+    MatCardSubtitle,
+    CustomLoadingSpinnerComponent,
+    NgOptimizedImage,
+    PokeNumberPipePipe
   ],
   templateUrl: './poke-card.component.html',
   styleUrl: './poke-card.component.scss'
@@ -35,9 +43,14 @@ export class PokeCardComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.getSinglePokemon(this.index+1).subscribe({
-      next: data => {this.data = data},
+      next: data => {
+        this.data = data;
+          console.log(this.data);
+      },
       error: error => {console.log(error);
       }});
+
+
   }
 
 }

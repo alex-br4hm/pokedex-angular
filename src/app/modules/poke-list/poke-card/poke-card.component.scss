@@ -5,14 +5,15 @@
 
 mat-card {
   justify-content: center;
+  transition: scale 75ms ease-in, background-color 150ms ease-in-out;
 }
 
 mat-card:hover {
-  background-color: #3d383b;
   cursor: pointer;
+  scale: 1.01;
 
   img {
-    scale:1;
+    scale: 1;
   }
 }
 
@@ -20,9 +21,8 @@ mat-card:hover {
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-
+  padding: 16px 0;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 img {
@@ -31,4 +31,112 @@ img {
   scale:.9;
   width: 100%;
   padding: 4px;
+
+  //background-color: rgba(255, 255, 255, 0.17);
+  //border: 3px solid rgba(252, 207, 9, 0.9);
+  //border-radius: 12px !important;
+  //box-shadow: 3px 5px 15px black;
 }
+
+.card-header-content {
+  display: flex;
+  align-items: end;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom:16px;
+}
+
+.mat-mdc-card-subtitle {
+  display: inline !important;
+}
+
+.poke-type {
+  padding: 8px 2vw;
+  border-radius: 12px;
+
+}
+
+.poke-text {
+  padding-top: 16px;
+  display: block;
+}
+
+.poke-type-wrapper {
+  padding: 16px 0;
+  display: flex;
+  gap:8px;
+  justify-content: start;
+}
+
+.normal-chip {
+  background-color: rgba(168, 168, 120, 0.9); /* Grau-Beige für Normal-Typ */
+}
+
+.fire-chip {
+  background-color: rgba(240, 128, 48, 0.9); /* Orange-Rot für Fire-Typ */
+}
+
+.water-chip {
+  background-color: rgba(104, 144, 240, 0.9); /* Mittelblau für Water-Typ */
+}
+
+.electric-chip {
+  background-color: rgba(248, 208, 48, 0.9); /* Gelb für Electric-Typ */
+}
+
+.grass-chip {
+  background-color: rgba(120, 200, 80, 0.9); /* Sattes Grün für Grass-Typ */
+}
+
+.ice-chip {
+  background-color: rgba(152, 216, 216, 0.9); /* Hellblau für Ice-Typ */
+}
+
+.fighting-chip {
+  background-color: rgba(192, 48, 40, 0.9); /* Dunkelrot für Fighting-Typ */
+}
+
+.poison-chip {
+  background-color: rgba(160, 64, 160, 0.9); /* Lila für Poison-Typ */
+}
+
+.ground-chip {
+  background-color: rgba(224, 192, 104, 0.9); /* Sandbraun für Ground-Typ */
+}
+
+.flying-chip {
+  background-color: rgba(168, 144, 240, 0.9); /* Hellviolett für Flying-Typ */
+}
+
+.psychic-chip {
+  background-color: rgba(248, 88, 136, 0.9); /* Pink-Rot für Psychic-Typ */
+}
+
+.bug-chip {
+  background-color: rgba(168, 184, 32, 0.9); /* Olivgrün für Bug-Typ */
+}
+
+.rock-chip {
+  background-color: rgba(184, 160, 56, 0.9); /* Gold-Braun für Rock-Typ */
+}
+
+.ghost-chip {
+  background-color: rgba(112, 88, 152, 0.9); /* Dunkelviolett für Ghost-Typ */
+}
+
+.dragon-chip {
+  background-color: rgba(112, 56, 248, 0.9); /* Dunkelblau-Lila für Dragon-Typ */
+}
+
+.dark-chip {
+  background-color: rgba(112, 88, 72, 0.9); /* Dunkelbraun für Dark-Typ (ab Gen 2) */
+}
+
+.steel-chip {
+  background-color: rgba(184, 184, 208, 0.9); /* Hellgrau-Blau für Steel-Typ (ab Gen 2) */
+}
+
+.fairy-chip {
+  background-color: rgba(238, 153, 238, 0.9); /* Hellrosa für Fairy-Typ (später eingeführt) */
+}
+
