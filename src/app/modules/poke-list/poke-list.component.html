@@ -1,14 +1,12 @@
 
-
-
 @if (pokeList) {
   <app-header></app-header>
+  <app-footer></app-footer>
   <div class="list-container">
     @for (card of pokeList; track $index) {
       <app-poke-card
-        [pokeData]="card"
         [index]="$index"
-        [routerLink]="['detail-view/' +  ($index + 1)]"
+        [routerLink]="['pokemon/' +  ($index + 1)]"
         (click)="stopScrolling($event)"
       ></app-poke-card>
     }

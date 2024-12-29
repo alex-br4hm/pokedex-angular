@@ -1,0 +1,40 @@
+:host {
+  background-color: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  left:0;
+  z-index: 1000;
+  top: 50vh;
+  display: flex;
+  flex-direction: column;
+  transition: all 500ms ease-in-out;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+img, mat-icon {
+  height: 2rem;
+  width: 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 125ms ease-in-out;
+  color: black;
+
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+.hover-sign {
+  transition: all 500ms ease-in-out;
+  padding: 16px 4px;
+}
+
+.footer-content {
+  transition: all 500ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap:8px;
+  padding: 16px 4px;
+}
+
+
