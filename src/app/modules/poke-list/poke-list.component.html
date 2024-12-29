@@ -1,8 +1,16 @@
+
+
+
 @if (pokeList) {
   <app-header></app-header>
   <div class="list-container">
     @for (card of pokeList; track $index) {
-      <app-poke-card [pokeData]="card" [index]="$index"></app-poke-card>
+      <app-poke-card
+        [pokeData]="card"
+        [index]="$index"
+        [routerLink]="['detail-view/' +  ($index + 1)]"
+        (click)="stopScrolling($event)"
+      ></app-poke-card>
     }
   </div>
 } @else {
@@ -10,4 +18,8 @@
     <app-custom-loading-spinner></app-custom-loading-spinner>
   </div>
 }
+
+
+<router-outlet></router-outlet>
+
 
