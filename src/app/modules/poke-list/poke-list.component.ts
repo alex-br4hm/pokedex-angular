@@ -7,6 +7,8 @@ import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PokeDetailViewComponent} from '../poke-detail-view/poke-detail-view.component';
 import {PokemonData} from '../../core/models/pokemon';
+import {PokeDataService} from '../../core/services/poke-data.service';
+import {FooterComponent} from '../../core/components/footer/footer.component';
 
 @Component({
   selector: 'app-poke-list',
@@ -15,7 +17,8 @@ import {PokemonData} from '../../core/models/pokemon';
     PokeCardComponent,
     CustomLoadingSpinnerComponent,
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    FooterComponent
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
@@ -23,22 +26,35 @@ import {PokemonData} from '../../core/models/pokemon';
 export class PokeListComponent implements OnInit {
   pokeList!: PokemonData[];
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private pokeDataService: PokeDataService,
+    ) {
   }
 
   ngOnInit() {
     this.apiService.getData().subscribe({
       next: data => {
-          this.pokeList = data.results;
+        this.pokeList = data.results;
+        // this.getPokeData();
         },
-
       error: error => {console.log(error);
     }});
   }
 
-    stopScrolling(e: Event) {
+  // getPokeData() {
+  //   this.pokeList.forEach((pokemon, index) => {
+  //     this.apiService.getSinglePokemon(index + 1).subscribe({
+  //         next: data => {
+  //           this.pokeDataService.$pokemon.push(data);
+  //         },
+  //         error: error => {console.log(error);}
+  //     })
+  //   })
+  // }
+
+  stopScrolling(e: Event) {
       e.preventDefault();
       document.body.style.overflow = 'hidden';
-    }
-
+  }
 }
