@@ -12,6 +12,7 @@ import {
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
 import {PokeNumberPipePipe} from '../../../shared/utils/poke-number-pipe.pipe';
+import {PokemonGerData} from '../../../core/models/pokemon';
 
 @Component({
   selector: 'app-poke-card',
@@ -33,10 +34,11 @@ export class PokeCardComponent implements OnInit {
   @Input() pokeData: any;
   @Input() index!: number;
   data:any;
-  germanName!: string;
-  flavorText!: string;
-  germanTypes!: string[];
-  imgLoaded:boolean = false;
+  pokemonGerData: PokemonGerData = {
+    name: '',
+    infoText: '',
+    types: []
+  };
 
   constructor(private apiService: ApiService) {
   }
@@ -45,19 +47,19 @@ export class PokeCardComponent implements OnInit {
     this.apiService.getSinglePokemon(this.index + 1).subscribe({
       next: data => {
         this.data = data;
-        this.germanTypes = this.getGermanTypesFromArray(this.data.types);
+        this.pokemonGerData.types = this.getGermanTypesFromArray(this.data.types);
       },
       error: error => {console.log(error);
       }});
 
     this.apiService.getGermanInfo(this.index + 1).subscribe({
       next: data => {
-        this.germanName = data.names.find(
+        this.pokemonGerData.name = data.names.find(
           (name: { language: { name: string; }; }) => name.language.name === 'de')?.name;
 
         const germanFlavor = data.flavor_text_entries.find(
           (entry: { language: { name: string; }; }) => entry.language.name === 'de');
-        this.flavorText = germanFlavor ? germanFlavor.flavor_text : 'Keine Beschreibung vorhanden.';
+        this.pokemonGerData.infoText = germanFlavor ? germanFlavor.flavor_text : 'Keine Beschreibung vorhanden.';
       }
     })
 
