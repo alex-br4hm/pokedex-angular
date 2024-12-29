@@ -13,7 +13,7 @@ export const routes: Routes = [
     ),
     children: [
       {
-        path: 'detail-view/:game_index',
+        path: 'pokemon/:game_index',
         loadComponent: () =>
           import('./modules/poke-detail-view/poke-detail-view.component').then(
             m => m.PokeDetailViewComponent
