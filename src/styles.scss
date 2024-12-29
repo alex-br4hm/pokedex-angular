@@ -80,3 +80,20 @@ body {
   background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 0.5) 70%, rgba(80, 80, 80, 0.3) 90%);
 }
 
+// ##########
+// scroll bar
+// ##########
+
+::-webkit-scrollbar {
+  width:2px;
+
+}
+
+::-webkit-scrollbar-track {
+  background-color: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: white;
+
+}
