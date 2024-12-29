@@ -3,7 +3,7 @@
   <mat-card class="example-card {{data?.types[0].type.name}}">
     <mat-card-header>
       <div class="card-header-content">
-        <mat-card-title> {{ germanName }} </mat-card-title>
+        <mat-card-title> {{ pokemonGerData.name }} </mat-card-title>
         <mat-card-subtitle>{{ data?.id | pokeNumberPipe }}</mat-card-subtitle>
       </div>
     </mat-card-header>
@@ -18,12 +18,17 @@
 
     <mat-card-content>
       <span class="poke-text">
-        {{ flavorText }}
+        {{ pokemonGerData.infoText }}
       </span>
+
       <div class="poke-type-wrapper">
-        <span class="poke-type {{data?.types[0].type.name + '-chip' }}">{{ germanTypes[0] }}</span>
+        <span class="poke-type {{data?.types[0].type.name + '-chip' }}">
+          {{ pokemonGerData.types[0] }}
+        </span>
         @if (data?.types[1]?.type?.name) {
-          <span class="poke-type {{data?.types[1].type.name + '-chip' }}">{{ germanTypes[1] }}</span>
+          <span class="poke-type {{data?.types[1].type.name + '-chip' }}">
+            {{ pokemonGerData.types[1] }}
+          </span>
         }
       </div>
 
