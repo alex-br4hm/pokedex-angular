@@ -12,7 +12,8 @@ import {
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
 import {PokeNumberPipePipe} from '../../../shared/utils/poke-number-pipe.pipe';
-import {PokemonGerData} from '../../../core/models/pokemon';
+import {PokemonCardData} from '../../../core/models/pokemon';
+import {PokeDataService} from '../../../core/services/poke-data.service';
 
 @Component({
   selector: 'app-poke-card',
@@ -31,39 +32,58 @@ import {PokemonGerData} from '../../../core/models/pokemon';
   styleUrl: './poke-card.component.scss'
 })
 export class PokeCardComponent implements OnInit {
-  @Input() pokeData: any;
   @Input() index!: number;
-  data:any;
-  pokemonGerData: PokemonGerData = {
+  pokemon: PokemonCardData = {
     name: '',
     infoText: '',
-    types: []
+    typesGer: [],
+    typesEn: [],
+    img_url: '',
+    game_index: this.index
   };
+  test: any;
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private pokeDataService: PokeDataService,
+    ) {
   }
 
   ngOnInit() {
-    this.apiService.getSinglePokemon(this.index + 1).subscribe({
+    this.pokemon.game_index = this.index + 1;
+    this.getPokeData();
+    this.getGermanInfo();
+  }
+
+  getPokeData() {
+    this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
       next: data => {
-        this.data = data;
-        this.pokemonGerData.types = this.getGermanTypesFromArray(this.data.types);
+        this.pokemon.typesEn  = data.types.map((typeInfo: { type: { name: any; }; }) => typeInfo.type.name);
+        this.pokemon.typesGer = this.getGermanTypesFromArray(data.types);
+        this.pokemon.img_url  = data.sprites.other.dream_world.front_default;
       },
       error: error => {console.log(error);
       }});
+  }
 
-    this.apiService.getGermanInfo(this.index + 1).subscribe({
+  getGermanInfo() {
+    this.apiService.getGermanInfo(this.pokemon.game_index).subscribe({
       next: data => {
-        this.pokemonGerData.name = data.names.find(
+        this.pokemon.name = data.names.find(
           (name: { language: { name: string; }; }) => name.language.name === 'de')?.name;
 
         const germanFlavor = data.flavor_text_entries.find(
           (entry: { language: { name: string; }; }) => entry.language.name === 'de');
-        this.pokemonGerData.infoText = germanFlavor ? germanFlavor.flavor_text : 'Keine Beschreibung vorhanden.';
-      }
+        this.pokemon.infoText = germanFlavor ? germanFlavor.flavor_text : 'Keine Beschreibung vorhanden.';
+
+        this.sendDataToService();
+      },
+      error: error => {console.log(error);}
     })
+  }
 
-
+  sendDataToService() {
+    this.pokeDataService.$pokemon = this.pokemon;
   }
 
   getGermanTypesFromArray(typesArray: { slot: number, type: { name: string, url: string } }[]): string[] {
@@ -97,7 +117,7 @@ export class PokeCardComponent implements OnInit {
     if (typeObject) {
       return typeObject.german;
     } else {
-      return 'Unbekannter Typ'; // Rückgabe, falls der Typ nicht gefunden wird
+      return 'Unbekannter Typ';
     }
   }
 
