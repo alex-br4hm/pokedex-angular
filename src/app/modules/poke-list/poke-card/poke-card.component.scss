@@ -29,6 +29,10 @@ mat-card:hover {
   }
 }
 
+.mat-mdc-card-title {
+  font-weight: 500;
+}
+
 .poke-img-wrapper {
   width: 100%;
   display: flex;
@@ -111,75 +115,75 @@ img {
 }
 
 .normal-chip {
-  background-color: rgba(168, 168, 120, 0.9); /* Grau-Beige für Normal-Typ */
+  background-color: rgba(168, 168, 120, 0.9);
 }
 
 .fire-chip {
-  background-color: rgba(240, 128, 48, 0.9); /* Orange-Rot für Fire-Typ */
+  background-color: rgba(240, 128, 48, 0.9);
 }
 
 .water-chip {
-  background-color: rgba(104, 144, 240, 0.9); /* Mittelblau für Water-Typ */
+  background-color: rgba(104, 144, 240, 0.9);
 }
 
 .electric-chip {
-  background-color: rgba(248, 208, 48, 0.9); /* Gelb für Electric-Typ */
+  background-color: rgba(248, 208, 48, 0.9);
 }
 
 .grass-chip {
-  background-color: rgba(120, 200, 80, 0.9); /* Sattes Grün für Grass-Typ */
+  background-color: rgba(120, 200, 80, 0.9);
 }
 
 .ice-chip {
-  background-color: rgba(152, 216, 216, 0.9); /* Hellblau für Ice-Typ */
+  background-color: rgba(152, 216, 216, 0.9);
 }
 
 .fighting-chip {
-  background-color: rgba(192, 48, 40, 0.9); /* Dunkelrot für Fighting-Typ */
+  background-color: rgba(192, 48, 40, 0.9);
 }
 
 .poison-chip {
-  background-color: rgba(160, 64, 160, 0.9); /* Lila für Poison-Typ */
+  background-color: rgba(160, 64, 160, 0.9);
 }
 
 .ground-chip {
-  background-color: rgba(224, 192, 104, 0.9); /* Sandbraun für Ground-Typ */
+  background-color: rgba(224, 192, 104, 0.9);
 }
 
 .flying-chip {
-  background-color: rgba(168, 144, 240, 0.9); /* Hellviolett für Flying-Typ */
+  background-color: rgba(193, 181, 225, 0.9);
 }
 
 .psychic-chip {
-  background-color: rgba(248, 88, 136, 0.9); /* Pink-Rot für Psychic-Typ */
+  background-color: rgba(248, 88, 136, 0.9);
 }
 
 .bug-chip {
-  background-color: rgba(168, 184, 32, 0.9); /* Olivgrün für Bug-Typ */
+  background-color: rgba(168, 184, 32, 0.9);
 }
 
 .rock-chip {
-  background-color: rgba(184, 160, 56, 0.9); /* Gold-Braun für Rock-Typ */
+  background-color: rgba(184, 160, 56, 0.9);
 }
 
 .ghost-chip {
-  background-color: rgba(112, 88, 152, 0.9); /* Dunkelviolett für Ghost-Typ */
+  background-color: rgba(112, 88, 152, 0.9);
 }
 
 .dragon-chip {
-  background-color: rgba(112, 56, 248, 0.9); /* Dunkelblau-Lila für Dragon-Typ */
+  background-color: rgba(112, 56, 248, 0.9);
 }
 
 .dark-chip {
-  background-color: rgba(112, 88, 72, 0.9); /* Dunkelbraun für Dark-Typ (ab Gen 2) */
+  background-color: rgba(112, 88, 72, 0.9);
 }
 
 .steel-chip {
-  background-color: rgba(184, 184, 208, 0.9); /* Hellgrau-Blau für Steel-Typ (ab Gen 2) */
+  background-color: rgba(184, 184, 208, 0.9);
 }
 
 .fairy-chip {
-  background-color: rgba(238, 153, 238, 0.9); /* Hellrosa für Fairy-Typ (später eingeführt) */
+  background-color: rgba(238, 153, 238, 0.9);
 }
 
 @media screen and (max-width: 1024px) {
