@@ -5,8 +5,52 @@
     <mat-icon>close</mat-icon>
   </div>
 
-  <div class="detail-view-card">
+  @if (pokemon && pokemon.img_url) {
 
-  </div>
+    <div class="detail-view-card {{pokemon.typesEn[0]}}">
+
+      <div class="card-content">
+
+        <h1>{{ pokemon.name }}</h1>
+      <div class="card-header">
+
+        <div class="poke-type-wrapper">
+              <span class="poke-type {{pokemon.typesEn[0] + '-chip' }}">
+                {{ pokemon.typesGer[0] }}
+              </span>
+
+          @if (pokemon.typesEn[1]) {
+            <span
+              class="poke-type {{pokemon.typesEn[1] + '-chip'}}">
+                {{ pokemon.typesGer[1] }}
+              </span>
+          }
+
+        </div>
+
+        <div> {{ pokemon.game_index | pokeNumberPipe }}</div>
+
+      </div>
+
+       <div class="img-wrapper">
+        <img ngSrc="{{ pokemon.img_url }}"
+             placeholder="placeholder"
+             priority
+             width="200"
+             height="240"
+             alt="Photo of {{ pokemon.name }}">
+       </div>
+
+         <mat-tab-group>
+           <mat-tab label="Stats"> Stats </mat-tab>
+           <mat-tab label="Entwicklung"> Content 2 </mat-tab>
+         </mat-tab-group>
+
+
+      </div>
+    </div>
+  }
+
+
 
 

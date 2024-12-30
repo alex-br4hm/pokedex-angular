@@ -14,5 +14,11 @@ export interface PokemonCardData {
   typesEn: string[];
   img_url: string;
   game_index: number;
+  stats?: Stats[];
+}
+
+export interface Stats {
+  name: string;
+  base_stat: number;
 }
 

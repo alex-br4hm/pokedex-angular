@@ -41,7 +41,6 @@ export class PokeCardComponent implements OnInit {
     img_url: '',
     game_index: this.index
   };
-  test: any;
 
   constructor(
     private apiService: ApiService,
@@ -59,7 +58,7 @@ export class PokeCardComponent implements OnInit {
     this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
       next: data => {
         this.pokemon.typesEn  = data.types.map((typeInfo: { type: { name: any; }; }) => typeInfo.type.name);
-        this.pokemon.typesGer = this.getGermanTypesFromArray(data.types);
+        this.pokemon.typesGer = this.getGermanTypesFromArray(this.pokemon.typesEn);
         this.pokemon.img_url  = data.sprites.other.dream_world.front_default;
       },
       error: error => {console.log(error);
@@ -86,8 +85,8 @@ export class PokeCardComponent implements OnInit {
     this.pokeDataService.$pokemon = this.pokemon;
   }
 
-  getGermanTypesFromArray(typesArray: { slot: number, type: { name: string, url: string } }[]): string[] {
-    return typesArray.map(typeObj => this.getGermanTypeName(typeObj.type.name));
+  getGermanTypesFromArray(typesArray: string[]): string[] {
+    return typesArray.map(typeObj => this.getGermanTypeName(typeObj));
   }
 
   getGermanTypeName(type: string): string {
