@@ -48,11 +48,9 @@ export class PokeDetailViewComponent implements OnInit {
       this.pokemon.game_index = params['game_index'];
       if (this.pokeDataService.$pokemon) {
         this.pokemon = this.pokeDataService.$pokemon;
-        console.log('click-poke:', this.pokemon);
       } else {
         this.getPokemonInformation();
         this.getGermanInfo();
-        console.log('poke:', this.pokemon);
       }
     })
   }

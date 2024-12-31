@@ -1,6 +1,7 @@
 export interface PokemonData {
   name: string;
   url: string;
+  id: number;
 }
 
 export interface Pokemon {

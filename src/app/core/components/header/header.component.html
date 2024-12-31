@@ -1,3 +1,5 @@
 <img src="/pokedexs.webp" alt="">
 
-<input type="text">
+<input type="text"
+       [(ngModel)]="searchInput"
+       (input)="onSearchInputChange()">

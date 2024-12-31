@@ -1,12 +1,12 @@
 
-@if (pokeList) {
-  <app-header></app-header>
+@if (isLoaded) {
+  <app-header (searchInputChange)="updateSearchInput($event)"></app-header>
   <app-footer></app-footer>
   <div class="list-container">
-    @for (card of pokeList; track $index) {
+    @for (card of filteredPokeList; track card.id) {
       <app-poke-card
-        [index]="$index"
-        [routerLink]="['pokemon/' +  ($index + 1)]"
+        [index]="card.id"
+        [routerLink]="['pokemon/' +  card.id]"
         (click)="stopScrolling($event)"
       ></app-poke-card>
     }

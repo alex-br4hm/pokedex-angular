@@ -22,6 +22,10 @@ export class ApiService {
     return this.http.get(this.API_URL + index);
   }
 
+  getSinglePokemon2(url: string): Observable<any> {
+    return this.http.get(url);
+  }
+
   getGermanInfo(index: number): Observable<any> {
     return this.http.get(this.species_API_URL + index);
   }

@@ -49,7 +49,7 @@ export class PokeCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pokemon.game_index = this.index + 1;
+    this.pokemon.game_index = this.index;
     this.getPokeData();
     this.getGermanInfo();
   }
