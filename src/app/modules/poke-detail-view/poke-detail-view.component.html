@@ -7,7 +7,7 @@
 
   @if (pokemon && pokemon.img_url) {
 
-    <div class="detail-view-card {{pokemon.typesEn[0]}}">
+    <div class="detail-view-card {{pokemon.types_en[0]}}">
 
       <div class="card-content">
 
@@ -15,14 +15,14 @@
       <div class="card-header">
 
         <div class="poke-type-wrapper">
-              <span class="poke-type {{pokemon.typesEn[0] + '-chip' }}">
-                {{ pokemon.typesGer[0] }}
+              <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">
+                {{ pokemon.types_ger[0] }}
               </span>
 
-          @if (pokemon.typesEn[1]) {
+          @if (pokemon.types_en[1]) {
             <span
-              class="poke-type {{pokemon.typesEn[1] + '-chip'}}">
-                {{ pokemon.typesGer[1] }}
+              class="poke-type {{pokemon.types_en[1] + '-chip'}}">
+                {{ pokemon.types_ger[1] }}
               </span>
           }
 

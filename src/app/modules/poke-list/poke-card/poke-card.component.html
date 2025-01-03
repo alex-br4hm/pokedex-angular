@@ -1,8 +1,9 @@
 <div class="card-wrapper"
     (click)="sendDataToService()"
 >
-@if (pokemon && pokemon.img_url) {
-  <mat-card class="example-card {{pokemon.typesEn[0]}}">
+@if (pokemon && pokemon.img_url)
+  {
+  <mat-card class="example-card {{pokemon.types_en[0]}}">
 
     <mat-card-header>
       <div class="card-header-content">
@@ -26,14 +27,14 @@
       </span>
 
         <div class="poke-type-wrapper">
-              <span class="poke-type {{pokemon.typesEn[0] + '-chip' }}">
-                {{ pokemon.typesGer[0] }}
+              <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">
+                {{ pokemon.types_ger[0] }}
               </span>
 
-          @if (pokemon.typesEn[1]) {
+          @if (pokemon.types_en[1]) {
               <span
-                class="poke-type {{pokemon.typesEn[1] + '-chip'}}">
-                {{ pokemon.typesGer[1] }}
+                class="poke-type {{pokemon.types_en[1] + '-chip'}}">
+                {{ pokemon.types_ger[1] }}
               </span>
           }
 

@@ -6,10 +6,10 @@ import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spin
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PokeDetailViewComponent} from '../poke-detail-view/poke-detail-view.component';
-import {PokemonCardData, PokemonData} from '../../core/models/pokemon';
+import {PokeData, PokeInfo, PokemonCardData, PokemonData, Stats} from '../../core/models/pokemon';
 import {PokeDataService} from '../../core/services/poke-data.service';
 import {FooterComponent} from '../../core/components/footer/footer.component';
-import {forkJoin} from 'rxjs';
+import {forkJoin, map} from 'rxjs';
 
 @Component({
   selector: 'app-poke-list',
@@ -25,10 +25,14 @@ import {forkJoin} from 'rxjs';
   styleUrl: './poke-list.component.scss'
 })
 export class PokeListComponent implements OnInit {
-  pokeList!: PokemonData[];
-  filteredPokeList!: PokemonData[];
+  pokeList: PokeData[] = [];
+  pokeInfoList: PokeData[] = [];
+  filteredPokeList: PokemonCardData[] = [];
+  initialPokeList: PokemonCardData[] = [];
+  pokemon!: PokemonCardData;
   searchInput!: string;
-  isLoaded: boolean = false;
+  isLoading: boolean = true;
+  searchLimit: number = 151;
 
   constructor(
     private apiService: ApiService,
@@ -37,49 +41,112 @@ export class PokeListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.apiService.getData().subscribe({
       next: data => {
         this.pokeList = data.results;
         this.getPokemonData();
-        },
-      error: error => {console.log(error);
-    }});
+      },
+      error: error => {
+        console.error("Fehler beim Abrufen der Daten:", error);
+        this.isLoading = false;
+      }
+    });
   }
 
   getPokemonData() {
-    const requests = this.pokeList.map((poke) =>
-      this.apiService.getSinglePokemon2(poke.url)
+    const requests = this.pokeList.map((poke: any) =>
+      this.apiService.getSinglePokemon(poke.url).pipe(
+        map(data => ({
+          species_url: data.species.url,
+          img_url: data.sprites.other.dream_world.front_default,
+          types_en: data.types.map((typeInfo: { type: { name: string } }) => typeInfo.type.name),
+        }))
+      )
     );
 
     forkJoin(requests).subscribe({
-      next: (responses) => {
-        responses.forEach((data, index) => {
-          this.pokeList[index].id = data.id;
-        });
-        this.filteredPokeList = this.pokeList;
-        this.isLoaded = true;
+      next: pokemonData => {
+        this.pokeInfoList = pokemonData;
+        this.getGermanData();
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: error => {
+        console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
+        this.isLoading = false;
+      }
     });
   }
+
+  getGermanData() {
+    const requests = this.pokeInfoList.map(poke =>
+      this.apiService.getGermanInfo(poke.species_url).pipe(
+        map(data => ({
+          name: data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt',
+          infoText: data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.',
+          types_ger: this.getGermanTypesFromArray(poke.types_en),
+          types_en: poke.types_en,
+          img_url: poke.img_url,
+          game_index: data.id,
+        }))
+      )
+    );
+
+    forkJoin(requests).subscribe({
+      next: filteredData => {
+        this.filteredPokeList = filteredData;
+        this.initialPokeList = filteredData;
+        this.isLoading = false;
+      },
+      error: error => {
+        console.error("Fehler beim Abrufen der deutschen Daten:", error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  getGermanTypesFromArray(typesArray: string[]): string[] {
+    return typesArray.map(type => this.getGermanTypeName(type));
+  }
+
+  getGermanTypeName(type: string): string {
+    const types = [
+      { english: 'normal', german: 'Normal' },
+      { english: 'fire', german: 'Feuer' },
+      { english: 'water', german: 'Wasser' },
+      { english: 'electric', german: 'Elektro' },
+      { english: 'grass', german: 'Pflanze' },
+      { english: 'flying', german: 'Flug' },
+      { english: 'bug', german: 'Käfer' },
+      { english: 'poison', german: 'Gift' },
+      { english: 'rock', german: 'Gestein' },
+      { english: 'ground', german: 'Boden' },
+      { english: 'fighting', german: 'Kämpfer' },
+      { english: 'ice', german: 'Eis' },
+      { english: 'psychic', german: 'Psycho' },
+      { english: 'ghost', german: 'Geist' },
+      { english: 'dragon', german: 'Drache' },
+      { english: 'fairy', german: 'Fee' },
+      { english: 'dark', german: 'Unlicht' },
+      { english: 'steel', german: 'Stahl' },
+    ];
+
+    return types.find(t => t.english === type)?.german || 'Unbekannter Typ';
+  }
+
 
   updateSearchInput(newInput: string) {
     this.searchInput = newInput;
     this.filterPokeList();
-    console.log(this.filteredPokeList);
     console.log('Aktueller Suchinput:', this.searchInput);
   }
 
   filterPokeList() {
     if (this.searchInput && this.searchInput.length > 0) {
-      console.log('hello?')
-      this.filteredPokeList = this.pokeList.filter(pokemon =>
+      this.filteredPokeList = this.initialPokeList.filter(pokemon =>
         pokemon.name.toLowerCase().includes(this.searchInput.toLowerCase())
       );
     } else {
-      this.filteredPokeList = this.pokeList;
+      this.filteredPokeList = this.initialPokeList;
     }
   }
 

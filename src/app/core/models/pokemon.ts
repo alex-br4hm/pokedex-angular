@@ -4,18 +4,19 @@ export interface PokemonData {
   id: number;
 }
 
-export interface Pokemon {
-
-}
-
 export interface PokemonCardData {
   name: string;
   infoText: string;
-  typesGer: string[];
-  typesEn: string[];
-  img_url: string;
+  types_ger: string[];
+  types_en: string[];
+  img_url?: string;
   game_index: number;
   stats?: Stats[];
+}
+
+export interface PokeInfo {
+  species_url: string;
+  stats: Stats[];
 }
 
 export interface Stats {
@@ -23,3 +24,9 @@ export interface Stats {
   base_stat: number;
 }
 
+export interface PokeData {
+  species_url: string;
+  types_en: string[];
+  stats?: Stats[];
+  img_url?: string;
+}

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {Pokemon} from '../models/pokemon';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 

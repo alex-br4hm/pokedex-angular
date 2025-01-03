@@ -1,21 +1,29 @@
 
-@if (isLoaded) {
+@if (!isLoading) {
   <app-header (searchInputChange)="updateSearchInput($event)"></app-header>
   <app-footer></app-footer>
   <div class="list-container">
-    @for (card of filteredPokeList; track card.id) {
-      <app-poke-card
-        [index]="card.id"
-        [routerLink]="['pokemon/' +  card.id]"
-        (click)="stopScrolling($event)"
-      ></app-poke-card>
+    @if (filteredPokeList.length > 0) {
+      @for (card of filteredPokeList; track $index) {
+        <app-poke-card
+          [index]="$index"
+          [pokemon]="card"
+          [routerLink]="['pokemon/' +  $index]"
+          (click)="stopScrolling($event)"
+        ></app-poke-card>
+      }
     }
+    @else {
+      <p>Keine Pokemon gefunden ...</p>
+    }
+
   </div>
 } @else {
   <div class="spinner-container">
     <app-custom-loading-spinner></app-custom-loading-spinner>
   </div>
 }
+
 
 
 <router-outlet></router-outlet>
