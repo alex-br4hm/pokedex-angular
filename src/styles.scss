@@ -1,12 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+}
 
 html, body {
   height: 100%;
   background-color: #111;
 }
 body {
-  margin: 0; font-family:
-  Roboto, "Helvetica Neue", sans-serif; }
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-card-title {
+  font-family: 'Press Start 2P', sans-serif !important;
+}
 
 // ####################
 // color codes for types
