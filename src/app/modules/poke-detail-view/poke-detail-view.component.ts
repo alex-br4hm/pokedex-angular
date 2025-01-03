@@ -8,6 +8,9 @@ import {PokemonCardData} from '../../core/models/pokemon';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {forkJoin, map} from 'rxjs';
+import {normalizeExtraEntryPoints} from '@angular-devkit/build-angular/src/tools/webpack/utils/helpers';
+import {StatsComponent} from './more-information-tabs/stats/stats.component';
 
 @Component({
   selector: 'app-poke-detail-view',
@@ -18,7 +21,8 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
     CustomLoadingSpinnerComponent,
     NgOptimizedImage,
     MatTabGroup,
-    MatTab
+    MatTab,
+    StatsComponent
   ],
   templateUrl: './poke-detail-view.component.html',
   styleUrl: './poke-detail-view.component.scss'
@@ -26,14 +30,16 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
 export class PokeDetailViewComponent implements OnInit {
   game_index!: number;
   pokemon: PokemonCardData = {
+    game_index: 0,
+    info_text: '',
     name: '',
-    infoText: '',
-    types_ger: [],
     types_en: [],
-    img_url: '',
-    game_index:  this.game_index,
-    stats: []
+    types_ger: []
   };
+  pokemonDetail: any = {
+    stats: [],
+  };
+  isLoading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,91 +48,60 @@ export class PokeDetailViewComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    // this.route.params.subscribe(params => {
-    //   this.pokemon.game_index = params['game_index'];
-    //   if (this.pokeDataService.$pokemon) {
-    //     this.pokemon = this.pokeDataService.$pokemon;
-    //   } else {
-    //     this.getPokemonInformation();
-    //     this.getGermanInfo();
-    //   }
-    // })
+    this.route.params.subscribe(params => {
+      this.pokemon.game_index = params['game_index'];
+      if (this.pokeDataService.$pokemon) {
+        this.pokemon = this.pokeDataService.$pokemon;
+        this.getPokemonDetails();
+        this.isLoading = false;
+      } else {
+        this.getSinglePokemon();
+        this.getPokemonDetails();
+      }
+
+      console.log(this.pokemon);
+    });
   }
-  //
-  // getPokemonInformation() {
-  //   this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
-  //     next: data => {
-  //       console.log(data.sprites);
-  //
-  //       this.getStats(data);
-  //       this.pokemon.types_en = data.types.map((typeInfo: { type: { name: any; }; }) => typeInfo.type.name);
-  //       this.pokemon.types_ger = this.getGermanTypesFromArray(this.pokemon.types_en);
-  //       this.pokemon.img_url  = data.sprites.other.dream_world.front_default;
-  //     }
-  //   })
-  // }
-  //
-  // getStats(data: any) {
-  //   data.stats.forEach((element: any) => {
-  //     this.pokemon.stats?.push(
-  //       { base_stat: element.base_stat, name: element.stat.name }
-  //     )
-  //   });
-  // }
-  //
-  // getGermanInfo() {
-  //   this.apiService.getGermanInfo(this.pokemon.game_index).subscribe({
-  //     next: data => {
-  //       console.log(data);
-  //       this.pokemon.name = data.names.find(
-  //         (name: { language: { name: string; }; }) => name.language.name === 'de')?.name;
-  //
-  //       const germanFlavor = data.flavor_text_entries.find(
-  //         (entry: { language: { name: string; }; }) => entry.language.name === 'de');
-  //       this.pokemon.infoText = germanFlavor ? germanFlavor.flavor_text : 'Keine Beschreibung vorhanden.';
-  //     },
-  //     error: error => {console.log(error);}
-  //   })
-  // }
-  //
-  // testiTest() {
-  //   console.log(this.pokemon);
-  // }
-  //
-  // getGermanTypesFromArray(typesArray: string[]): string[] {
-  //   return typesArray.map(typeObj => this.getGermanTypeName(typeObj));
-  // }
-  //
-  // getGermanTypeName(type: string): string {
-  //   const types = [
-  //     { english: 'normal', german: 'Normal' },
-  //     { english: 'fire', german: 'Feuer' },
-  //     { english: 'water', german: 'Wasser' },
-  //     { english: 'electric', german: 'Elektro' },
-  //     { english: 'grass', german: 'Pflanze' },
-  //     { english: 'flying', german: 'Flug' },
-  //     { english: 'bug', german: 'Käfer' },
-  //     { english: 'poison', german: 'Gift' },
-  //     { english: 'rock', german: 'Gestein' },
-  //     { english: 'ground', german: 'Boden' },
-  //     { english: 'fighting', german: 'Kämpfer' },
-  //     { english: 'ice', german: 'Eis' },
-  //     { english: 'psychic', german: 'Psycho' },
-  //     { english: 'ghost', german: 'Geist' },
-  //     { english: 'dragon', german: 'Drache' },
-  //     { english: 'fairy', german: 'Fee' },
-  //     { english: 'dark', german: 'Unlicht' },
-  //     { english: 'steel', german: 'Stahl' },
-  //   ];
-  //
-  //   const typeObject = types.find((t) => t.english === type);
-  //
-  //   if (typeObject) {
-  //     return typeObject.german;
-  //   } else {
-  //     return 'Unbekannter Typ';
-  //   }
-  // }
+
+  getSinglePokemon() {
+   this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
+     next: data => {
+       this.pokemon.types_en    = data.types.map((typeInfo: { type: { name: string } }) => typeInfo.type.name);
+       this.pokemon.img_url     = data.sprites.other.dream_world.front_default;
+       this.pokemon.species_url = data.species.url;
+
+       this.pokemonDetail.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
+                                    base_stat: stat.base_stat,
+                                    name: stat.stat.name
+                                  }));
+       console.log(this.pokemonDetail.stats);
+       if (this.pokemon.species_url) {
+         this.getGermanData(this.pokemon.species_url);
+       }
+
+     },
+     error: error => {
+       console.log(error);
+       this.isLoading = false;
+     }
+   })
+  }
+
+  getGermanData(url: string) {
+    this.apiService.getGermanInfo(url).subscribe({
+      next: data => {
+        this.pokemon.name      = data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt';
+        this.pokemon.info_text = data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.';
+        this.pokemon.types_ger = this.pokeDataService.getGermanTypesFromArray(this.pokemon.types_en);
+
+        this.isLoading = false;
+      }
+    })
+  }
+
+  getPokemonDetails() {
+
+  }
 
   startScrolling(e: Event) {
     e.preventDefault();

@@ -18,11 +18,11 @@ export class ApiService {
    return this.http.get(this.API_URL + '?limit=151');
   }
 
-  // getSinglePokemon(index: number): Observable<any> {
-  //   return this.http.get(this.API_URL + index);
-  // }
+  getSinglePokemon(index: number): Observable<any> {
+    return this.http.get(this.API_URL + index);
+  }
 
-  getSinglePokemon(url: string): Observable<any> {
+  getPokemonDetails(url: string): Observable<any> {
     return this.http.get(url);
   }
 

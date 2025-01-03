@@ -6,11 +6,12 @@ export interface PokemonData {
 
 export interface PokemonCardData {
   name: string;
-  infoText: string;
+  info_text: string;
   types_ger: string[];
   types_en: string[];
   img_url?: string;
   game_index: number;
+  species_url?: string;
   stats?: Stats[];
 }
 

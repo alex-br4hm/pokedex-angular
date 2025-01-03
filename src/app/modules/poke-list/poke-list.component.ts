@@ -56,7 +56,7 @@ export class PokeListComponent implements OnInit {
 
   getPokemonData() {
     const requests = this.pokeList.map((poke: any) =>
-      this.apiService.getSinglePokemon(poke.url).pipe(
+      this.apiService.getPokemonDetails(poke.url).pipe(
         map(data => ({
           species_url: data.species.url,
           img_url: data.sprites.other.dream_world.front_default,
@@ -82,8 +82,8 @@ export class PokeListComponent implements OnInit {
       this.apiService.getGermanInfo(poke.species_url).pipe(
         map(data => ({
           name: data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt',
-          infoText: data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.',
-          types_ger: this.getGermanTypesFromArray(poke.types_en),
+          info_text: data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.',
+          types_ger: this.pokeDataService.getGermanTypesFromArray(poke.types_en),
           types_en: poke.types_en,
           img_url: poke.img_url,
           game_index: data.id,
@@ -103,36 +103,6 @@ export class PokeListComponent implements OnInit {
       }
     });
   }
-
-  getGermanTypesFromArray(typesArray: string[]): string[] {
-    return typesArray.map(type => this.getGermanTypeName(type));
-  }
-
-  getGermanTypeName(type: string): string {
-    const types = [
-      { english: 'normal', german: 'Normal' },
-      { english: 'fire', german: 'Feuer' },
-      { english: 'water', german: 'Wasser' },
-      { english: 'electric', german: 'Elektro' },
-      { english: 'grass', german: 'Pflanze' },
-      { english: 'flying', german: 'Flug' },
-      { english: 'bug', german: 'Käfer' },
-      { english: 'poison', german: 'Gift' },
-      { english: 'rock', german: 'Gestein' },
-      { english: 'ground', german: 'Boden' },
-      { english: 'fighting', german: 'Kämpfer' },
-      { english: 'ice', german: 'Eis' },
-      { english: 'psychic', german: 'Psycho' },
-      { english: 'ghost', german: 'Geist' },
-      { english: 'dragon', german: 'Drache' },
-      { english: 'fairy', german: 'Fee' },
-      { english: 'dark', german: 'Unlicht' },
-      { english: 'steel', german: 'Stahl' },
-    ];
-
-    return types.find(t => t.english === type)?.german || 'Unbekannter Typ';
-  }
-
 
   updateSearchInput(newInput: string) {
     this.searchInput = newInput;

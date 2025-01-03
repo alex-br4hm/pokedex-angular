@@ -102,19 +102,6 @@ img {
   align-items: center;
 }
 
-@keyframes loadingGlimmer {
-  0% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.5);
-  }
-  100% {
-    filter: brightness(1);
-  }
-}
-
-
 
 @media screen and (max-width: 520px) {
   :host {

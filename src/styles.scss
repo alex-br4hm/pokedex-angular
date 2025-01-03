@@ -170,6 +170,23 @@ body {
   }
 }
 
+
+// ##################
+// ### Animations ###
+// ##################
+
+@keyframes loadingGlimmer {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
 // ##########
 // scroll bar
 // ##########

@@ -5,50 +5,59 @@
     <mat-icon>close</mat-icon>
   </div>
 
-  @if (pokemon && pokemon.img_url) {
+<!--  @if (pokemon && pokemon.img_url) -->
 
+  @if (!isLoading)
+
+  {
     <div class="detail-view-card {{pokemon.types_en[0]}}">
-
       <div class="card-content">
-
         <h1>{{ pokemon.name }}</h1>
-      <div class="card-header">
+           <div class="card-header">
+              <div class="poke-type-wrapper">
+                    <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">
+                          {{ pokemon.types_ger[0] }}
+                    </span>
 
-        <div class="poke-type-wrapper">
-              <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">
-                {{ pokemon.types_ger[0] }}
-              </span>
+                @if (pokemon.types_en[1]) {
+                    <span
+                      class="poke-type {{pokemon.types_en[1] + '-chip'}}">
+                      {{ pokemon.types_ger[1] }}
+                    </span>
+                }
+              </div>
 
-          @if (pokemon.types_en[1]) {
-            <span
-              class="poke-type {{pokemon.types_en[1] + '-chip'}}">
-                {{ pokemon.types_ger[1] }}
-              </span>
-          }
-
-        </div>
-
-        <div> {{ pokemon.game_index | pokeNumberPipe }}</div>
-
-      </div>
+              <div> {{ pokemon.game_index | pokeNumberPipe }}</div>
+            </div>
 
        <div class="img-wrapper">
-        <img ngSrc="{{ pokemon.img_url }}"
-             placeholder="placeholder"
-             priority
-             width="200"
-             height="240"
-             alt="Photo of {{ pokemon.name }}">
+          <img ngSrc="{{ pokemon.img_url }}"
+               placeholder="placeholder"
+               priority
+               width="200"
+               height="240"
+               alt="Photo of {{ pokemon.name }}">
        </div>
 
          <mat-tab-group>
-           <mat-tab label="Stats"> Stats </mat-tab>
+           <mat-tab label="Stats">
+             @if (pokemonDetail.stats) {
+               <app-stats [stats]="pokemonDetail.stats"></app-stats>
+             }
+           </mat-tab>
            <mat-tab label="Entwicklung"> Content 2 </mat-tab>
+           <mat-tab label="Mehr Informationen">
+            {{ this.pokemon.info_text }}
+           </mat-tab>
          </mat-tab-group>
-
 
       </div>
     </div>
+  } @else {
+    <div class="loading-card-container">
+      <app-custom-loading-spinner></app-custom-loading-spinner>
+    </div>
+
   }
 
 
