@@ -48,14 +48,17 @@ export class PokeDetailViewComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    document.body.style.overflow = 'hidden';
     this.route.params.subscribe(params => {
       this.pokemon.game_index = params['game_index'];
       if (this.pokeDataService.$pokemon) {
         this.pokemon = this.pokeDataService.$pokemon;
+        this.getPokemonStats()
         this.getPokemonDetails();
         this.isLoading = false;
       } else {
         this.getSinglePokemon();
+        this.getPokemonStats()
         this.getPokemonDetails();
       }
 
@@ -70,11 +73,8 @@ export class PokeDetailViewComponent implements OnInit {
        this.pokemon.img_url     = data.sprites.other.dream_world.front_default;
        this.pokemon.species_url = data.species.url;
 
-       this.pokemonDetail.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
-                                    base_stat: stat.base_stat,
-                                    name: stat.stat.name
-                                  }));
-       console.log(this.pokemonDetail.stats);
+
+       console.log(this.pokemonDetail);
        if (this.pokemon.species_url) {
          this.getGermanData(this.pokemon.species_url);
        }
@@ -101,6 +101,21 @@ export class PokeDetailViewComponent implements OnInit {
 
   getPokemonDetails() {
 
+  }
+
+  getPokemonStats() {
+    this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
+      next: data => {
+        console.log(data);
+        this.pokemonDetail.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
+          value: stat.base_stat,
+          name: stat.stat.name
+        }));
+      },
+      error: error => {
+        console.log(error);
+      }
+    })
   }
 
   startScrolling(e: Event) {

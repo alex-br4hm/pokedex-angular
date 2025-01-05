@@ -1,9 +1,19 @@
 <div class="card-wrapper"
-    (click)="sendDataToService()"
->
-@if (pokemon && pokemon.img_url)
-  {
+    (click)="sendDataToService()">
+
+@if (pokemon && pokemon.img_url) {
+
+
+
   <mat-card class="example-card {{pokemon.types_en[0]}}">
+    <div class="poke-img-wrapper">
+      <img
+        mat-card-image
+        ngSrc="{{ pokemon.img_url }}"
+        placeholder="placeholder"
+        fill
+        alt="Photo of {{ pokemon.name }}">
+    </div>
 
     <mat-card-header>
       <div class="card-header-content">
@@ -12,19 +22,12 @@
       </div>
     </mat-card-header>
 
-      <div class="poke-img-wrapper">
-          <img
-            mat-card-image
-            ngSrc="{{ pokemon.img_url }}"
-            placeholder="placeholder"
-            fill
-            alt="Photo of {{ pokemon.name }}">
-      </div>
+
 
     <mat-card-content>
-      <span class="poke-text">
-        {{ pokemon.info_text }}
-      </span>
+<!--      <span class="poke-text">-->
+<!--        {{ pokemon.info_text }}-->
+<!--      </span>-->
 
         <div class="poke-type-wrapper">
               <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">

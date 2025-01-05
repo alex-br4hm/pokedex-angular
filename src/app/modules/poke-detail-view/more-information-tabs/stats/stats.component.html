@@ -1,7 +1,9 @@
+<div class="chart-container">
 
-@if (stats) {
-  @for (stat of stats; track $index) {
-    <div> {{ stat }} </div>
+  @if (stats) {
+
+  } @else {
+    <app-custom-loading-spinner></app-custom-loading-spinner>
   }
-}
 
+</div>

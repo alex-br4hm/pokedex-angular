@@ -1,6 +1,8 @@
+<app-header (searchInputChange)="updateSearchInput($event)"></app-header>
+<app-footer></app-footer>
+
 @if (!isLoading) {
-  <app-header (searchInputChange)="updateSearchInput($event)"></app-header>
-  <app-footer></app-footer>
+
 
   <div class="list-container">
     @if (filteredPokeList.length > 0) {
@@ -8,8 +10,7 @@
         <app-poke-card
           [index]="card.game_index"
           [pokemon]="card"
-          [routerLink]="['pokemon/' +  card.game_index]"
-          (click)="stopScrolling($event)">
+          [routerLink]="['pokemon/' +  card.game_index]">
         </app-poke-card>
       }
     } @else {

@@ -120,9 +120,4 @@ export class PokeListComponent implements OnInit {
     }
   }
 
-
-  stopScrolling(e: Event) {
-      e.preventDefault();
-      document.body.style.overflow = 'hidden';
-  }
 }
