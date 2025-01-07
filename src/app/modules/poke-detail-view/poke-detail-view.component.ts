@@ -34,7 +34,8 @@ export class PokeDetailViewComponent implements OnInit {
     info_text: '',
     name: '',
     types_en: [],
-    types_ger: []
+    types_ger: [],
+    stats: []
   };
   pokemonDetail: any = {
     stats: [],
@@ -107,7 +108,7 @@ export class PokeDetailViewComponent implements OnInit {
     this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
       next: data => {
         console.log(data);
-        this.pokemonDetail.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
+        this.pokemon.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
           value: stat.base_stat,
           name: stat.stat.name
         }));
