@@ -15,7 +15,7 @@ export class ApiService {
   }
 
   getData(): Observable<any> {
-   return this.http.get(this.API_URL + '?limit=151');
+   return this.http.get(this.API_URL + '?limit=251');
   }
 
   getSinglePokemon(index: number): Observable<any> {
@@ -27,6 +27,10 @@ export class ApiService {
   }
 
   getGermanInfo(url: string): Observable<any> {
+    return this.http.get(url);
+  }
+
+  getEvolutionInfo(url: string): Observable<any> {
     return this.http.get(url);
   }
 

@@ -41,11 +41,14 @@ export class PokeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.isLoading = false;
+
+    // only for building database
+    this.pokeDataService.getDataForDB();
+
     this.apiService.getData().subscribe({
       next: data => {
         this.pokeList = data.results;
-        this.getPokemonData();
       },
       error: error => {
         console.error("Fehler beim Abrufen der Daten:", error);
@@ -54,55 +57,55 @@ export class PokeListComponent implements OnInit {
     });
   }
 
-  getPokemonData() {
-    const requests = this.pokeList.map((poke: any) =>
-      this.apiService.getPokemonDetails(poke.url).pipe(
-        map(data => ({
-          species_url: data.species.url,
-          img_url: data.sprites.other.dream_world.front_default,
-          types_en: data.types.map((typeInfo: { type: { name: string } }) => typeInfo.type.name),
-        }))
-      )
-    );
-
-    forkJoin(requests).subscribe({
-      next: pokemonData => {
-        this.pokeInfoList = pokemonData;
-        this.getGermanData();
-      },
-      error: error => {
-        console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
-        this.isLoading = false;
-      }
-    });
-  }
-
-  getGermanData() {
-    const requests = this.pokeInfoList.map(poke =>
-      this.apiService.getGermanInfo(poke.species_url).pipe(
-        map(data => ({
-          name: data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt',
-          info_text: data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.',
-          types_ger: this.pokeDataService.getGermanTypesFromArray(poke.types_en),
-          types_en: poke.types_en,
-          img_url: poke.img_url,
-          game_index: data.id,
-        }))
-      )
-    );
-
-    forkJoin(requests).subscribe({
-      next: filteredData => {
-        this.filteredPokeList = filteredData;
-        this.initialPokeList = filteredData;
-        this.isLoading = false;
-      },
-      error: error => {
-        console.error("Fehler beim Abrufen der deutschen Daten:", error);
-        this.isLoading = false;
-      }
-    });
-  }
+  // getPokemonData() {
+  //   const requests = this.pokeList.map((poke: any) =>
+  //     this.apiService.getPokemonDetails(poke.url).pipe(
+  //       map(data => ({
+  //         species_url: data.species.url,
+  //         img_url: data.sprites.other.dream_world.front_default,
+  //         types_en: data.types.map((typeInfo: { type: { name: string } }) => typeInfo.type.name),
+  //       }))
+  //     )
+  //   );
+  //
+  //   forkJoin(requests).subscribe({
+  //     next: pokemonData => {
+  //       this.pokeInfoList = pokemonData;
+  //       this.getGermanData();
+  //     },
+  //     error: error => {
+  //       console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+  //
+  // getGermanData() {
+  //   const requests = this.pokeInfoList.map(poke =>
+  //     this.apiService.getGermanInfo(poke.species_url).pipe(
+  //       map(data => ({
+  //         name: data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt',
+  //         info_text: data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.',
+  //         types_ger: this.pokeDataService.getGermanTypesFromArray(poke.types_en),
+  //         types_en: poke.types_en,
+  //         img_url: poke.img_url,
+  //         game_index: data.id,
+  //       }))
+  //     )
+  //   );
+  //
+  //   forkJoin(requests).subscribe({
+  //     next: filteredData => {
+  //       this.filteredPokeList = filteredData;
+  //       this.initialPokeList = filteredData;
+  //       this.isLoading = false;
+  //     },
+  //     error: error => {
+  //       console.error("Fehler beim Abrufen der deutschen Daten:", error);
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
 
   updateSearchInput(newInput: string) {
     this.searchInput = newInput;
