@@ -7,6 +7,9 @@ import {FooterComponent} from '../../core/components/footer/footer.component';
 import {FirebaseService} from '../../core/services/firebase.service';
 import {PokeDataService} from '../../core/services/poke-data.service';
 import {Pokemon} from '../../core/models/pokemon';
+import {SearchFilterBarComponent} from './search-filter-bar/search-filter-bar.component';
+import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-poke-list',
@@ -16,7 +19,14 @@ import {Pokemon} from '../../core/models/pokemon';
     CustomLoadingSpinnerComponent,
     RouterOutlet,
     RouterLink,
-    FooterComponent
+    FooterComponent,
+    SearchFilterBarComponent,
+    MatDrawerContainer,
+    MatDrawer,
+    MatButton,
+    MatSidenavContainer,
+    MatSidenav,
+    MatSidenavContent
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
@@ -27,10 +37,14 @@ export class PokeListComponent implements OnInit {
   pokeList!: Pokemon[];
   initialPokeList: Pokemon[] = [];
 
+
   constructor(
     private fireBaseService: FirebaseService,
     private pokeDataService: PokeDataService) {
   }
+
+
+
 
   ngOnInit() {
     this.isLoading = true;
@@ -87,17 +101,15 @@ export class PokeListComponent implements OnInit {
 
   updateSearchInput(newInput: string) {
     this.searchInput = newInput;
-    console.log('Aktueller Suchinput:', this.searchInput);
     this.filterPokeList();
-
   }
 
   filterPokeList() {
     if (this.searchInput.length > 0) {
-      console.log(this.pokeList);
       this.pokeList = this.initialPokeList.filter(pokemon =>
         pokemon.name.toLowerCase().includes(this.searchInput.toLowerCase())
       );
+      this.changeLoadingState();
     } else {
       this.pokeList = this.initialPokeList;
     }

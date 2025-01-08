@@ -8,9 +8,11 @@
 }
 
 html, body {
+
   height: 100%;
   background-color: #111;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -171,6 +173,22 @@ body {
 .fairy-chip {
   background-color: rgba(238, 153, 238, 0.9);
 }
+
+* {
+  --mat-sys-primary: whitesmoke;
+  --mat-sys-label-large-size: 16px;
+}
+
+.mat-mdc-button {
+  transition: all 125ms ease-in-out;
+  opacity: .9;
+  color: lightgray !important;
+  padding: 0 var(--mat-text-button-horizontal-padding, 16px);
+  &:hover {
+    color: whitesmoke !important;
+  }
+}
+
 
 @media screen and (max-width: 1024px) {
   :host {

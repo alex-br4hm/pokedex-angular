@@ -1,10 +1,18 @@
 <app-header (searchInputChange)="updateSearchInput($event)"></app-header>
 <app-footer></app-footer>
 
+
+
+
+
+
 @if (!isLoading) {
 
 
+
   <div class="list-container">
+
+    <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
     @if (pokeList.length > 0) {
       @for (card of pokeList; track card.game_index) {
         <app-poke-card

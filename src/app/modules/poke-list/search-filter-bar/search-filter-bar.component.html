@@ -1,0 +1,52 @@
+<div class="input-wrapper">
+  @if (searchInput.length > 0) {
+    <mat-icon class="delete-icon" (click)="deleteSearchInput()">close</mat-icon>
+  } @else {
+    <mat-icon class="placeholder-icon">search</mat-icon>
+  }
+
+  <input type="text"
+         placeholder="Pokemon suchen"
+         (input)="onSearchInputChange()"
+         [(ngModel)]="searchInput">
+</div>
+
+
+<div class="view-filter-container">
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>visibility</mat-icon>
+    Ansicht
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item>
+      <mat-icon>grid_view</mat-icon>
+      Kacheln
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>view_list</mat-icon>
+      Liste
+    </button>
+  </mat-menu>
+
+
+  <div class="filter-wrapper" (click)="toggleFilter(true)">
+    <mat-icon>filter_list</mat-icon>
+    <span>Filter</span>
+  </div>
+</div>
+
+
+
+@if (filterToggled) {
+
+  <div
+    class="settings-container"
+    [class.slide-out]="isClosing"
+    (animationend)="handleAnimationEnd()"
+  >
+    <mat-icon (click)="toggleFilter(false)">close</mat-icon>
+  </div>
+}
+
+
