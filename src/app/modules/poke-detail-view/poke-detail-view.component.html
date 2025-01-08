@@ -5,14 +5,28 @@
     <mat-icon>close</mat-icon>
   </div>
 
-  <mat-icon class="arrow-left">chevron_left</mat-icon>
-  <mat-icon class="arrow-right">chevron_right</mat-icon>
+  @if (pokemon && pokeList) {
+    @if (game_index > 1) {
+      <mat-icon
+        class="arrow-left"
+        (click)="changePokemon('previous')">
+          chevron_left
+      </mat-icon>
+    }
 
+    @if (game_index < pokeList.length) {
+      <mat-icon
+        class="arrow-right"
 
+        (click)="changePokemon('next')">
+        chevron_right
+      </mat-icon>
+    }
 
-  @if (pokemon && pokemon.img_url) {
     <div class="detail-view-container {{pokemon.types_en[0]}}">
+      <h1> {{ pokemon.name }} </h1>
 
+      <img src="{{ pokemon.img_url }}" alt="">
     </div>
 
   } @else {

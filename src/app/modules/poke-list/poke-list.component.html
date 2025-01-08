@@ -5,8 +5,8 @@
 
 
   <div class="list-container">
-    @if (filteredPokeList.length > 0) {
-      @for (card of filteredPokeList; track card.game_index) {
+    @if (pokeList.length > 0) {
+      @for (card of pokeList; track card.game_index) {
         <app-poke-card
           [index]="card.game_index"
           [pokemon]="card"
@@ -24,8 +24,6 @@
     <app-custom-loading-spinner></app-custom-loading-spinner>
   </div>
 }
-
-
 
 <router-outlet></router-outlet>
 

@@ -54,6 +54,8 @@
 }
 
 .detail-view-container {
+  position: relative;
+  z-index: 1000;
   height: 90vh;
   width: 80%;
   border-radius: 12px;

@@ -6,13 +6,12 @@ import {
   MatCardImage, MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import {ApiService} from '../../../core/services/api.service';
 import {
   CustomLoadingSpinnerComponent
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
 import {PokeNumberPipePipe} from '../../../shared/utils/poke-number-pipe.pipe';
-import {PokemonCardData} from '../../../core/models/pokemon';
+import {Pokemon } from '../../../core/models/pokemon';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 
 @Component({
@@ -33,14 +32,7 @@ import {PokeDataService} from '../../../core/services/poke-data.service';
 })
 export class PokeCardComponent implements OnInit {
   @Input() index!: number;
-  @Input() pokemon: PokemonCardData = {
-    name: '',
-    info_text: '',
-    types_ger: [],
-    types_en: [],
-    img_url: '',
-    game_index: this.index
-  };
+  @Input() pokemon!: Pokemon;
 
   constructor(private pokeDataService: PokeDataService) {
   }
@@ -50,5 +42,4 @@ export class PokeCardComponent implements OnInit {
   sendDataToService() {
     this.pokeDataService.$pokemon = this.pokemon;
   }
-
 }

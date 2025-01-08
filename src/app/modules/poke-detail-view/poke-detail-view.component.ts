@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
-import {ApiService} from '../../core/services/api.service';
 import {PokeDataService} from "../../core/services/poke-data.service";
 import {PokeNumberPipePipe} from "../../shared/utils/poke-number-pipe.pipe";
-import {PokemonCardData} from '../../core/models/pokemon';
+import {Pokemon} from '../../core/models/pokemon';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
-import {forkJoin, map} from 'rxjs';
-import {normalizeExtraEntryPoints} from '@angular-devkit/build-angular/src/tools/webpack/utils/helpers';
+import { Subscription} from 'rxjs';
 import {StatsComponent} from './more-information-tabs/stats/stats.component';
+import {FirebaseService} from '../../core/services/firebase.service';
 
 @Component({
   selector: 'app-poke-detail-view',
@@ -27,96 +26,86 @@ import {StatsComponent} from './more-information-tabs/stats/stats.component';
   templateUrl: './poke-detail-view.component.html',
   styleUrl: './poke-detail-view.component.scss'
 })
-export class PokeDetailViewComponent implements OnInit {
-  game_index!: number;
-  pokemon: PokemonCardData = {
-    game_index: 0,
-    info_text: '',
-    name: '',
-    types_en: [],
-    types_ger: [],
-    stats: []
-  };
-  pokemonDetail: any = {
-    stats: [],
-  };
+export class PokeDetailViewComponent implements OnInit, OnDestroy {
+  pokemon?: Pokemon | undefined;
+  pokeList: Pokemon[] = [];
+  game_index: number = 1;
   isLoading: boolean = true;
+
+  private routeSub: Subscription | null = null;
+  private firebaseSub: Subscription | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private router: Router,
+    private firebaseService: FirebaseService,
     private pokeDataService: PokeDataService,
     ) {}
 
   ngOnInit() {
     document.body.style.overflow = 'hidden';
-    this.route.params.subscribe(params => {
-      this.pokemon.game_index = params['game_index'];
-      if (this.pokeDataService.$pokemon) {
-        this.pokemon = this.pokeDataService.$pokemon;
-        this.getPokemonStats()
-        this.getPokemonDetails();
-        this.isLoading = false;
-      } else {
-        this.getSinglePokemon();
-        this.getPokemonStats()
-        this.getPokemonDetails();
-      }
+    this.routeSub = this.route.params.subscribe(params => {
+      this.game_index = +params['game_index'];
 
-      console.log(this.pokemon);
+
+    if (this.pokeDataService.$pokemonList) {
+      this.pokeList = this.pokeDataService.$pokemonList;
+      this.findPokemon();
+    } else {
+      this.firebaseSub = this.firebaseService.getPokemon().subscribe({
+        next: data => {
+          this.pokeList = data;
+          this.findPokemon();
+        },
+        error: err => {
+          console.log(Error)
+        }
+      })
+    }
     });
+
+    window.addEventListener('keydown', this.handleArrowKeys.bind(this));
   }
 
-  getSinglePokemon() {
-   this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
-     next: data => {
-       this.pokemon.types_en    = data.types.map((typeInfo: { type: { name: string } }) => typeInfo.type.name);
-       this.pokemon.img_url     = data.sprites.other.dream_world.front_default;
-       this.pokemon.species_url = data.species.url;
-
-
-       console.log(this.pokemonDetail);
-       if (this.pokemon.species_url) {
-         this.getGermanData(this.pokemon.species_url);
-       }
-
-     },
-     error: error => {
-       console.log(error);
-       this.isLoading = false;
-     }
-   })
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
+    this.firebaseSub?.unsubscribe();
+    window.removeEventListener('keydown', this.handleArrowKeys.bind(this));
   }
 
-  getGermanData(url: string) {
-    this.apiService.getGermanInfo(url).subscribe({
-      next: data => {
-        this.pokemon.name      = data.names.find((entry: any) => entry.language.name === 'de')?.name || 'Unbekannt';
-        this.pokemon.info_text = data.flavor_text_entries.find((entry: any) => entry.language.name === 'de')?.flavor_text || 'Keine Beschreibung vorhanden.';
-        this.pokemon.types_ger = this.pokeDataService.getGermanTypesFromArray(this.pokemon.types_en);
-
-        this.isLoading = false;
+  findPokemon(): void {
+    if (this.game_index && this.pokeList) {
+      this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
+      if (!this.pokemon) {
+        console.warn(`Kein Pokémon mit dem Index ${this.game_index} gefunden.`);
       }
-    })
+    }
   }
 
-  getPokemonDetails() {
+  changePokemon(dir: string): void {
+    const previousGameIndex = this.game_index;
+
+    if (dir === 'previous' && this.game_index && this.game_index > 0) {
+      this.game_index--;
+    } else if (this.game_index && this.game_index < this.pokeList.length) {
+      this.game_index++;
+    }
+
+    if (this.game_index !== previousGameIndex) {
+      this.findPokemon();  // Ruft findPokemon() nur auf, wenn sich der Index geändert hat
+      this.router.navigateByUrl(`/pokedex/pokemon/${this.game_index}`);  // Navigiere nur bei Änderungen
+    }
 
   }
 
-  getPokemonStats() {
-    this.apiService.getSinglePokemon(this.pokemon.game_index).subscribe({
-      next: data => {
-        console.log(data);
-        this.pokemon.stats = data.stats.map((stat: { base_stat: number; stat: { name: string; }; }) => ({
-          value: stat.base_stat,
-          name: stat.stat.name
-        }));
-      },
-      error: error => {
-        console.log(error);
-      }
-    })
+  handleArrowKeys(event: KeyboardEvent): void {
+    event.preventDefault();
+
+    if (event.key === 'ArrowLeft') {
+      this.changePokemon('previous');
+    } else if (event.key === 'ArrowRight') {
+      this.changePokemon('next');
+    }
   }
 
   startScrolling(e: Event) {

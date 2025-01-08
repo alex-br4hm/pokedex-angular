@@ -1,11 +1,15 @@
-<div class="card-wrapper"
-    (click)="sendDataToService()">
+<div class="card-wrapper" (click)="sendDataToService()">
 
-@if (pokemon && pokemon.img_url) {
+@if (pokemon) {
+  <mat-card class="poke-card {{pokemon.types_en[0]}}">
 
+    <mat-card-header>
+      <div class="name-index-wrapper">
+        <mat-card-title> {{ pokemon.name }} </mat-card-title>
+        <mat-card-subtitle>{{ pokemon.game_index | pokeNumberPipe }}</mat-card-subtitle>
+      </div>
+    </mat-card-header>
 
-
-  <mat-card class="example-card {{pokemon.types_en[0]}}">
     <div class="poke-img-wrapper">
       <img
         mat-card-image
@@ -15,20 +19,7 @@
         alt="Photo of {{ pokemon.name }}">
     </div>
 
-    <mat-card-header>
-      <div class="card-header-content">
-        <mat-card-title> {{ pokemon.name }} </mat-card-title>
-        <mat-card-subtitle>{{ pokemon.game_index | pokeNumberPipe }}</mat-card-subtitle>
-      </div>
-    </mat-card-header>
-
-
-
     <mat-card-content>
-<!--      <span class="poke-text">-->
-<!--        {{ pokemon.info_text }}-->
-<!--      </span>-->
-
         <div class="poke-type-wrapper">
               <span class="poke-type {{pokemon.types_en[0] + '-chip' }}">
                 {{ pokemon.types_ger[0] }}
@@ -40,16 +31,14 @@
                 {{ pokemon.types_ger[1] }}
               </span>
           }
-
         </div>
-
     </mat-card-content>
 
   </mat-card>
-
 } @else {
   <div class="loading-placeholder">
       <app-custom-loading-spinner></app-custom-loading-spinner>
   </div>
 }
+
 </div>

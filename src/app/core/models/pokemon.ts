@@ -27,31 +27,8 @@ export interface EvolutionChain {
   min_level?: number;
 }
 
-export interface PokemonCardData {
-  name: string;
-  info_text: string;
-  types_ger: string[];
-  types_en: string[];
-  img_url?: string;
-  game_index: number;
-  species_url?: string;
-  stats?: Stats[];
-}
-
 export interface Stats {
   name: string;
   base_stat: number;
 }
 
-export interface PokeInfo {
-  species_url: string;
-  stats: Stats[];
-}
-
-
-export interface PokeData {
-  species_url: string;
-  types_en: string[];
-  stats?: Stats[];
-  img_url?: string;
-}

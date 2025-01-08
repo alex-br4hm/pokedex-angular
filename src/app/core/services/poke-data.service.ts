@@ -2,19 +2,24 @@ import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {forkJoin, map, Observable, tap} from 'rxjs';
 import {Pokemon, PokemonData} from '../models/pokemon';
+import {FirebaseService} from './firebase.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokeDataService {
-  $pokemon: any;
+  $pokemon?: Pokemon;
+  $pokemonList?: Pokemon[];
+
   initialPokeList: PokemonData[] = [];
-
-
   pokemon?: Pokemon;
   pokemonAPIList: Pokemon[] = [];
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private firestoreService: FirebaseService
+    ) {
   }
 
   getDataForDB() {
@@ -100,8 +105,20 @@ export class PokeDataService {
 
     // Lade alle Evolutionsketten parallel
     forkJoin(requests).subscribe(() => {
-      console.log('Alles geladen:', this.pokemonAPIList);
+
+
+      // this.savePokemonToFirestore();
     });
+  }
+
+  savePokemonToFirestore() {
+    this.firestoreService.addBulkDataToCollection('pokemon', this.pokemonAPIList)
+      .then(() => {
+        console.log('Alle Pokémon wurden erfolgreich hochgeladen!');
+      })
+      .catch(error => {
+        console.error('Fehler beim Hochladen der Pokémon:', error);
+      });
   }
 
   buildEvolutionChain(chain: any): any {
