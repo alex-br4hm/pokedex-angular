@@ -34,28 +34,55 @@ export class PokeListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.loadFromLocalStorage();
 
     // only for building database
     // this.pokeDataService.getDataForDB();
+  }
 
+  saveInLocalStorage() {
+    if (this.pokeList) {
+      localStorage.setItem('pokemonList', JSON.stringify(this.pokeList));
+      console.log("Pokémon-Liste wurde im localStorage gespeichert.");
+    } else {
+      console.error("Pokémon-Liste ist leer oder nicht definiert.");
+    }
+  }
+
+  loadFromLocalStorage() {
+    const storedList = localStorage.getItem('pokemonList');
+    if (storedList) {
+      this.pokeList = JSON.parse(storedList);
+      this.initialPokeList = this.pokeList;
+      this.pokeDataService.$pokemonList = this.initialPokeList;
+      console.log("Pokémon-Liste wurde aus dem localStorage geladen.");
+      this.changeLoadingState();
+    } else {
+      this.getDataFromDB();
+    }
+  }
+
+  getDataFromDB() {
     this.fireBaseService.getPokemon().subscribe({
       next: data => {
-        console.log('helloooooo?', data)
-        console.log('helloooooo?')
-        console.log('helloooooo?')
-        console.log('helloooooo?')
-        console.log('helloooooo?')
         this.pokeList = data.sort((a, b) => a.game_index - b.game_index);
+        this.saveInLocalStorage();
         this.initialPokeList = this.pokeList;
         this.pokeDataService.$pokemonList = this.initialPokeList;
-        console.log(this.pokeList)
-        this.isLoading = false;
+        console.log(this.pokeList);
+        this.changeLoadingState();
       },
       error: error => {
         console.error("Fehler beim Abrufen der Daten:", error);
-        this.isLoading = false;
+        this.changeLoadingState();
       }
-    })
+    });
+  }
+
+  changeLoadingState() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
   }
 
   updateSearchInput(newInput: string) {
