@@ -40,6 +40,11 @@ export class PokeListComponent implements OnInit {
 
     this.fireBaseService.getPokemon().subscribe({
       next: data => {
+        console.log('helloooooo?', data)
+        console.log('helloooooo?')
+        console.log('helloooooo?')
+        console.log('helloooooo?')
+        console.log('helloooooo?')
         this.pokeList = data.sort((a, b) => a.game_index - b.game_index);
         this.initialPokeList = this.pokeList;
         this.pokeDataService.$pokemonList = this.initialPokeList;

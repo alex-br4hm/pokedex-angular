@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  experimentalForceLongPolling: true,
   apiKey: "AIzaSyAoffDGPcSfLXcHYRTyCv0jdx1iL-GMvoo",
   authDomain: "pokedex-b1ab0.firebaseapp.com",
   projectId: "pokedex-b1ab0",

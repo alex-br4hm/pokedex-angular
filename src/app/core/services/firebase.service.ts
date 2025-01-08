@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import { environment } from '../../../environments/environment';
-import {Observable} from 'rxjs';
+import {catchError, Observable, of, retry} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,13 @@ export class FirebaseService {
 
 
   getPokemon(): Observable<any[]> {
-    return this.firestore.collection('pokemon').valueChanges(); // Ruft die gesamte Sammlung ab
+    return this.firestore.collection('pokemon').valueChanges().pipe(
+      retry(3),
+      catchError((error) => {
+        console.error('Fehler beim Abrufen der Pokémon-Daten:', error);
+        return of([]);
+      })
+    );
   }
 
   addDataToCollection(collectionName: string, data: any) {
