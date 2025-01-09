@@ -5,7 +5,8 @@
   <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
 
 
-  <div class="list-container">
+  @if (gridView) {
+  <div class="grid-container">
         @if (pokeList.length > 0) {
           @for (card of pokeList; track card.game_index) {
             <app-poke-card
@@ -18,6 +19,26 @@
           <p>Kein Pokemon gefunden ...</p>
         }
   </div>
+  } @else {
+    <div class="list-container">
+      @if (pokeList.length > 0) {
+        <table>
+          @for (card of pokeList; track card.game_index) {
+          <tr class="{{ card.types_en[0] }}" [routerLink]="['pokemon/' + card.game_index]">
+            <td>
+              <span> {{ card.game_index | pokeNumberPipe }}</span>
+              {{ card.name }}
+              <img src="{{ card.small_img_url }}" alt="">
+            </td>
+
+          </tr>
+          }
+        </table>
+      }
+
+
+    </div>
+  }
 
 
 } @else {

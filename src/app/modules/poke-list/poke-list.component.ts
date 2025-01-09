@@ -10,6 +10,7 @@ import {Pokemon} from '../../core/models/pokemon';
 import {SearchFilterBarComponent} from './search-filter-bar/search-filter-bar.component';
 import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatButton} from '@angular/material/button';
+import {PokeNumberPipePipe} from '../../shared/utils/poke-number-pipe.pipe';
 
 @Component({
   selector: 'app-poke-list',
@@ -27,6 +28,7 @@ import {MatButton} from '@angular/material/button';
     MatSidenavContainer,
     MatSidenav,
     MatSidenavContent,
+    PokeNumberPipePipe,
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
@@ -36,6 +38,7 @@ export class PokeListComponent implements OnInit {
   isLoading: boolean = true;
   pokeList!: Pokemon[];
   initialPokeList: Pokemon[] = [];
+  gridView: boolean = true;
 
 
   constructor(
