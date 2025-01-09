@@ -6,23 +6,6 @@
   </div>
 
   @if (pokemon && pokeList) {
-    @if (game_index > 1) {
-      <mat-icon
-        class="arrow-left"
-        (click)="changePokemon('previous')">
-          chevron_left
-      </mat-icon>
-    }
-
-    @if (game_index < pokeList.length) {
-      <mat-icon
-        class="arrow-right"
-
-        (click)="changePokemon('next')">
-        chevron_right
-      </mat-icon>
-    }
-
     <div class="detail-view-container {{pokemon.types_en[0]}}">
       <h1> {{ pokemon.name }} </h1>
 

@@ -47,64 +47,40 @@ export class PokeDetailViewComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.params.subscribe(params => {
       this.game_index = +params['game_index'];
 
-
-    if (this.pokeDataService.$pokemonList) {
-      this.pokeList = this.pokeDataService.$pokemonList;
-      this.findPokemon();
-    } else {
-      this.firebaseSub = this.firebaseService.getPokemon().subscribe({
-        next: data => {
-          this.pokeList = data;
-          this.findPokemon();
-        },
-        error: err => {
-          console.log(Error)
-        }
-      })
-    }
+      if (this.pokeDataService.$pokemonList) {
+        this.pokeList = this.pokeDataService.$pokemonList;
+        this.findPokemon();
+      } else {
+        this.firebaseSub = this.firebaseService.getPokemon().subscribe({
+          next: data => {
+            this.pokeList = data;
+            this.findPokemon();
+          },
+          error: err => {
+            console.log(Error)
+          }
+        });
+      }
     });
-
-    window.addEventListener('keydown', this.handleArrowKeys.bind(this));
   }
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
     this.firebaseSub?.unsubscribe();
-    window.removeEventListener('keydown', this.handleArrowKeys.bind(this));
   }
 
   findPokemon(): void {
     if (this.game_index && this.pokeList) {
       this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
+      console.log(this.pokemon);
       if (!this.pokemon) {
-        console.warn(`Kein Pokémon mit dem Index ${this.game_index} gefunden.`);
+        console.log(this.pokemon);
+        this.router.navigateByUrl(`/pokedex/pokemon/1`)
       }
     }
-  }
 
-  changePokemon(dir: string): void {
-    const previousGameIndex = this.game_index;
-
-    if (dir === 'previous' && this.game_index && this.game_index > 0) {
-      this.game_index--;
-    } else if (this.game_index && this.game_index < this.pokeList.length) {
-      this.game_index++;
-    }
-
-    if (this.game_index !== previousGameIndex) {
-      this.findPokemon();  // Ruft findPokemon() nur auf, wenn sich der Index geändert hat
-      this.router.navigateByUrl(`/pokedex/pokemon/${this.game_index}`);  // Navigiere nur bei Änderungen
-    }
-
-  }
-
-  handleArrowKeys(event: KeyboardEvent): void {
-    event.preventDefault();
-
-    if (event.key === 'ArrowLeft') {
-      this.changePokemon('previous');
-    } else if (event.key === 'ArrowRight') {
-      this.changePokemon('next');
+    if (this.game_index === 0) {
+      this.router.navigateByUrl(`/pokedex/pokemon/1`)
     }
   }
 
