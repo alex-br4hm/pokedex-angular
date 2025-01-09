@@ -20,6 +20,10 @@ export const routes: Routes = [
           )
       }
     ]
-  }
+  },
+  {
+    path: '**',
+    redirectTo: 'pokedex',
+    pathMatch: 'full'},
 
 ];
