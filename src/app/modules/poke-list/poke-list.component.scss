@@ -5,22 +5,33 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 365px;
 }
 
 
 .list-container {
   padding: 24px 0;
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
   width: 90%;
-  min-height: 50vh;
+  height: 75vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  overflow: auto;
 
   p {
     color: whitesmoke;
     font-family: 'Press Start 2P', cursive;
   }
+}
+
+.scroll-viewport {
+  height: 100%; /* Höhe des Viewports */
+  width: 100%;   /* Volle Breite */
+  overflow: auto;
+}
+
+.grid-container {
+
 }
 
 

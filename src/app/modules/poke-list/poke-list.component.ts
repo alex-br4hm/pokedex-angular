@@ -26,7 +26,7 @@ import {MatButton} from '@angular/material/button';
     MatButton,
     MatSidenavContainer,
     MatSidenav,
-    MatSidenavContent
+    MatSidenavContent,
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
@@ -42,8 +42,6 @@ export class PokeListComponent implements OnInit {
     private fireBaseService: FirebaseService,
     private pokeDataService: PokeDataService) {
   }
-
-
 
 
   ngOnInit() {

@@ -1,31 +1,24 @@
 <app-header (searchInputChange)="updateSearchInput($event)"></app-header>
 <app-footer></app-footer>
 
-
-
-
-
-
 @if (!isLoading) {
-
+  <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
 
 
   <div class="list-container">
+        @if (pokeList.length > 0) {
+          @for (card of pokeList; track card.game_index) {
+            <app-poke-card
+              [index]="card.game_index"
+              [pokemon]="card"
+              [routerLink]="['pokemon/' + card.game_index]">
+            </app-poke-card>
+          }
+        } @else {
+          <p>Kein Pokemon gefunden ...</p>
+        }
+      </div>
 
-    <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
-    @if (pokeList.length > 0) {
-      @for (card of pokeList; track card.game_index) {
-        <app-poke-card
-          [index]="card.game_index"
-          [pokemon]="card"
-          [routerLink]="['pokemon/' +  card.game_index]">
-        </app-poke-card>
-      }
-    } @else {
-      <p>Kein Pokemon gefunden ...</p>
-    }
-
-  </div>
 
 } @else {
   <div class="spinner-container">
