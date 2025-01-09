@@ -40,13 +40,17 @@
 
 @if (filterToggled) {
 
+  <div class="settings-close-helper" (click)="toggleFilter(false)"></div>
+
   <div
     class="settings-container"
     [class.slide-out]="isClosing"
-    (animationend)="handleAnimationEnd()"
-  >
+    (animationend)="handleAnimationEnd()">
     <mat-icon (click)="toggleFilter(false)">close</mat-icon>
+    <app-filter-sidebar></app-filter-sidebar>
   </div>
+
+
 }
 
 

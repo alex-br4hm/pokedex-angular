@@ -11,6 +11,7 @@ import {
   MatSidenavContainer,
   MatSidenavContent
 } from '@angular/material/sidenav';
+import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component';
 
 @Component({
   selector: 'app-search-filter-bar',
@@ -28,7 +29,8 @@ import {
     MatDrawerContainer,
     MatSidenav,
     MatSidenavContainer,
-    MatSidenavContent
+    MatSidenavContent,
+    FilterSidebarComponent
   ],
   templateUrl: './search-filter-bar.component.html',
   styleUrl: './search-filter-bar.component.scss'
@@ -42,10 +44,10 @@ export class SearchFilterBarComponent {
 
   toggleFilter(open: boolean) {
     if (!open) {
-      // Trigger Slide-Out Animation
+      document.body.style.overflow = 'unset';
       this.isClosing = true;
     } else {
-      // Open Filter
+      document.body.style.overflow = 'hidden';
       this.filterToggled = true;
       this.isClosing = false;
     }
@@ -53,7 +55,6 @@ export class SearchFilterBarComponent {
 
   handleAnimationEnd() {
     if (this.isClosing) {
-      // After Slide-Out Animation, hide the container
       this.filterToggled = false;
       this.isClosing = false;
     }
