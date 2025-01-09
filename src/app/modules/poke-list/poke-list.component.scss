@@ -5,18 +5,19 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 365px;
+
 }
 
 
 .list-container {
   padding: 24px 0;
   width: 90%;
-  height: 75vh;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
   overflow: auto;
+  height: 75vh;
 
   p {
     color: whitesmoke;
