@@ -12,7 +12,7 @@
             <app-poke-card
               [index]="card.game_index"
               [pokemon]="card"
-              [routerLink]="['pokemon/' + card.game_index]">
+              [routerLink]="['pokemon/' + card.game_index + '/' + card.name]">
             </app-poke-card>
           }
         } @else {

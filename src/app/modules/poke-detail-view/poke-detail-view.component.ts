@@ -8,7 +8,7 @@ import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spin
 import {NgOptimizedImage} from '@angular/common';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import { Subscription} from 'rxjs';
-import {StatsComponent} from './more-information-tabs/stats/stats.component';
+import {StatsComponent} from './stats/stats.component';
 import {FirebaseService} from '../../core/services/firebase.service';
 
 @Component({
@@ -74,7 +74,6 @@ export class PokeDetailViewComponent implements OnInit, OnDestroy {
       this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
       console.log(this.pokemon);
       if (!this.pokemon) {
-        console.log(this.pokemon);
         this.router.navigateByUrl(`/pokedex/pokemon/1`)
       }
     }

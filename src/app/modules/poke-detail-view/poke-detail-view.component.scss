@@ -1,67 +1,156 @@
 :host {
   display: flex;
   width: 100%;
+  max-width: 1920px;
   height: 100vh;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.7);
+
   color: rgba(255, 255, 255, 0.9);
 }
 
 .clickable-background {
+  background-color: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
-
-  mat-icon {
-    color: rgba(255, 255, 255, 0.9);
-    position: absolute;
-    right: 2.5%;
-    top: 2.5%;
-    scale: 1.5;
-    display: none;
-    transition: all 125ms cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    &:hover {
-      color:white;
-    }
-  }
-}
-
-.arrow-left, .arrow-right {
-  height: 3rem;
-  width: 3rem;
-  scale: 1.5;
-  font-size: 3rem;
-  position: absolute;
-  top: calc(50vh - 3rem);
-  z-index: 1001;
-  cursor: pointer;
-}
-
-.arrow-left {
-  left: 2.5%;
-}
-
-.arrow-right {
-  right: 2.5%;
 }
 
 .detail-view-container {
   position: relative;
   z-index: 1000;
   height: 90vh;
-  width: 80%;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 70%;
   border-radius: 12px;
-  background-color: black;
+  overflow-y: scroll;
   animation: slideIn .4s;
 }
+
+.teest {
+  height: 2000px;
+  width: 10px;
+}
+
+mat-icon {
+  color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  right: 0;
+  font-size: 32px;
+  padding: 32px 32px 24px 24px;
+  transition: all 125ms ease-in-out;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  &:hover {
+    color: white;
+
+  }
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  margin:0;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 1em;
+  z-index: 998;
+  img {
+    height: 80%;
+  }
+}
+
+.poke-info-wrapper {
+  width: 100%;
+  //background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+  gap:32px;
+
+}
+
+.poke-img-wrapper {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 25vh !important;
+    position: unset !important;
+  }
+}
+
+.basic-info-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.poke-detail-info-wrapper {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  border-radius: 12px;
+  padding: 0 16px;
+  //border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.poke-detail-row-wrapper {
+  display: flex;
+  width: 100%;
+  gap:16px;
+}
+
+.poke-detail-row {
+  //border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex:1;
+  span {
+
+  }
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.poke-type-wrapper {
+  display: flex;
+
+  gap:16px;
+
+  .poke-detail-type {
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 12px 0;
+
+    flex: 1;
+    text-align: center;
+  }
+}
+
 
 @keyframes slideIn {
   from { transform: translateY(100%) }

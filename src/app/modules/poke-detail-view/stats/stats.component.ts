@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 
 import {
   CustomLoadingSpinnerComponent
-} from '../../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
+} from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 import {BaseChartDirective} from 'ng2-charts';
 
