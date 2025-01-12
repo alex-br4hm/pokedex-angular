@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {MatSlider, MatSliderRangeThumb} from '@angular/material/slider';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {FormBuilder, FormControl, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatChip} from '@angular/material/chips';
 import {MatButton} from '@angular/material/button';
-import {JsonPipe} from '@angular/common';
+import {JsonPipe, NgClass} from '@angular/common';
 import {PokeWeightPipe} from '../../../../shared/utils/poke-weight.pipe';
 import {PokeHeightPipe} from '../../../../shared/utils/poke-height.pipe';
 import {Pokemon} from '../../../../core/models/pokemon';
@@ -27,18 +27,22 @@ import {PokeDataService} from '../../../../core/services/poke-data.service';
     MatButton,
     JsonPipe,
     PokeWeightPipe,
-    PokeHeightPipe
+    PokeHeightPipe,
+    FormsModule,
+    NgClass
   ],
   templateUrl: './filter-sidebar.component.html',
   styleUrl: './filter-sidebar.component.scss'
 })
 export class FilterSidebarComponent implements OnInit {
-  // selectedTypes = new FormControl('');
-  pokeList!: Pokemon[] | undefined;
+  pokeList!: Pokemon[];
   minHeight: number = 0;
   maxHeight: number = 0;
   minWeight: number = 0;
   maxWeight: number = 0;
+  isLoading: boolean = true;
+  @Input() filterToggled!: boolean;
+  @Output() filterToggledChange = new EventEmitter<boolean>();
 
   _formBuilder = inject(FormBuilder);
 
@@ -68,37 +72,50 @@ export class FilterSidebarComponent implements OnInit {
     }),
     weightRange: this._formBuilder.group({
       startValue: 0,
-      endValue: 200,
+      endValue: 0,
     }),
     heightRange: this._formBuilder.group({
       startValue: 0,
-      endValue: 200,
+      endValue: 0,
     }),
   })
 
   ngOnInit() {
     this.pokeList = this.pokeDataService.$pokemonList;
+    this.getMinMaxValues();
+    this.initialPatchValues();
+    this.isLoading = false;
 
-    if (this.pokeList) {
-      const weights = this.pokeList.map(p => p.weight);
-      const heights = this.pokeList.map(p => p.height);
+  }
 
-      this.minWeight = Math.min(...weights);
-      this.maxWeight = Math.max(...weights);
+  getMinMaxValues() {
+    const weights = this.pokeList.map(p => p.weight);
+    const heights = this.pokeList.map(p => p.height);
+    this.minWeight = Math.min(...weights) / 10 ;
+    this.maxWeight = Math.max(...weights) / 10;
+    this.minHeight = Math.min(...heights) / 10;
+    this.maxHeight = Math.max(...heights) / 10;
+  }
 
-      this.minHeight = Math.min(...heights);
-      this.maxHeight = Math.max(...heights);
-    }
-
-
-
+  initialPatchValues() {
+    this.filterSelections.patchValue({
+      weightRange: {
+        startValue: this.minWeight,
+        endValue: this.maxWeight
+      },
+      heightRange: {
+        startValue: this.minHeight,
+        endValue: this.maxHeight
+      }
+    });
   }
 
   getFilterSelection() {
     const selection = this.filterSelections.value;
-    console.log(selection);
+    this.filterToggledChange.emit(false);
+    document.body.style.overflow = 'unset';
+    this.pokeDataService.setFilterSelection(selection);
   }
-
 
   typeList = [
     'Normal',
@@ -120,5 +137,4 @@ export class FilterSidebarComponent implements OnInit {
     'Unlicht',
     'Stahl'
   ];
-
 }

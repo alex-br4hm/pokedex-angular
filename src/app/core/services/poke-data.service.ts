@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {ApiService} from './api.service';
 import {forkJoin, map, Observable, tap} from 'rxjs';
 import {Pokemon, PokemonData} from '../models/pokemon';
@@ -10,11 +10,17 @@ import {FirebaseService} from './firebase.service';
 })
 export class PokeDataService {
   $pokemon?: Pokemon;
-  $pokemonList?: Pokemon[];
+  $pokemonList!: Pokemon[];
 
   initialPokeList: PokemonData[] = [];
   pokemon?: Pokemon;
   pokemonAPIList: Pokemon[] = [];
+
+  filterSelection = signal<any>(null);
+
+  setFilterSelection(selection: any) {
+    this.filterSelection.set(selection);
+  }
 
   constructor(
     private apiService: ApiService,

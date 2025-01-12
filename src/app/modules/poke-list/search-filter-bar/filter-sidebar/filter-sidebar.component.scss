@@ -11,11 +11,12 @@
 }
 
 h3 {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 mat-slider {
-  width: 100%;
+  width: 95%;
 }
 
 mat-form-field {
@@ -58,7 +59,6 @@ mat-form-field {
 
   button {
     color: rgba(0, 0, 0, 0.9) !important;
-    color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
     font-size: 14px;
     padding: 8px 12px;
@@ -73,10 +73,11 @@ mat-form-field {
       opacity: 1;
     }
   }
-
 }
 
-
+.unchecked {
+  opacity: 0.3;
+}
 
 
 .Normal-chip {

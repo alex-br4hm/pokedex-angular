@@ -4,6 +4,9 @@
 @if (!isLoading) {
   <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
 
+  <div class="amount-wrapper">
+    Pokemon:  <span>{{ pokeList.length }}</span>
+  </div>
 
   @if (gridView) {
   <div class="grid-container">

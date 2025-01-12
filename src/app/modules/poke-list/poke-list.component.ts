@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../core/components/header/header.component';
 import {PokeCardComponent} from './poke-card/poke-card.component';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
@@ -40,16 +40,25 @@ export class PokeListComponent implements OnInit {
   initialPokeList: Pokemon[] = [];
   gridView: boolean = true;
 
+  filterSelection: any;
+
 
   constructor(
     private fireBaseService: FirebaseService,
     private pokeDataService: PokeDataService) {
+
+    effect(() => {
+      this.filterSelection = this.pokeDataService.filterSelection();
+      this.filterListAfterSelection();
+    });
   }
 
 
   ngOnInit() {
     this.isLoading = true;
     this.loadFromLocalStorage();
+
+
 
     // only for building database
     // this.pokeDataService.getDataForDB();
@@ -114,5 +123,47 @@ export class PokeListComponent implements OnInit {
     } else {
       this.pokeList = this.initialPokeList;
     }
+  }
+
+  filterListAfterSelection() {
+    console.log(this.filterSelection);
+    this.isLoading = true;
+
+    if (!this.filterSelection) {
+      this.isLoading = false;
+      return;
+    }
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 100)
+
+
+    const selectedTypes = Object.keys(this.filterSelection.types)
+      .filter(type => this.filterSelection.types[type]);
+
+    const excludedTypes = Object.keys(this.filterSelection.types)
+      .filter(type => !this.filterSelection.types[type]); // Deaktivierte Typen (false)
+
+    console.log('Selected Types:', selectedTypes);
+    console.log('Excluded Types:', excludedTypes);
+
+    this.pokeList = this.initialPokeList.filter(pokemon =>
+      pokemon.types_ger.every(type => !selectedTypes.includes(type))
+    );
+
+
+    this.pokeList = this.initialPokeList.filter(pokemon => {
+      // Überprüfe, ob das Pokémon einen deaktivierten Typ hat
+      const hasExcludedType = pokemon.types_ger.some(type => excludedTypes.includes(type));
+      if (hasExcludedType) {
+        return false; // Wenn das Pokémon einen deaktivierten Typ hat, wird es herausgefiltert
+      }
+
+      // Wenn das Pokémon keine deaktivierten Typen hat, überprüfe, ob es mit den ausgewählten Typen übereinstimmt
+      return pokemon.types_ger.some(type => selectedTypes.includes(type));
+    });
+
+    console.log('Filtered Pokémon List:', this.pokeList);
   }
 }

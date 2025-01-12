@@ -1,45 +1,83 @@
-<div class="filter-container" [formGroup]="filterSelections">
+@if (!isLoading) {
+  <div class="filter-container" [formGroup]="filterSelections">
 
-  <h3>Gewicht:
-    <b>
-    {{ filterSelections.get('weightRange.startValue')?.value | pokeWeight }}
-    -
-    {{ filterSelections.get('weightRange.endValue')?.value | pokeWeight }}
-    </b>
-  </h3>
+    <!-- ############# -->
+    <!-- WEIGHT SLIDER -->
+    <!-- ############# -->
 
-  <mat-slider min="0" max="500" formGroupName="weightRange">
-    <input value="0" matSliderStartThumb>
-    <input value="400" matSliderEndThumb>
-  </mat-slider>
+    <h3> Gewicht
+      <br>
+      <b> {{ weightStart.value + ' kg'}} - {{ weightEnd.value + ' kg'}} </b>
+    </h3>
 
-  <h3>Größe:
-    <b>
-    {{ filterSelections.get('heightRange.startValue')?.value | pokeHeight }}
-    -
-    {{ filterSelections.get('heightRange.endValue')?.value | pokeHeight }}
-    </b>
-  </h3>
+      <mat-slider formGroupName="weightRange"
+                  min="{{ minWeight }}"
+                  max="{{ maxWeight }}"
+                  step="0.1">
 
-  <mat-slider min="{{ this.minHeight }}" max="{{ this.maxHeight }}" formGroupName="heightRange">
-    <input value="{{ this.minHeight }}" matSliderStartThumb>
-    <input value="{{ this.maxHeight }}" matSliderEndThumb>
-  </mat-slider>
+        <input formControlName="startValue"
+               #weightStart
+               matSliderStartThumb>
 
-  <h3>Typen</h3>
+        <input formControlName="endValue"
+               #weightEnd
+               matSliderEndThumb>
+
+      </mat-slider>
+
+
+    <!-- ############# -->
+    <!-- HEIGHT SLIDER -->
+    <!-- ############# -->
+
+    <h3> Größe
+      <br>
+      <b> {{ heightStart.value + ' m' }} - {{ heightEnd.value + ' m' }} </b>
+    </h3>
+
+      <mat-slider formGroupName="heightRange"
+                  min="{{ minHeight }}"
+                  max="{{ maxHeight }}"
+                  step="0.1">
+
+        <input formControlName="startValue"
+               #heightStart
+               matSliderStartThumb>
+
+        <input formControlName="endValue"
+               #heightEnd
+               matSliderEndThumb>
+
+      </mat-slider>
+
+
+    <!-- ############# -->
+    <!--     TYPES     -->
+    <!-- ############# -->
+
+    <h3>Typen</h3>
     <div class="type-list" formGroupName="types">
-        @for (type of typeList; track type) {
-          <mat-checkbox
-            class="{{type}}-chip"
-            formControlName="{{ type }}">
-            {{ type }}
-          </mat-checkbox>
-        }
+      @for (type of typeList; track type) {
+        <mat-checkbox
+          class="{{type}}-chip"
+          [ngClass]="{ 'unchecked': !filterSelections.get(['types', type])?.value }"
+          formControlName="{{ type }}">
+          {{ type }}
+        </mat-checkbox>
+      }
     </div>
 
-  <div class="button-wrapper">
-    <button class="btn-clear">Zurücksetzen</button>
-    <button class="btn-succes" (click)="getFilterSelection()">Anwenden</button>
-  </div>
+    <!-- ############# -->
+    <!--     BUTTONS   -->
+    <!-- ############# -->
 
-</div>
+    <div class="button-wrapper">
+      <button class="btn-clear">Zurücksetzen</button>
+      <button class="btn-succes" (click)="getFilterSelection()">Anwenden</button>
+    </div>
+
+  </div>
+} @else {
+  <p>WAIT</p>
+}
+
