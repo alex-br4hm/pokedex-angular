@@ -10,6 +10,8 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import { Subscription} from 'rxjs';
 import {StatsComponent} from './stats/stats.component';
 import {FirebaseService} from '../../core/services/firebase.service';
+import {PokeHeightPipe} from '../../shared/utils/poke-height.pipe';
+import {PokeWeightPipe} from '../../shared/utils/poke-weight.pipe';
 
 @Component({
   selector: 'app-poke-detail-view',
@@ -21,7 +23,9 @@ import {FirebaseService} from '../../core/services/firebase.service';
     NgOptimizedImage,
     MatTabGroup,
     MatTab,
-    StatsComponent
+    StatsComponent,
+    PokeHeightPipe,
+    PokeWeightPipe
   ],
   templateUrl: './poke-detail-view.component.html',
   styleUrl: './poke-detail-view.component.scss'
