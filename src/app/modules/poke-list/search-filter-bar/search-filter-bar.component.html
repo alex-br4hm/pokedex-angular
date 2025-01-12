@@ -13,21 +13,21 @@
 
 
 <div class="view-filter-container">
-  <button mat-button [matMenuTriggerFor]="menu">
-    <mat-icon>visibility</mat-icon>
-    Ansicht
-  </button>
-  <mat-menu #menu="matMenu" xPosition="before">
-    <button mat-menu-item>
-      <mat-icon>grid_view</mat-icon>
-      Kacheln
-    </button>
+<!--  <button mat-button [matMenuTriggerFor]="menu">-->
+<!--    <mat-icon>visibility</mat-icon>-->
+<!--    Ansicht-->
+<!--  </button>-->
+<!--  <mat-menu #menu="matMenu" xPosition="before">-->
+<!--    <button mat-menu-item>-->
+<!--      <mat-icon>grid_view</mat-icon>-->
+<!--      Kacheln-->
+<!--    </button>-->
 
-    <button mat-menu-item>
-      <mat-icon>view_list</mat-icon>
-      Liste
-    </button>
-  </mat-menu>
+<!--    <button mat-menu-item>-->
+<!--      <mat-icon>view_list</mat-icon>-->
+<!--      Liste-->
+<!--    </button>-->
+<!--  </mat-menu>-->
 
 
   <div class="filter-wrapper" (click)="toggleFilter(true)">
@@ -38,7 +38,7 @@
 
 
 
-@if (filterToggled) {
+@if (!filterToggled) {
 
   <div class="settings-close-helper" (click)="toggleFilter(false)"></div>
 

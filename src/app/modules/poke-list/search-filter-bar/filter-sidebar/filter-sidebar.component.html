@@ -1,1 +1,33 @@
-<p>filter-sidebar works!</p>
+<div class="filter-container" [formGroup]="filterSelections">
+
+  <h3>Gewicht:</h3>
+
+  <mat-slider min="200" max="500">
+    <input value="300" matSliderStartThumb>
+    <input value="400" matSliderEndThumb>
+  </mat-slider>
+
+  <h3>Größe:</h3>
+
+  <mat-slider min="200" max="500">
+    <input value="300" matSliderStartThumb>
+    <input value="400" matSliderEndThumb>
+  </mat-slider>
+
+  <h3>Typen</h3>
+    <div class="type-list" formGroupName="types">
+        @for (type of typeList; track type) {
+          <mat-checkbox
+            class="{{type}}-chip"
+            formControlName="{{ type }}">
+            {{ type }}
+          </mat-checkbox>
+        }
+    </div>
+
+  <div class="button-wrapper">
+    <button class="btn-clear">Zurücksetzen</button>
+    <button class="btn-succes" (click)="getFilterSelection()">Anwenden</button>
+  </div>
+
+</div>
