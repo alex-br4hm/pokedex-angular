@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PokeHeightPipe implements PipeTransform {
 
-  transform(value: number): string {
+  transform(value: number | undefined | null): string {
+    if (value === undefined || value === null) {
+      return '0';
+    }
+
     return value / 10 + ' m';
   }
 
