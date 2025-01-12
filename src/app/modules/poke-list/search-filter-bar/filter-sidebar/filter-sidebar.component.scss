@@ -1,0 +1,149 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-container {
+  width: 80%;
+  margin-top: 8vh;
+}
+
+mat-slider {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.type-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+  gap: 12px;
+  span {
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 12px;
+
+  }
+}
+
+.mat-mdc-checkbox {
+  border-radius: 12px;
+  --mat-sys-on-surface: whitesmoke;
+  --mat-sys-body-medium-size: 14px;
+  --mat-sys-body-medium-weight: 500;
+  transition: all 125ms ease-in-out;
+  opacity: 0.9;
+  background-color: black;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.button-wrapper {
+  margin-top: 32px;
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+  width: 100%;
+
+  button {
+    color: rgba(0, 0, 0, 0.9) !important;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    opacity: .8;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+}
+
+
+
+
+.Normal-chip {
+  background-color: rgba(168, 168, 120, 0.9);
+}
+
+.Feuer-chip {
+  background-color: rgba(240, 128, 48, 0.9);
+}
+
+.Wasser-chip {
+  background-color: rgba(104, 144, 240, 0.9);
+}
+
+.Elektro-chip {
+  background-color: rgba(248, 208, 48, 0.9);
+}
+
+.Pflanze-chip {
+  background-color: rgba(120, 200, 80, 0.9);
+}
+
+.Eis-chip {
+  background-color: rgba(152, 216, 216, 0.9);
+}
+
+.Kämpfer-chip {
+  background-color: rgba(192, 48, 40, 0.9);
+}
+
+.Gift-chip {
+  background-color: rgba(160, 64, 160, 0.9);
+}
+
+.Boden-chip {
+  background-color: rgba(224, 192, 104, 0.9);
+}
+
+.Flug-chip {
+  background-color: rgba(193, 181, 225, 0.9);
+}
+
+.Psycho-chip {
+  background-color: rgba(248, 88, 136, 0.9);
+}
+
+.Käfer-chip {
+  background-color: rgba(168, 184, 32, 0.9);
+}
+
+.Gestein-chip {
+  background-color: rgba(184, 160, 56, 0.9);
+}
+
+.Geist-chip {
+  background-color: rgba(112, 88, 152, 0.9);
+}
+
+.Drache-chip {
+  background-color: rgba(112, 56, 248, 0.9);
+}
+
+.Unlicht-chip {
+  background-color: rgba(112, 88, 72, 0.9);
+}
+
+.Stahl-chip {
+  background-color: rgba(184, 184, 208, 0.9);
+}
+
+.Fee-chip {
+  background-color: rgba(238, 153, 238, 0.9);
+}
+
