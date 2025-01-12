@@ -1,17 +1,29 @@
 <div class="filter-container" [formGroup]="filterSelections">
 
-  <h3>Gewicht:</h3>
+  <h3>Gewicht:
+    <b>
+    {{ filterSelections.get('weightRange.startValue')?.value | pokeWeight }}
+    -
+    {{ filterSelections.get('weightRange.endValue')?.value | pokeWeight }}
+    </b>
+  </h3>
 
-  <mat-slider min="200" max="500">
-    <input value="300" matSliderStartThumb>
+  <mat-slider min="0" max="500" formGroupName="weightRange">
+    <input value="0" matSliderStartThumb>
     <input value="400" matSliderEndThumb>
   </mat-slider>
 
-  <h3>Größe:</h3>
+  <h3>Größe:
+    <b>
+    {{ filterSelections.get('heightRange.startValue')?.value | pokeHeight }}
+    -
+    {{ filterSelections.get('heightRange.endValue')?.value | pokeHeight }}
+    </b>
+  </h3>
 
-  <mat-slider min="200" max="500">
-    <input value="300" matSliderStartThumb>
-    <input value="400" matSliderEndThumb>
+  <mat-slider min="{{ this.minHeight }}" max="{{ this.maxHeight }}" formGroupName="heightRange">
+    <input value="{{ this.minHeight }}" matSliderStartThumb>
+    <input value="{{ this.maxHeight }}" matSliderEndThumb>
   </mat-slider>
 
   <h3>Typen</h3>
