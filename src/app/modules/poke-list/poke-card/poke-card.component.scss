@@ -1,16 +1,14 @@
 :host {
   flex:1;
-  max-width: 320px;
-  min-width: 240px;
   height: 100%;
   color:white;
   user-select: none;
 }
 
 .card-wrapper {
-  max-width: 320px;
   height: 100%;
   display: flex;
+  justify-content: center;
 }
 
 mat-card {

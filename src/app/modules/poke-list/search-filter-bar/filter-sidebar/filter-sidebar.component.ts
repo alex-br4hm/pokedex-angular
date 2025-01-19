@@ -11,6 +11,9 @@ import {PokeWeightPipe} from '../../../../shared/utils/poke-weight.pipe';
 import {PokeHeightPipe} from '../../../../shared/utils/poke-height.pipe';
 import {Pokemon} from '../../../../core/models/pokemon';
 import {PokeDataService} from '../../../../core/services/poke-data.service';
+import {
+  CustomLoadingSpinnerComponent
+} from '../../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 
 @Component({
   selector: 'app-filter-sidebar',
@@ -29,7 +32,8 @@ import {PokeDataService} from '../../../../core/services/poke-data.service';
     PokeWeightPipe,
     PokeHeightPipe,
     FormsModule,
-    NgClass
+    NgClass,
+    CustomLoadingSpinnerComponent
   ],
   templateUrl: './filter-sidebar.component.html',
   styleUrl: './filter-sidebar.component.scss'
@@ -41,6 +45,9 @@ export class FilterSidebarComponent implements OnInit {
   minWeight: number = 0;
   maxWeight: number = 0;
   isLoading: boolean = true;
+
+  sessionFilters?: string | null;
+  resetDialogOpen: boolean = false;
   @Input() filterToggled!: boolean;
   @Output() filterToggledChange = new EventEmitter<boolean>();
 
@@ -78,27 +85,57 @@ export class FilterSidebarComponent implements OnInit {
       startValue: 0,
       endValue: 0,
     }),
+    generation: this._formBuilder.group({
+      gen_1: true,
+      gen_2: true
+    })
   })
 
   ngOnInit() {
     this.pokeList = this.pokeDataService.$pokemonList;
     this.getMinMaxValues();
-    this.initialPatchValues();
+    this.sessionFilters = sessionStorage.getItem('filterSelections');
+    if (this.sessionFilters) {
+      this.filterSelections.patchValue(JSON.parse(this.sessionFilters));
+    } else {
+      this.setInitialFilterSelection();
+    }
+
     this.isLoading = false;
 
   }
 
   getMinMaxValues() {
-    const weights = this.pokeList.map(p => p.weight);
-    const heights = this.pokeList.map(p => p.height);
-    this.minWeight = Math.min(...weights) / 10 ;
-    this.maxWeight = Math.max(...weights) / 10;
-    this.minHeight = Math.min(...heights) / 10;
-    this.maxHeight = Math.max(...heights) / 10;
+    const weights: number[] = this.pokeList.map(p => p.weight);
+    const heights: number[] = this.pokeList.map(p => p.height);
+    this.minWeight          = Math.min(...weights) / 10 ;
+    this.maxWeight          = Math.max(...weights) / 10;
+    this.minHeight          = Math.min(...heights) / 10;
+    this.maxHeight          = Math.max(...heights) / 10;
   }
 
-  initialPatchValues() {
+  setInitialFilterSelection() {
     this.filterSelections.patchValue({
+      types: {
+        Normal: true,
+        Feuer: true,
+        Wasser: true,
+        Elektro: true,
+        Pflanze: true,
+        Flug: true,
+        Käfer: true,
+        Gift: true,
+        Gestein: true,
+        Boden: true,
+        Kämpfer: true,
+        Eis: true,
+        Psycho: true,
+        Geist: true,
+        Drache: true,
+        Fee: true,
+        Unlicht: true,
+        Stahl: true,
+      },
       weightRange: {
         startValue: this.minWeight,
         endValue: this.maxWeight
@@ -106,15 +143,29 @@ export class FilterSidebarComponent implements OnInit {
       heightRange: {
         startValue: this.minHeight,
         endValue: this.maxHeight
-      }
+      },
+      generation: {
+        gen_1: true,
+        gen_2: true,
+      },
     });
   }
 
   getFilterSelection() {
-    const selection = this.filterSelections.value;
-    this.filterToggledChange.emit(false);
     document.body.style.overflow = 'unset';
-    this.pokeDataService.setFilterSelection(selection);
+    this.filterToggledChange.emit(false);
+    sessionStorage.setItem('filterSelections', JSON.stringify(this.filterSelections.value));
+    this.pokeDataService.setFilterSelection(this.filterSelections.value);
+  }
+
+  openResetDialog() {
+    this.resetDialogOpen = true;
+  }
+
+  resetFilter() {
+    this.resetDialogOpen = false;
+    this.setInitialFilterSelection();
+
   }
 
   typeList = [
@@ -137,4 +188,5 @@ export class FilterSidebarComponent implements OnInit {
     'Unlicht',
     'Stahl'
   ];
+
 }

@@ -1,6 +1,21 @@
 @if (!isLoading) {
   <div class="filter-container" [formGroup]="filterSelections">
 
+<!--     #############-->
+<!--     GEN SELECTION-->
+<!--     #############-->
+
+    <h3> Generation </h3>
+      <div class="gen-selection" formGroupName="generation">
+        <mat-checkbox formControlName="gen_1">
+          Gen 1
+        </mat-checkbox>
+
+        <mat-checkbox formControlName="gen_2">
+          Gen 2
+        </mat-checkbox>
+      </div>
+
     <!-- ############# -->
     <!-- WEIGHT SLIDER -->
     <!-- ############# -->
@@ -56,28 +71,41 @@
     <!-- ############# -->
 
     <h3>Typen</h3>
-    <div class="type-list" formGroupName="types">
-      @for (type of typeList; track type) {
-        <mat-checkbox
-          class="{{type}}-chip"
-          [ngClass]="{ 'unchecked': !filterSelections.get(['types', type])?.value }"
-          formControlName="{{ type }}">
-          {{ type }}
-        </mat-checkbox>
-      }
-    </div>
+      <div class="type-list" formGroupName="types">
+        @for (type of typeList; track type) {
+          <mat-checkbox
+            class="{{type}}-chip"
+            [ngClass]="{ 'unchecked': !filterSelections.get(['types', type])?.value }"
+            formControlName="{{ type }}">
+              {{ type }}
+          </mat-checkbox>
+        }
+      </div>
 
     <!-- ############# -->
     <!--     BUTTONS   -->
     <!-- ############# -->
 
     <div class="button-wrapper">
-      <button class="btn-clear">Zurücksetzen</button>
+      <button class="btn-clear" (click)="openResetDialog()">Zurücksetzen</button>
       <button class="btn-succes" (click)="getFilterSelection()">Anwenden</button>
     </div>
 
+    @if (resetDialogOpen) {
+      <div class="reset-dialog-wrapper" (click)="resetDialogOpen = false">
+        <div class="reset-dialog">
+          <h3>Filter wirklich zurücksetzen?</h3>
+          <div class="button-wrapper">
+            <button class="btn-clear" (click)="resetDialogOpen = false">Abbrechen</button>
+            <button class="btn-succes" (click)="resetFilter()">Zurücksetzen</button>
+          </div>
+        </div>
+      </div>
+
+
+    }
   </div>
 } @else {
-  <p>WAIT</p>
+  <app-custom-loading-spinner></app-custom-loading-spinner>
 }
 

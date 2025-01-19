@@ -11,6 +11,8 @@ import {SearchFilterBarComponent} from './search-filter-bar/search-filter-bar.co
 import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatButton} from '@angular/material/button';
 import {PokeNumberPipePipe} from '../../shared/utils/poke-number-pipe.pipe';
+import {object} from '@angular/fire/database';
+import {PokeHeightPipe} from '../../shared/utils/poke-height.pipe';
 
 @Component({
   selector: 'app-poke-list',
@@ -29,6 +31,7 @@ import {PokeNumberPipePipe} from '../../shared/utils/poke-number-pipe.pipe';
     MatSidenav,
     MatSidenavContent,
     PokeNumberPipePipe,
+    PokeHeightPipe,
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
@@ -40,7 +43,9 @@ export class PokeListComponent implements OnInit {
   initialPokeList: Pokemon[] = [];
   gridView: boolean = true;
 
+  sessionFilter?: string | null;
   filterSelection: any;
+  excludedTypes!: string[];
 
 
   constructor(
@@ -49,7 +54,10 @@ export class PokeListComponent implements OnInit {
 
     effect(() => {
       this.filterSelection = this.pokeDataService.filterSelection();
-      this.filterListAfterSelection();
+      if (this.filterSelection) {
+        console.log(this.filterSelection.weightRange.endValue)
+        this.filterListAfterSelection();
+      }
     });
   }
 
@@ -57,17 +65,23 @@ export class PokeListComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.loadFromLocalStorage();
-
-
+    this.checkFilterSelection();
 
     // only for building database
     // this.pokeDataService.getDataForDB();
   }
 
+  checkFilterSelection() {
+    this.sessionFilter = sessionStorage.getItem('filterSelections');
+    if (this.sessionFilter) {
+      this.filterSelection = (JSON.parse(this.sessionFilter));
+      this.filterListAfterSelection();
+    }
+  }
+
   saveInLocalStorage() {
     if (this.pokeList) {
       localStorage.setItem('pokemonList', JSON.stringify(this.pokeList));
-      console.log("Pokémon-Liste wurde im localStorage gespeichert.");
     } else {
       console.error("Pokémon-Liste ist leer oder nicht definiert.");
     }
@@ -79,7 +93,6 @@ export class PokeListComponent implements OnInit {
       this.pokeList = JSON.parse(storedList);
       this.initialPokeList = this.pokeList;
       this.pokeDataService.$pokemonList = this.initialPokeList;
-      console.log("Pokémon-Liste wurde aus dem localStorage geladen.");
       this.changeLoadingState();
     } else {
       this.getDataFromDB();
@@ -93,7 +106,6 @@ export class PokeListComponent implements OnInit {
         this.saveInLocalStorage();
         this.initialPokeList = this.pokeList;
         this.pokeDataService.$pokemonList = this.initialPokeList;
-        console.log(this.pokeList);
         this.changeLoadingState();
       },
       error: error => {
@@ -126,44 +138,46 @@ export class PokeListComponent implements OnInit {
   }
 
   filterListAfterSelection() {
-    console.log(this.filterSelection);
     this.isLoading = true;
+    const types: string[]         = Object.keys(this.filterSelection.types);
+    this.excludedTypes            = types.filter(type => !this.filterSelection.types[type]);
+    const maxHeight: number       = this.filterSelection.heightRange.endValue;
+    const minHeight: number       = this.filterSelection.heightRange.startValue;
+    const maxWeight: number       = this.filterSelection.weightRange.endValue;
+    const minWeight: number       = this.filterSelection.weightRange.startValue;
+    const gen_1: boolean          = this.filterSelection.generation.gen_1;
+    const gen_2: boolean          = this.filterSelection.generation.gen_2;
 
-    if (!this.filterSelection) {
-      this.isLoading = false;
-      return;
-    }
+    this.pokeList = this.initialPokeList.filter(pokemon => {
+      const pokeHeight: number = pokemon.height / 10;
+      const pokeWeight: number = pokemon.weight / 10;
+
+      const hasExcludedType = pokemon.types_ger.some(type => this.excludedTypes.includes(type));
+      if (hasExcludedType) {
+        return false;
+      }
+
+      if (!gen_1 && pokemon.game_index <= 151) {
+        return false;
+      }
+
+      if (!gen_2 && pokemon.game_index > 151) {
+        return false;
+      }
+
+      if (pokeWeight < minWeight || pokeWeight > maxWeight) {
+        return false;
+      }
+
+      if (pokeHeight < minHeight || pokeHeight > maxHeight) {
+        return false;
+      }
+
+      return true;
+    });
 
     setTimeout(() => {
       this.isLoading = false;
-    }, 100)
-
-
-    const selectedTypes = Object.keys(this.filterSelection.types)
-      .filter(type => this.filterSelection.types[type]);
-
-    const excludedTypes = Object.keys(this.filterSelection.types)
-      .filter(type => !this.filterSelection.types[type]); // Deaktivierte Typen (false)
-
-    console.log('Selected Types:', selectedTypes);
-    console.log('Excluded Types:', excludedTypes);
-
-    this.pokeList = this.initialPokeList.filter(pokemon =>
-      pokemon.types_ger.every(type => !selectedTypes.includes(type))
-    );
-
-
-    this.pokeList = this.initialPokeList.filter(pokemon => {
-      // Überprüfe, ob das Pokémon einen deaktivierten Typ hat
-      const hasExcludedType = pokemon.types_ger.some(type => excludedTypes.includes(type));
-      if (hasExcludedType) {
-        return false; // Wenn das Pokémon einen deaktivierten Typ hat, wird es herausgefiltert
-      }
-
-      // Wenn das Pokémon keine deaktivierten Typen hat, überprüfe, ob es mit den ausgewählten Typen übereinstimmt
-      return pokemon.types_ger.some(type => selectedTypes.includes(type));
-    });
-
-    console.log('Filtered Pokémon List:', this.pokeList);
+    }, 50)
   }
 }
