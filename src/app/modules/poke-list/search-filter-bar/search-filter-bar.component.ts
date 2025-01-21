@@ -12,6 +12,7 @@ import {
   MatSidenavContent
 } from '@angular/material/sidenav';
 import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-search-filter-bar',
@@ -30,7 +31,8 @@ import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component'
     MatSidenav,
     MatSidenavContainer,
     MatSidenavContent,
-    FilterSidebarComponent
+    FilterSidebarComponent,
+    MatTooltip
   ],
   templateUrl: './search-filter-bar.component.html',
   styleUrl: './search-filter-bar.component.scss'

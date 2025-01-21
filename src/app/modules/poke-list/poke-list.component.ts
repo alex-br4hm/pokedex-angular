@@ -129,17 +129,24 @@ export class PokeListComponent implements OnInit {
 
   filterPokeList() {
     if (this.searchInput.length > 0) {
-      this.pokeList = this.initialPokeList.filter(pokemon =>
+      this.pokeList = this.initialPokeList;
+      this.filterListAfterSelection();
+      this.pokeList = this.pokeList.filter(pokemon =>
         pokemon.name.toLowerCase().includes(this.searchInput.toLowerCase())
       );
+
       this.changeLoadingState();
     } else {
       this.pokeList = this.initialPokeList;
+      this.filterListAfterSelection();
     }
   }
 
   filterListAfterSelection() {
-    this.isLoading = true;
+    if (!this.filterSelection) {
+      return;
+    }
+
     const types: string[]   = Object.keys(this.filterSelection.types);
     this.excludedTypes      = types.filter(type => !this.filterSelection.types[type]);
     const maxHeight: number = this.filterSelection.heightRange.endValue;
@@ -176,9 +183,5 @@ export class PokeListComponent implements OnInit {
 
       return true;
     });
-
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 500)
   }
 }
