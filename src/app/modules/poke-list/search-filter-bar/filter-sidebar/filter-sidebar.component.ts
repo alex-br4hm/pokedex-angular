@@ -1,7 +1,7 @@
-import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {MatSlider, MatSliderRangeThumb} from '@angular/material/slider';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatChip} from '@angular/material/chips';
@@ -46,12 +46,16 @@ export class FilterSidebarComponent implements OnInit {
   maxWeight: number = 0;
   isLoading: boolean = true;
 
-  sessionFilters?: string | null;
+  isFormChanged: boolean = false;
+  isInitialFormChanged: boolean = false;
+  sessionFilters?: any;
   resetDialogOpen: boolean = false;
   @Input() filterToggled!: boolean;
   @Output() filterToggledChange = new EventEmitter<boolean>();
 
   _formBuilder = inject(FormBuilder);
+
+  initialFilterValues = {};
 
   constructor(private pokeDataService: PokeDataService) {
   }
@@ -94,15 +98,29 @@ export class FilterSidebarComponent implements OnInit {
   ngOnInit() {
     this.pokeList = this.pokeDataService.$pokemonList;
     this.getMinMaxValues();
-    this.sessionFilters = sessionStorage.getItem('filterSelections');
+    this.sessionFilters = this.pokeDataService.filterSelection();
+    this.setInitialFilterSelection();
+
     if (this.sessionFilters) {
-      this.filterSelections.patchValue(JSON.parse(this.sessionFilters));
+      this.filterSelections.patchValue(this.sessionFilters);
     } else {
-      this.setInitialFilterSelection();
+      this.patchInitialFilterValues();
     }
 
+    this.checkFormChanges();
     this.isLoading = false;
 
+  }
+
+  checkFormChanges() {
+    if (this.sessionFilters) {
+      this.isInitialFormChanged = JSON.stringify(this.sessionFilters) !== JSON.stringify(this.initialFilterValues);
+    }
+
+    this.filterSelections.valueChanges.subscribe(() => {
+      this.isFormChanged = JSON.stringify(this.sessionFilters) !== JSON.stringify(this.filterSelections.value);
+      this.isInitialFormChanged = JSON.stringify(this.filterSelections.value) !== JSON.stringify(this.initialFilterValues);
+    });
   }
 
   getMinMaxValues() {
@@ -115,7 +133,7 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   setInitialFilterSelection() {
-    this.filterSelections.patchValue({
+    this.initialFilterValues = {
       types: {
         Normal: true,
         Feuer: true,
@@ -138,23 +156,28 @@ export class FilterSidebarComponent implements OnInit {
       },
       weightRange: {
         startValue: this.minWeight,
-        endValue: this.maxWeight
+        endValue: this.maxWeight,
       },
       heightRange: {
         startValue: this.minHeight,
-        endValue: this.maxHeight
+        endValue: this.maxHeight,
       },
       generation: {
         gen_1: true,
         gen_2: true,
       },
-    });
+    }
+
   }
 
-  getFilterSelection() {
+  patchInitialFilterValues() {
+    this.filterSelections.patchValue(this.initialFilterValues);
+    this.sessionFilters = this.initialFilterValues;
+  }
+
+  useFilterSelection() {
     document.body.style.overflow = 'unset';
     this.filterToggledChange.emit(false);
-    sessionStorage.setItem('filterSelections', JSON.stringify(this.filterSelections.value));
     this.pokeDataService.setFilterSelection(this.filterSelections.value);
   }
 
@@ -164,29 +187,14 @@ export class FilterSidebarComponent implements OnInit {
 
   resetFilter() {
     this.resetDialogOpen = false;
-    this.setInitialFilterSelection();
-
+    this.isInitialFormChanged = false;
+    this.patchInitialFilterValues();
   }
 
-  typeList = [
-    'Normal',
-    'Feuer',
-    'Wasser',
-    'Elektro',
-    'Pflanze',
-    'Flug',
-    'Käfer',
-    'Gift',
-    'Gestein',
-    'Boden',
-    'Kämpfer',
-    'Eis',
-    'Psycho',
-    'Geist',
-    'Drache',
-    'Fee',
-    'Unlicht',
-    'Stahl'
+  typeList: string[] = [
+    'Normal', 'Feuer', 'Wasser', 'Elektro', 'Pflanze',
+    'Flug', 'Käfer', 'Gift', 'Gestein', 'Boden',
+    'Kämpfer', 'Eis', 'Psycho', 'Geist', 'Drache',
+    'Fee', 'Unlicht', 'Stahl'
   ];
-
 }

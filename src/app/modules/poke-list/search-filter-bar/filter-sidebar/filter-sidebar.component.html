@@ -1,9 +1,9 @@
 @if (!isLoading) {
   <div class="filter-container" [formGroup]="filterSelections">
 
-<!--     #############-->
-<!--     GEN SELECTION-->
-<!--     #############-->
+    <!-- ############# -->
+    <!-- GEN SELECTION -->
+    <!-- ############# -->
 
     <h3> Generation </h3>
       <div class="gen-selection" formGroupName="generation">
@@ -87,8 +87,19 @@
     <!-- ############# -->
 
     <div class="button-wrapper">
-      <button class="btn-clear" (click)="openResetDialog()">Zurücksetzen</button>
-      <button class="btn-succes" (click)="getFilterSelection()">Anwenden</button>
+      <button class="btn-clear"
+              (click)="openResetDialog()"
+              [disabled]="!isInitialFormChanged"
+              [class.btn-disabled]="!isInitialFormChanged">
+        Zurücksetzen
+      </button>
+
+      <button class="btn-succes"
+              (click)="useFilterSelection()"
+              [disabled]="!isFormChanged"
+              [class.btn-disabled]="!isInitialFormChanged">
+        Anwenden
+      </button>
     </div>
 
     @if (resetDialogOpen) {
@@ -96,12 +107,11 @@
         <div class="reset-dialog">
           <h3>Filter wirklich zurücksetzen?</h3>
           <div class="button-wrapper">
-            <button class="btn-clear" (click)="resetDialogOpen = false">Abbrechen</button>
+            <button class="btn-clear" (click)="resetDialogOpen = false" >Abbrechen</button>
             <button class="btn-succes" (click)="resetFilter()">Zurücksetzen</button>
           </div>
         </div>
       </div>
-
 
     }
   </div>

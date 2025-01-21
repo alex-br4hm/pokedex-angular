@@ -7,24 +7,24 @@
   <div class="amount-wrapper">
     Pokemon:  <span>{{ pokeList.length }}</span>
 
-<!--    @if (filterSelection) {-->
-<!--      Filter:-->
-<!--      @if (filterSelection.generation.gen_1) {-->
-<!--      <span>Generation 1</span>-->
-<!--      }-->
-<!--      @if (filterSelection.generation.gen_2) {-->
-<!--        <span>Generation 2</span>-->
-<!--      }-->
-<!--      -->
-<!--      <span>{{ filterSelection.heightRange.startValue + ' m' }} - {{ filterSelection.heightRange.endValue + ' m'}}</span>-->
-<!--      <span>{{ filterSelection.weightRange.startValue + ' kg' }} - {{ filterSelection.weightRange.endValue + ' kg'}}</span>-->
-<!--      <span> Excluded: @for (type of excludedTypes; track $index) {-->
-<!--        {{ type }} }</span>-->
-<!--    }-->
+    @if (filterSelection) {
+      Filter:
+      @if (filterSelection.generation.gen_1) {
+      <span>Generation 1</span>
+      }
+      @if (filterSelection.generation.gen_2) {
+        <span>Generation 2</span>
+      }
+
+      <span>{{ filterSelection.heightRange.startValue + ' m' }} - {{ filterSelection.heightRange.endValue + ' m'}}</span>
+      <span>{{ filterSelection.weightRange.startValue + ' kg' }} - {{ filterSelection.weightRange.endValue + ' kg'}}</span>
+      @for (type of excludedTypes; track $index) {
+        <span class="excluded-type">  {{ type }} </span>
+      }
+    }
 
   </div>
 
-  @if (gridView) {
   <div class="grid-container">
         @if (pokeList.length > 0) {
           @for (card of pokeList; track card.game_index) {
@@ -38,26 +38,6 @@
           <p>Kein Pokemon gefunden ...</p>
         }
   </div>
-  } @else {
-    <div class="list-container">
-      @if (pokeList.length > 0) {
-        <table>
-          @for (card of pokeList; track card.game_index) {
-          <tr class="{{ card.types_en[0] }}" [routerLink]="['pokemon/' + card.game_index]">
-            <td>
-              <span> {{ card.game_index | pokeNumberPipe }}</span>
-              {{ card.name }}
-              <img src="{{ card.small_img_url }}" alt="">
-            </td>
-
-          </tr>
-          }
-        </table>
-      }
-
-
-    </div>
-  }
 
 
 } @else {

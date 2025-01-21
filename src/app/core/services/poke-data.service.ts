@@ -20,6 +20,7 @@ export class PokeDataService {
 
   setFilterSelection(selection: any) {
     this.filterSelection.set(selection);
+    console.log(selection);
   }
 
   constructor(

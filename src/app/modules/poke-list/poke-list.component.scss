@@ -28,6 +28,7 @@
   font-size: 14px;
   display: flex;
   gap: 6px;
+
   span {
     background-color: rgba(255, 255, 255, 0.3);
     padding: 4px 8px;
@@ -44,6 +45,10 @@
   align-items: center;
 }
 
+.excluded-type {
+  text-decoration: line-through;
+}
+
 
 .list-container {
   height: 75vh;
@@ -53,8 +58,6 @@
 table {
   width: 90vw;
   color: whitesmoke;
-
-
 
   tr {
     height: 40px;

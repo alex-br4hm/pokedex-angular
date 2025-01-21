@@ -1,4 +1,4 @@
-import {Component, effect, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, effect, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../core/components/header/header.component';
 import {PokeCardComponent} from './poke-card/poke-card.component';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
@@ -41,21 +41,20 @@ export class PokeListComponent implements OnInit {
   isLoading: boolean = true;
   pokeList!: Pokemon[];
   initialPokeList: Pokemon[] = [];
-  gridView: boolean = true;
 
   sessionFilter?: string | null;
-  filterSelection: any;
+  filterSelection?: any;
   excludedTypes!: string[];
 
 
   constructor(
     private fireBaseService: FirebaseService,
-    private pokeDataService: PokeDataService) {
+    private pokeDataService: PokeDataService
+    ) {
 
     effect(() => {
       this.filterSelection = this.pokeDataService.filterSelection();
       if (this.filterSelection) {
-        console.log(this.filterSelection.weightRange.endValue)
         this.filterListAfterSelection();
       }
     });
@@ -64,6 +63,7 @@ export class PokeListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+
     this.loadFromLocalStorage();
     this.checkFilterSelection();
 
@@ -75,6 +75,7 @@ export class PokeListComponent implements OnInit {
     this.sessionFilter = sessionStorage.getItem('filterSelections');
     if (this.sessionFilter) {
       this.filterSelection = (JSON.parse(this.sessionFilter));
+      console.log(this.filterSelection.generation);
       this.filterListAfterSelection();
     }
   }
@@ -139,14 +140,14 @@ export class PokeListComponent implements OnInit {
 
   filterListAfterSelection() {
     this.isLoading = true;
-    const types: string[]         = Object.keys(this.filterSelection.types);
-    this.excludedTypes            = types.filter(type => !this.filterSelection.types[type]);
-    const maxHeight: number       = this.filterSelection.heightRange.endValue;
-    const minHeight: number       = this.filterSelection.heightRange.startValue;
-    const maxWeight: number       = this.filterSelection.weightRange.endValue;
-    const minWeight: number       = this.filterSelection.weightRange.startValue;
-    const gen_1: boolean          = this.filterSelection.generation.gen_1;
-    const gen_2: boolean          = this.filterSelection.generation.gen_2;
+    const types: string[]   = Object.keys(this.filterSelection.types);
+    this.excludedTypes      = types.filter(type => !this.filterSelection.types[type]);
+    const maxHeight: number = this.filterSelection.heightRange.endValue;
+    const minHeight: number = this.filterSelection.heightRange.startValue;
+    const maxWeight: number = this.filterSelection.weightRange.endValue;
+    const minWeight: number = this.filterSelection.weightRange.startValue;
+    const gen_1: boolean    = this.filterSelection.generation.gen_1;
+    const gen_2: boolean    = this.filterSelection.generation.gen_2;
 
     this.pokeList = this.initialPokeList.filter(pokemon => {
       const pokeHeight: number = pokemon.height / 10;
@@ -178,6 +179,6 @@ export class PokeListComponent implements OnInit {
 
     setTimeout(() => {
       this.isLoading = false;
-    }, 50)
+    }, 500)
   }
 }
