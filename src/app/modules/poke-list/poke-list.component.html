@@ -5,25 +5,29 @@
   <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
 
   <div class="amount-wrapper">
-    Pokemon:  <span>{{ pokeList.length }}</span>
+    Pokemon: <span>{{ pokeList.length }}</span>
+  </div>
+
 
     @if (filterSelection) {
+      <div class="filter-wrapper">
       Filter:
-      @if (filterSelection.generation.gen_1) {
-      <span>Generation 1</span>
-      }
-      @if (filterSelection.generation.gen_2) {
-        <span>Generation 2</span>
-      }
+        @if (filterSelection.generation.gen_1) {
+          <span>Generation 1</span>
+        }
+        @if (filterSelection.generation.gen_2) {
+          <span>Generation 2</span>
+        }
 
-      <span>{{ filterSelection.heightRange.startValue + ' m' }} - {{ filterSelection.heightRange.endValue + ' m'}}</span>
-      <span>{{ filterSelection.weightRange.startValue + ' kg' }} - {{ filterSelection.weightRange.endValue + ' kg'}}</span>
-      @for (type of excludedTypes; track $index) {
-        <span class="excluded-type">  {{ type }} </span>
-      }
+        <span>{{ filterSelection.heightRange.startValue + ' m' }} - {{ filterSelection.heightRange.endValue + ' m'}}</span>
+        <span>{{ filterSelection.weightRange.startValue + ' kg' }} - {{ filterSelection.weightRange.endValue + ' kg'}}</span>
+        @for (type of excludedTypes; track $index) {
+          <span class="excluded-type">  {{ type }} </span>
+        }
+      </div>
     }
 
-  </div>
+
 
   <div class="grid-container">
         @if (pokeList.length > 0) {

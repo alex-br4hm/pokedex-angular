@@ -21,12 +21,13 @@
   }
 }
 
-.amount-wrapper {
+.amount-wrapper, .filter-wrapper {
   color: rgba(245, 245, 245, 0.8);
   width: 90%;
   padding: 4px 0;
   font-size: 14px;
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 
   span {
