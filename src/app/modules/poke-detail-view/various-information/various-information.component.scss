@@ -1,0 +1,53 @@
+:host {
+  width: 70%;
+}
+
+.basic-info-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+
+.poke-detail-row-wrapper {
+  display: flex;
+  width: 100%;
+  gap:16px;
+}
+
+.poke-detail-row {
+  //border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex:1;
+  span {
+
+  }
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.poke-type-wrapper {
+  display: flex;
+  gap:8px;
+  margin-top:12px;
+
+  .poke-detail-type {
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 2px 16px;
+    text-align: center;
+  }
+}
+
+p {
+  width: 75%;
+}
