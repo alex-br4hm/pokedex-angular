@@ -63,7 +63,6 @@ export class PokeListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-
     this.loadFromLocalStorage();
     this.checkFilterSelection();
 
@@ -137,7 +136,7 @@ export class PokeListComponent implements OnInit {
 
       this.changeLoadingState();
     } else {
-      this.pokeList = this.initialPokeList;
+      this.ngOnInit();
       this.filterListAfterSelection();
     }
   }

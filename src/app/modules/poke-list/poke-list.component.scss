@@ -14,11 +14,12 @@
   height: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
 
-  p {
-    color: whitesmoke;
-    font-family: 'Press Start 2P', cursive;
-  }
+.no-pokemon-found {
+  color: whitesmoke;
+  font-family: 'Press Start 2P', cursive;
+  margin-top:20vh;
 }
 
 .amount-wrapper, .filter-wrapper {
@@ -35,6 +36,8 @@
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
   }
 }
 

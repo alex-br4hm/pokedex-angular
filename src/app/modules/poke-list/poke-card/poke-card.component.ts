@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {
   MatCard,
   MatCardContent,
@@ -33,11 +33,19 @@ import {PokeDataService} from '../../../core/services/poke-data.service';
 export class PokeCardComponent implements OnInit {
   @Input() index!: number;
   @Input() pokemon!: Pokemon;
+  imgLoaded: boolean = false;
 
   constructor(private pokeDataService: PokeDataService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.imgLoaded = false;
+  }
+
+  onImageLoad() {
+    this.imgLoaded = true;
+    console.log('HALLO', this.imgLoaded);
+  }
 
   sendDataToService() {
     this.pokeDataService.$pokemon = this.pokemon;

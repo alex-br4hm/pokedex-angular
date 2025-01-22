@@ -22,15 +22,13 @@
         <span>{{ filterSelection.heightRange.startValue + ' m' }} - {{ filterSelection.heightRange.endValue + ' m'}}</span>
         <span>{{ filterSelection.weightRange.startValue + ' kg' }} - {{ filterSelection.weightRange.endValue + ' kg'}}</span>
         @for (type of excludedTypes; track $index) {
-          <span class="excluded-type">  {{ type }} </span>
+          <span class="excluded-type {{type}}-chip">  {{ type }} </span>
         }
       </div>
     }
 
-
-
+  @if (pokeList.length > 0) {
   <div class="grid-container">
-        @if (pokeList.length > 0) {
           @for (card of pokeList; track card.game_index) {
             <app-poke-card
               [index]="card.game_index"
@@ -38,10 +36,10 @@
               [routerLink]="['pokemon/' + card.game_index + '/' + card.name]">
             </app-poke-card>
           }
-        } @else {
-          <p>Kein Pokemon gefunden ...</p>
-        }
   </div>
+  } @else {
+    <p class="no-pokemon-found">Kein Pokemon gefunden ...</p>
+  }
 
 
 } @else {

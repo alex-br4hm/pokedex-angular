@@ -11,12 +11,12 @@
     </mat-card-header>
 
     <div class="poke-img-wrapper">
-      <img
-        mat-card-image
-        ngSrc="{{ pokemon.img_url }}"
-        placeholder="placeholder"
-        fill
-        alt="Photo of {{ pokemon.name }}">
+        <img
+          mat-card-image
+          [src]=" pokemon.img_url "
+          fill
+          placeholder="placeholder"
+          alt="Photo of {{ pokemon.name }}">
     </div>
 
     <mat-card-content>
