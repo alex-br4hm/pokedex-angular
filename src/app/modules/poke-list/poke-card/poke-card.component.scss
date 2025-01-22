@@ -68,6 +68,16 @@ img {
   filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.7));
 }
 
+.img-loading-placeholder {
+  position: absolute;
+  top:0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mat-mdc-card-content {
   padding-top:16px;
   display: flex;

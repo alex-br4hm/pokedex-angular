@@ -14,9 +14,16 @@
         <img
           mat-card-image
           [src]=" pokemon.img_url "
-          fill
-          placeholder="placeholder"
+          (load)="onImageLoad()"
+          loading="lazy"
           alt="Photo of {{ pokemon.name }}">
+
+        @if (!imgLoaded) {
+          <div class="img-loading-placeholder">
+            <app-custom-loading-spinner></app-custom-loading-spinner>
+          </div>
+        }
+
     </div>
 
     <mat-card-content>
