@@ -13,9 +13,9 @@
     <div class="poke-img-wrapper">
         <img
           mat-card-image
-          [src]=" pokemon.img_url "
+          [ngSrc]=" pokemon.img_url "
+          fill
           (load)="onImageLoad()"
-          loading="lazy"
           alt="Photo of {{ pokemon.name }}">
 
         @if (!imgLoaded) {

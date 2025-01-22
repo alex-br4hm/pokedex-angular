@@ -49,7 +49,7 @@ mat-card {
 
 .poke-img-wrapper {
   width: 100%;
-  height: 25vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   padding: 24px 0;
@@ -61,7 +61,7 @@ mat-card {
 img {
   transition: all 125ms ease-in-out;
   opacity: 0.85;
-  height: 20vh ;
+  height: 20vh;
   width: 100%;
   padding: 4px;
   position: unset !important;
@@ -73,6 +73,7 @@ img {
   top:0;
   height: 100%;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
