@@ -12,6 +12,9 @@ import {StatsComponent} from './stats/stats.component';
 import {FirebaseService} from '../../core/services/firebase.service';
 import {PokeHeightPipe} from '../../shared/utils/poke-height.pipe';
 import {PokeWeightPipe} from '../../shared/utils/poke-weight.pipe';
+import {VariousInformationComponent} from './various-information/various-information.component';
+import {MatDivider} from '@angular/material/divider';
+import {EvolutionChainComponent} from './evolution-chain/evolution-chain.component';
 
 @Component({
   selector: 'app-poke-detail-view',
@@ -25,13 +28,15 @@ import {PokeWeightPipe} from '../../shared/utils/poke-weight.pipe';
     MatTab,
     StatsComponent,
     PokeHeightPipe,
-    PokeWeightPipe
+    PokeWeightPipe,
+    VariousInformationComponent,
+    EvolutionChainComponent
   ],
   templateUrl: './poke-detail-view.component.html',
   styleUrl: './poke-detail-view.component.scss'
 })
 export class PokeDetailViewComponent implements OnInit, OnDestroy {
-  pokemon?: Pokemon | undefined;
+  pokemon: Pokemon | undefined;
   pokeList: Pokemon[] = [];
   game_index: number = 1;
   isLoading: boolean = true;
@@ -76,7 +81,6 @@ export class PokeDetailViewComponent implements OnInit, OnDestroy {
   findPokemon(): void {
     if (this.game_index && this.pokeList) {
       this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
-      console.log(this.pokemon);
       if (!this.pokemon) {
         this.router.navigateByUrl(`/pokedex/pokemon/1`)
       }

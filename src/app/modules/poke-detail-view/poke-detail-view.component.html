@@ -4,71 +4,33 @@
     [routerLink]="['/pokedex']">
   </div>
 
-  @if (pokemon && pokeList) {
+  @if (pokemon) {
 
     <div class="detail-view-container {{ pokemon.types_en[0] }}">
 
-
-      <h1>{{ pokemon.name }}
-        <img src="{{ pokemon.small_img_url }}" alt="">
-        <mat-icon (click)="startScrolling($event)" [routerLink]="['/pokedex']">
-          close
-        </mat-icon>
+      <h1>
+        {{ pokemon.name }}
+          <mat-icon (click)="startScrolling($event)" [routerLink]="['/pokedex']">
+            close
+          </mat-icon>
       </h1>
 
 
-
-        <div class="poke-info-wrapper">
-          <div class="poke-img-wrapper">
+          <div class="poke-img-wrapper ">
             <img src="{{ pokemon.img_url }}" alt="picture of {{ pokemon.name }}" />
+<!--            <div class="funny-ball {{ pokemon.types_en[0] }}"></div>-->
           </div>
 
-          <div class="poke-detail-info-wrapper">
+
+      <app-various-information [pokemon]="pokemon"></app-various-information>
+      <app-stats [stats]="pokemon.stats"></app-stats>
+
+      @if (pokemon.evolution_chain) {
+        <app-evolution-chain [evolution_chain]="pokemon.evolution_chain" [evolution_chain_url]="pokemon.evolution_chain_url"></app-evolution-chain>
+      }
 
 
-            <div class="basic-info-wrapper">
-                <div class="poke-detail-row-wrapper">
-                  <div class="poke-detail-row">
-                    <span>Gattung</span>
-                    <h3>{{ pokemon.genera }}</h3>
-                  </div>
-                  <div class="poke-detail-row">
-                    <span>Höhe</span>
-                    <h3>{{ pokemon.height | pokeHeight }}</h3>
-                  </div>
-                </div>
-
-                <div class="poke-detail-row-wrapper">
-                  <div class="poke-detail-row">
-                    <span>Gewicht</span>
-                    <h3>{{ pokemon.weight | pokeWeight }}</h3>
-                  </div>
-                  <div class="poke-detail-row">
-                    <span>Poke-Index</span>
-                    <h3>{{ pokemon.game_index | pokeNumberPipe }}</h3>
-                  </div>
-                </div>
-            </div>
-
-            <div class="poke-detail-row-wrapper poke-type-wrapper">
-                <span class="poke-detail-type {{ pokemon.types_en[0] }}-chip">
-                  {{ pokemon.types_ger[0] }}
-                </span>
-                    @if (pokemon.types_ger[1]) {
-                      <span class="poke-detail-type {{ pokemon.types_en[1] }}-chip">
-                          {{ pokemon.types_ger[1] }}
-                      </span>
-              }
-            </div>
-
-
-
-          </div>
-        </div>
-
-
-        <div class="teest"></div>
-      </div>
+    </div>
 
 
   } @else {
