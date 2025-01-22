@@ -1,20 +1,63 @@
 :host {
-  display: flex;
-  justify-content: center;
+  width: 70%;
 }
 
 .chart-container {
+  width: 100%;
+  gap:5%;
+  display: flex;
+  align-items: center;
   position: relative;
-  width: 100%; /* Passt sich an die verfügbare Breite an */
-  max-width: 700px; /* Maximale Breite */
-  aspect-ratio: 3; /* Breiter als hoch, typisch für Balkendiagramme */
-  //background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.04);
   border-radius: 12px;
-  padding: 1rem;
-
+  padding: 24px;
 }
 
-canvas {
-  width: 100% !important;
-  height: 100% !important;
+.stats-chart {
+
+  width: 40%;
+  min-width: 360px;
+  aspect-ratio: 1 / 1;
+  #radarChart {
+    width: 100% !important;
+  }
 }
+
+.stats-table-container {
+  display: flex;
+  width: 42.5%;
+  height: 100%;
+  .stats-table {
+    flex:1;
+    gap:4px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+
+  }
+
+  .stats-row {
+    padding: 12px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:first-child {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    &:nth-child(even) {
+
+    }
+  }
+}
+
+
