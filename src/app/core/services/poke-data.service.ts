@@ -104,7 +104,7 @@ export class PokeDataService {
       this.apiService.getEvolutionInfo(poke.evolution_chain_url).pipe(
         map(data => this.buildEvolutionChain(data.chain)),
         tap(evolutionChain => {
-          poke.evolution_chain = evolutionChain; // Füge die Evolutionskette hinzu
+          poke.evolution_chain = evolutionChain;
         })
       )
     );

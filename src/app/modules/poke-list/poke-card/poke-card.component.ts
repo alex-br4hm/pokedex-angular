@@ -44,7 +44,6 @@ export class PokeCardComponent implements OnInit {
 
   onImageLoad() {
     this.imgLoaded = true;
-    console.log('HALLO', this.imgLoaded);
   }
 
   sendDataToService() {
