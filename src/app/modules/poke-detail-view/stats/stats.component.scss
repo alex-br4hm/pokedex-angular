@@ -14,7 +14,6 @@
 }
 
 .stats-chart {
-
   width: 40%;
   min-width: 360px;
   aspect-ratio: 1 / 1;
@@ -33,7 +32,10 @@
     display: flex;
     flex-direction: column;
     border-radius: 12px;
+  }
 
+  h3 {
+    margin: 0;
   }
 
   .stats-row {
@@ -54,9 +56,6 @@
       border-bottom-right-radius: 12px;
     }
 
-    &:nth-child(even) {
-
-    }
   }
 }
 
