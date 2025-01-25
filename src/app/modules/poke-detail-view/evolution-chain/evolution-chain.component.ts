@@ -53,7 +53,6 @@ export class EvolutionChainComponent implements OnInit {
     }
 
     this.evolutions = evolutions.filter(evo => evo !== null);
-    console.log(this.evolutions);
   }
 
   createEvolution(pokemon: Pokemon | undefined, game_index: number | undefined = undefined): any {
