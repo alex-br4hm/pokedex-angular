@@ -1,14 +1,12 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-
 import {
   CustomLoadingSpinnerComponent
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 import {BaseChartDirective} from 'ng2-charts';
-import {Chart, ChartConfiguration, registerables} from 'chart.js';
+import {Chart, registerables} from 'chart.js';
 import {Stats} from '../../../core/models/pokemon';
-
-
+import {StatNamePipe} from '../../../shared/utils/stat-name.pipe';
 
 @Component({
   selector: 'app-stats',
@@ -16,6 +14,7 @@ import {Stats} from '../../../core/models/pokemon';
     CustomLoadingSpinnerComponent,
     NgxChartsModule,
     BaseChartDirective,
+    StatNamePipe,
   ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss'
@@ -23,8 +22,7 @@ import {Stats} from '../../../core/models/pokemon';
 export class StatsComponent implements OnInit, AfterViewInit {
   @Input() stats: Stats[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     Chart.register(...registerables);
@@ -36,7 +34,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
   loadChart() {
     const ctx = document.getElementById('radarChart') as HTMLCanvasElement;
-    const labels = ['HP', 'Angriff', 'Verteidig.', 'Sp. Angr.', 'Sp. Verteid.', 'Geschwindigk.'];
+    const labels: string[] = ['HP', 'Angriff', 'Verteidig.', 'Sp. Angr.', 'Sp. Verteid.', 'Geschwindigk.'];
     const data = this.stats.map(stat => stat.value);
 
     new Chart(ctx, {
@@ -61,5 +59,4 @@ export class StatsComponent implements OnInit, AfterViewInit {
       },
     });
   }
-
 }
