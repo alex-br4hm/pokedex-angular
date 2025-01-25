@@ -5,39 +5,32 @@
   </div>
 
   @if (pokemon) {
-
     <div class="detail-view-container {{ pokemon.types_en[0] }}">
-
-      <h1>
-        {{ pokemon.name }}
+      <h1>{{ pokemon.name }}
           <mat-icon (click)="startScrolling($event)" [routerLink]="['/pokedex']">
             close
           </mat-icon>
       </h1>
 
-
-          <div class="poke-img-wrapper ">
-            <img src="{{ pokemon.img_url }}" alt="picture of {{ pokemon.name }}" />
-          </div>
-
+      <div class="poke-img-wrapper ">
+          <img src="{{ pokemon.img_url }}" alt="picture of {{ pokemon.name }}" />
+      </div>
 
       <app-various-information [pokemon]="pokemon"></app-various-information>
       <app-stats [stats]="pokemon.stats"></app-stats>
-
-      @if (pokemon.evolution_chain) {
-        <app-evolution-chain [evolution_chain]="pokemon.evolution_chain" [evolution_chain_url]="pokemon.evolution_chain_url"></app-evolution-chain>
-      }
-
+      <app-evolution-chain
+        [evolution_chain]="pokemon.evolution_chain"
+        [evolution_chain_url]="pokemon.evolution_chain_url"
+        (scrollToTopEvent)="handleScrollToTop()">
+      </app-evolution-chain>
 
     </div>
-
 
   } @else {
-    <div class="loading-card-container">
-      <app-custom-loading-spinner></app-custom-loading-spinner>
-    </div>
-
-  }
+      <div class="loading-card-container">
+        <app-custom-loading-spinner></app-custom-loading-spinner>
+      </div>
+    }
 
 
 
