@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Evolution, Pokemon} from '../../../core/models/pokemon';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 import {MatIcon} from '@angular/material/icon';
-import {Router, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
@@ -35,10 +35,10 @@ export class EvolutionChainComponent implements OnInit {
     const evolutions: any[] = [];
 
     const pokemon_1 : Pokemon | undefined = this.getPokemon(this.evolution_chain?.name);
-    const evolution_1: any = this.evolution_chain?.evolves_to?.[0];
-    const pokemon_2: Pokemon | undefined = this.getPokemon(evolution_1?.name);
-    const evolution_2: any = evolution_1?.evolves_to?.evolves_to?.[0];
-    const pokemon_3: Pokemon | undefined = this.getPokemon(evolution_2?.name);
+    const evolution_1: any                = this.evolution_chain?.evolves_to?.[0];
+    const pokemon_2: Pokemon | undefined  = this.getPokemon(evolution_1?.name);
+    const evolution_2: any                = evolution_1?.evolves_to?.evolves_to?.[0];
+    const pokemon_3: Pokemon | undefined  = this.getPokemon(evolution_2?.name);
 
     if (pokemon_1 && evolution_1) {
       evolutions.push(this.createEvolution(pokemon_1, pokemon_1.game_index));

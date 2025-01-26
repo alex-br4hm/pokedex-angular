@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {PokeDataService} from "../../core/services/poke-data.service";
@@ -80,14 +80,14 @@ export class PokeDetailViewComponent implements OnInit {
   findPokemon() {
     if (this.game_index && this.pokeList) {
       this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
-      
-      if (this.pokemon) {
-        this.name = this.pokemon.name;
-        this.router.navigate(['/pokedex/pokemon', this.game_index, this.name]);
+
+        if (this.pokemon) {
+          this.name = this.pokemon.name;
+          this.router.navigate(['/pokedex/pokemon', this.game_index, this.name]);
+        } else {
+          this.navigateToStart();
+        }
       } else {
-        this.navigateToStart();
-      }
-    } else {
       this.navigateToStart();
     }
   }
