@@ -3,6 +3,13 @@
 @if (anyFilterSet) {
     Filter:
 
+    @if (searchInput) {
+    <span (click)="clearSearchInput()" [matTooltip]="'Suche löschen'">
+      Suche:
+      <b>{{ searchInput }}</b>
+    </span>
+    }
+
     @if (!gen_1) {
       <span class="excluded"
             [matTooltip]="'Filter löschen'"

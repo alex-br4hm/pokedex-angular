@@ -19,6 +19,7 @@ export class FilterDisplayComponent {
   initialFilterValues!: Filter;
   excludedTypes!: string[];
   filterSelection!: Filter;
+  searchInput: string = '';
 
   gen_1: boolean | undefined = true;
   gen_2: boolean | undefined = true;
@@ -36,8 +37,10 @@ export class FilterDisplayComponent {
       this.initialFilterValues = this.pokeDataService.initialFilterValues();
       this.filterSelection     = this.pokeDataService.filterSelection();
       this.excludedTypes       = this.pokeDataService.excludedTypes();
+      this.searchInput         = this.pokeDataService.searchInput();
       this.setInitialValues();
       this.setCurrentFilterValues();
+      this.checkChanges();
     });
   }
 
@@ -65,18 +68,30 @@ export class FilterDisplayComponent {
     this.checkChanges();
   }
 
-  /** Checks if any filter values have changed. */
+  /** Checks if any filter values have changed.
+   *  (heightRange, weightRange, types, generation, searchInput)
+   *  Set 'anyFilterSet'-value to display filter correctly.
+   * */
   checkChanges() {
-    this.heightFilterChange =
+    if (this.filterSelection) {
+      this.heightFilterChange =
         this.heightFilter.max != this.heightFilter.currentEnd ||
         this.heightFilter.min != this.heightFilter.currentStart;
 
-    this.weightFilterChange =
+      this.weightFilterChange =
         this.weightFilter.max != this.weightFilter.currentEnd ||
         this.weightFilter.min != this.weightFilter.currentStart;
 
-    this.anyFilterSet =
-        JSON.stringify(this.filterSelection) !== JSON.stringify(this.initialFilterValues);
+      this.anyFilterSet       = this.isFilterSelectionInitial() || this.searchInput.length > 0;
+    }
+
+    if (this.searchInput.length > 0) {
+      this.anyFilterSet = true;
+    }
+
+    if (this.searchInput.length === 0 && !this.isFilterSelectionInitial()) {
+      this.anyFilterSet = false;
+    }
   }
 
   /**
@@ -89,14 +104,28 @@ export class FilterDisplayComponent {
 
       if (category === 'heightRange') {
         this.filterSelection[category].startValue = this.heightFilter.min ?? 0;
-        this.filterSelection[category].endValue = this.heightFilter.max ?? 0;
+        this.filterSelection[category].endValue   = this.heightFilter.max ?? 0;
       } else if (category === 'weightRange') {
         this.filterSelection[category].startValue = this.weightFilter.min ?? 0;
-        this.filterSelection[category].endValue = this.weightFilter.max ?? 0;
+        this.filterSelection[category].endValue   = this.weightFilter.max ?? 0;
       } else {
         this.filterSelection[category][key] = true;
       }
 
       this.pokeDataService.setFilterSelection(this.filterSelection);
     }
+
+
+  /** Clear searchInput clicking searchInput-Chip */
+  clearSearchInput() {
+    this.pokeDataService.setSearchInput('');
+  }
+
+  /**
+   * returns true if filterSelection and initialFilterValues equal.
+   * returns false if filterSelection and initialFilterValues not equal.
+   */
+  isFilterSelectionInitial() {
+    return JSON.stringify(this.filterSelection) !== JSON.stringify(this.initialFilterValues);
+  }
 }

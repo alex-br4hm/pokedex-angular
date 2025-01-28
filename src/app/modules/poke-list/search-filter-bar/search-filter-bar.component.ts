@@ -25,7 +25,6 @@ export class SearchFilterBarComponent {
   constructor(private pokeDataService: PokeDataService) {
     effect(() => {
       this.searchInput = this.pokeDataService.searchInput();
-      console.log(this.searchInput);
     });
   }
 
