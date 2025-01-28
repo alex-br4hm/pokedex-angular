@@ -1,6 +1,6 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {ApiService} from './api.service';
-import {forkJoin, map, Observable, tap} from 'rxjs';
+import {forkJoin, map, tap} from 'rxjs';
 import {Pokemon, PokemonData} from '../models/pokemon';
 import {FirebaseService} from './firebase.service';
 
