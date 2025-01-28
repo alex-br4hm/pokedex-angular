@@ -5,6 +5,7 @@
 
     @if (!gen_1) {
       <span class="excluded"
+            [matTooltip]="'Filter löschen'"
             (click)="deleteFilter('generation','gen_1')">
         Generation 1
       </span>
@@ -12,13 +13,15 @@
 
     @if (!gen_2) {
       <span class="excluded"
+            [matTooltip]="'Filter löschen'"
             (click)="deleteFilter('generation','gen_2')">
         Generation 2
       </span>
     }
 
     @if (heightFilterChange) {
-      <span (click)="deleteFilter('heightRange','')">
+      <span (click)="deleteFilter('heightRange','')"
+            [matTooltip]="'Filter löschen'">
         {{ heightFilter.currentStart + ' m' }}
         -
         {{ heightFilter.currentEnd+ ' m'}}
@@ -26,7 +29,8 @@
     }
 
    @if (weightFilterChange) {
-     <span (click)="deleteFilter('weightRange','')">
+     <span (click)="deleteFilter('weightRange','')"
+           [matTooltip]="'Filter löschen'">
        {{ filterSelection.weightRange.startValue + ' kg' }}
        -
        {{ filterSelection.weightRange.endValue + ' kg'}}
@@ -34,14 +38,19 @@
    }
 
     @for (type of excludedTypes; track $index) {
-      <span class="excluded {{type}}-chip" (click)="deleteFilter('types', type)">
+      <span class="excluded {{type}}-chip"
+            [matTooltip]="'Filter löschen'"
+            (click)="deleteFilter('types', type)">
         {{ type }}
       </span>
     }
 
 } @else {
   Filter:
-  <span>Keine Filter</span>
+
+  <span class="no-filter-chip">
+    Keine Filter
+  </span>
 }
 
 </div>

@@ -48,8 +48,7 @@ export interface Filter {
     endValue: number;
   };
   generation: {
-    gen_1: boolean;
-    gen_2: boolean;
+    [key: string]: boolean;
   };
 }
 

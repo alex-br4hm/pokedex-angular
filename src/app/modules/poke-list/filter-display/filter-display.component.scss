@@ -21,6 +21,19 @@
     font-size: 12px;
     display: flex;
     align-items: center;
+    gap:4px;
+    position: relative;
+    cursor: pointer;
+    transition: all 75ms ease-in-out;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  .no-filter-chip:hover {
+    cursor: unset;
+    opacity: 1;
   }
 }
 
