@@ -40,16 +40,16 @@ import {
 })
 export class FilterSidebarComponent implements OnInit {
   pokeList!: Pokemon[];
-  minHeight: number = 0;
-  maxHeight: number = 0;
-  minWeight: number = 0;
-  maxWeight: number = 0;
+  minHeight: number  = 0;
+  maxHeight: number  = 0;
+  minWeight: number  = 0;
+  maxWeight: number  = 0;
   isLoading: boolean = true;
 
-  isFormChanged: boolean = false;
+  isFormChanged: boolean        = false;
   isInitialFormChanged: boolean = false;
   sessionFilters?: any;
-  resetDialogOpen: boolean = false;
+  resetDialogOpen: boolean      = false;
   @Input() filterToggled!: boolean;
   @Output() filterToggledChange = new EventEmitter<boolean>();
 
@@ -124,8 +124,8 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   getMinMaxValues() {
-    const weights: number[] = this.pokeList.map(p => p.weight);
-    const heights: number[] = this.pokeList.map(p => p.height);
+    const weights: number[] = this.pokeList.map(pokemon => pokemon.weight);
+    const heights: number[] = this.pokeList.map(pokemon => pokemon.height);
     this.minWeight          = Math.min(...weights) / 10 ;
     this.maxWeight          = Math.max(...weights) / 10;
     this.minHeight          = Math.min(...heights) / 10;
@@ -168,6 +168,7 @@ export class FilterSidebarComponent implements OnInit {
       },
     }
 
+    this.pokeDataService.setInitialFilterValues(this.initialFilterValues);
   }
 
   patchInitialFilterValues() {

@@ -17,9 +17,20 @@ export class PokeDataService {
   pokemonAPIList: Pokemon[] = [];
 
   filterSelection = signal<any>(null);
+  initialFilterValues = signal<any>(null);
+  excludedTypes = signal<any>(null);
 
   setFilterSelection(selection: any) {
+    // console.log('setFilterSelection:', selection);
     this.filterSelection.set(selection);
+  }
+
+  setInitialFilterValues(selection: any) {
+    this.initialFilterValues.set(selection);
+  }
+
+  setExcludedTypes(selection: any) {
+    this.excludedTypes.set(selection);
   }
 
   constructor(

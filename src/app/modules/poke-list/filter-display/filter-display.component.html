@@ -1,0 +1,47 @@
+<div class="filter-wrapper">
+
+@if (anyFilterSet) {
+    Filter:
+
+    @if (!filterSelection.gen_1) {
+      <span class="excluded"
+            (click)="deleteFilter('generation', 'gen_1')">
+        Generation 1
+      </span>
+    }
+
+    @if (!filterSelection.gen_2) {
+      <span class="excluded"
+            (click)="deleteFilter('generation','gen_2')">
+        Generation 2
+      </span>
+    }
+
+    @if (heightFilterChange) {
+      <span (click)="deleteFilter('heightRange', '')">
+        {{ heightFilter.currentStart + ' m' }}
+        -
+        {{ heightFilter.currentEnd+ ' m'}}
+      </span>
+    }
+
+   @if (weightFilterChange) {
+     <span (click)="deleteFilter('weightRange', '')">
+       {{ filterSelection.weightRange.startValue + ' kg' }}
+       -
+       {{ filterSelection.weightRange.endValue + ' kg'}}
+     </span>
+   }
+
+    @for (type of excludedTypes; track $index) {
+      <span class="excluded {{type}}-chip" (click)="deleteFilter('types', type)">
+        {{ type }}
+      </span>
+    }
+
+} @else {
+  Filter:
+  <span>Keine Filter</span>
+}
+
+</div>
