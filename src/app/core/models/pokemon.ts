@@ -37,24 +37,7 @@ export interface Evolution {
 
 export interface Filter {
   types: {
-    Boden: boolean;
-    Drache: boolean;
-    Eis: boolean;
-    Elektro: boolean;
-    Fee: boolean;
-    Feuer: boolean;
-    Flug: boolean;
-    Geist: boolean;
-    Gestein: boolean;
-    Gift: boolean;
-    Käfer: boolean;
-    Kämpfer: boolean;
-    Normal: boolean;
-    Pflanze: boolean;
-    Psycho: boolean;
-    Stahl: boolean;
-    Unlicht: boolean;
-    Wasser: boolean;
+    [key: string]: boolean;
   };
   weightRange: {
     startValue: number;

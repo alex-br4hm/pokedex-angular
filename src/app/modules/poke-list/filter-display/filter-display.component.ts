@@ -11,9 +11,9 @@ import {Filter, FilterRange} from '../../../core/models/pokemon';
 export class FilterDisplayComponent {
   initialFilterValues!: Filter;
   excludedTypes!: string[];
-  filterSelection!: any;
-  gen_1: boolean = true;
-  gen_2: boolean = true;
+  filterSelection!: Filter;
+  gen_1: boolean | undefined = true;
+  gen_2: boolean | undefined = true;
 
   heightFilter: FilterRange = {}
   weightFilter: FilterRange = {}
@@ -73,16 +73,22 @@ export class FilterDisplayComponent {
     this.filterSelection = {...this.filterSelection};
 
     if (category === 'heightRange') {
-      this.filterSelection[category].startValue = this.heightFilter.min;
-      this.filterSelection[category].endValue = this.heightFilter.max;
+      this.filterSelection[category].startValue = this.heightFilter.min ?? 0;
+      this.filterSelection[category].endValue = this.heightFilter.max ?? 0;
     } else if (category === 'weightRange') {
-      this.filterSelection[category].startValue = this.weightFilter.min;
-      this.filterSelection[category].endValue = this.weightFilter.max;
+      this.filterSelection[category].startValue = this.weightFilter.min ?? 0;
+      this.filterSelection[category].endValue = this.weightFilter.max ?? 0;
+    } else if (category === 'generation') {
+      this.filterSelection[category].gen_1 = true;
+      this.filterSelection[category].gen_2 = true;
     } else {
-      this.filterSelection[category] = {... this.filterSelection[category], [key]: true};
+      this.filterSelection.types[key] = true;
     }
 
     this.pokeDataService.setFilterSelection(this.filterSelection);
-  }
+    }
+
+
+
 
 }

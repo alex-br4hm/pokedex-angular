@@ -3,14 +3,14 @@
 @if (anyFilterSet) {
     Filter:
 
-    @if (!filterSelection.gen_1) {
+    @if (!gen_1) {
       <span class="excluded"
-            (click)="deleteFilter('generation', 'gen_1')">
+            (click)="deleteFilter('generation','gen_1')">
         Generation 1
       </span>
     }
 
-    @if (!filterSelection.gen_2) {
+    @if (!gen_2) {
       <span class="excluded"
             (click)="deleteFilter('generation','gen_2')">
         Generation 2
@@ -18,7 +18,7 @@
     }
 
     @if (heightFilterChange) {
-      <span (click)="deleteFilter('heightRange', '')">
+      <span (click)="deleteFilter('heightRange','')">
         {{ heightFilter.currentStart + ' m' }}
         -
         {{ heightFilter.currentEnd+ ' m'}}
@@ -26,7 +26,7 @@
     }
 
    @if (weightFilterChange) {
-     <span (click)="deleteFilter('weightRange', '')">
+     <span (click)="deleteFilter('weightRange','')">
        {{ filterSelection.weightRange.startValue + ' kg' }}
        -
        {{ filterSelection.weightRange.endValue + ' kg'}}
