@@ -117,7 +117,6 @@ export class PokeListComponent implements OnInit {
           .toLowerCase()
           .includes(this.searchInput.toLowerCase())
       );
-    console.log(this.pokeList.length);
   }
 
   filterListAfterSelection() {

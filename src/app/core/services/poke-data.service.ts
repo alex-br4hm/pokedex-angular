@@ -40,7 +40,6 @@ export class PokeDataService {
 
   setSearchInput(searchInput: string) {
     this.searchInput.set(searchInput);
-    console.log(this.searchInput());
   }
 
   /**
