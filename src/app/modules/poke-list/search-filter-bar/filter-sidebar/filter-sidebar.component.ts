@@ -1,14 +1,8 @@
-import {Component, effect, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {MatSlider, MatSliderRangeThumb} from '@angular/material/slider';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatChip} from '@angular/material/chips';
-import {MatButton} from '@angular/material/button';
-import {JsonPipe, NgClass} from '@angular/common';
-import {PokeWeightPipe} from '../../../../shared/utils/poke-weight.pipe';
-import {PokeHeightPipe} from '../../../../shared/utils/poke-height.pipe';
+import {NgClass} from '@angular/common';
 import {Pokemon} from '../../../../core/models/pokemon';
 import {PokeDataService} from '../../../../core/services/poke-data.service';
 import {
@@ -22,15 +16,6 @@ import {
     MatSliderRangeThumb,
     MatCheckbox,
     ReactiveFormsModule,
-    MatFormField,
-    MatSelect,
-    MatOption,
-    MatLabel,
-    MatChip,
-    MatButton,
-    JsonPipe,
-    PokeWeightPipe,
-    PokeHeightPipe,
     FormsModule,
     NgClass,
     CustomLoadingSpinnerComponent
@@ -114,12 +99,15 @@ export class FilterSidebarComponent implements OnInit {
 
   checkFormChanges() {
     if (this.sessionFilters) {
-      this.isInitialFormChanged = JSON.stringify(this.sessionFilters) !== JSON.stringify(this.initialFilterValues);
+      this.isInitialFormChanged =
+        JSON.stringify(this.sessionFilters) !== JSON.stringify(this.initialFilterValues);
     }
 
     this.filterSelections.valueChanges.subscribe(() => {
-      this.isFormChanged = JSON.stringify(this.sessionFilters) !== JSON.stringify(this.filterSelections.value);
-      this.isInitialFormChanged = JSON.stringify(this.filterSelections.value) !== JSON.stringify(this.initialFilterValues);
+      this.isFormChanged =
+        JSON.stringify(this.sessionFilters) !== JSON.stringify(this.filterSelections.value);
+      this.isInitialFormChanged =
+        JSON.stringify(this.filterSelections.value) !== JSON.stringify(this.initialFilterValues);
     });
   }
 

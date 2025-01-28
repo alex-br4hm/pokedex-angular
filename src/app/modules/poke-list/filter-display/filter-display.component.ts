@@ -1,15 +1,11 @@
 import {Component, effect} from '@angular/core';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 import {Filter, FilterRange} from '../../../core/models/pokemon';
-import {MatBadge} from '@angular/material/badge';
-import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-filter-display',
   imports: [
-    MatBadge,
-    MatIcon,
     MatTooltip
   ],
   templateUrl: './filter-display.component.html',

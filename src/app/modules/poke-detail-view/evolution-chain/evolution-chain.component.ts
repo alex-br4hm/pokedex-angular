@@ -3,14 +3,12 @@ import {Evolution, Pokemon} from '../../../core/models/pokemon';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
-import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-evolution-chain',
   imports: [
     MatIcon,
     RouterLink,
-    NgOptimizedImage
   ],
   templateUrl: './evolution-chain.component.html',
   styleUrl: './evolution-chain.component.scss'

@@ -3,7 +3,6 @@ import {
   CustomLoadingSpinnerComponent
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
-import {BaseChartDirective} from 'ng2-charts';
 import {Chart, registerables} from 'chart.js';
 import {Stats} from '../../../core/models/pokemon';
 import {StatNamePipe} from '../../../shared/utils/stat-name.pipe';
@@ -13,7 +12,6 @@ import {StatNamePipe} from '../../../shared/utils/stat-name.pipe';
   imports: [
     CustomLoadingSpinnerComponent,
     NgxChartsModule,
-    BaseChartDirective,
     StatNamePipe,
   ],
   templateUrl: './stats.component.html',

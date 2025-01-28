@@ -2,15 +2,10 @@ import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {PokeDataService} from "../../core/services/poke-data.service";
-import {PokeNumberPipePipe} from "../../shared/utils/poke-number-pipe.pipe";
 import {Pokemon} from '../../core/models/pokemon';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
-import {NgOptimizedImage} from '@angular/common';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {StatsComponent} from './stats/stats.component';
 import {FirebaseService} from '../../core/services/firebase.service';
-import {PokeHeightPipe} from '../../shared/utils/poke-height.pipe';
-import {PokeWeightPipe} from '../../shared/utils/poke-weight.pipe';
 import {VariousInformationComponent} from './various-information/various-information.component';
 import {EvolutionChainComponent} from './evolution-chain/evolution-chain.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -20,14 +15,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   imports: [
     RouterLink,
     MatIcon,
-    PokeNumberPipePipe,
     CustomLoadingSpinnerComponent,
-    NgOptimizedImage,
-    MatTabGroup,
-    MatTab,
     StatsComponent,
-    PokeHeightPipe,
-    PokeWeightPipe,
     VariousInformationComponent,
     EvolutionChainComponent
   ],
