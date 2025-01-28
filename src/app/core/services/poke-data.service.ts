@@ -1,4 +1,4 @@
-import {Injectable, signal} from '@angular/core';
+import {Injectable, signal, WritableSignal} from '@angular/core';
 import {ApiService} from './api.service';
 import {forkJoin, map, Observable, tap} from 'rxjs';
 import {Pokemon, PokemonData} from '../models/pokemon';
@@ -16,12 +16,17 @@ export class PokeDataService {
   pokemon?: Pokemon;
   pokemonAPIList: Pokemon[] = [];
 
-  filterSelection = signal<any>(null);
-  initialFilterValues = signal<any>(null);
-  excludedTypes = signal<any>(null);
+  filterSelection: WritableSignal<any>     = signal<any>(null);
+  initialFilterValues: WritableSignal<any> = signal<any>(null);
+  excludedTypes: WritableSignal<any>       = signal<any>(null);
+  searchInput: WritableSignal<string>      = signal<string>('');
+
+  constructor(
+    private apiService: ApiService,
+    private firestoreService: FirebaseService
+    ) { }
 
   setFilterSelection(selection: any) {
-    // console.log('setFilterSelection:', selection);
     this.filterSelection.set(selection);
   }
 
@@ -33,11 +38,18 @@ export class PokeDataService {
     this.excludedTypes.set(selection);
   }
 
-  constructor(
-    private apiService: ApiService,
-    private firestoreService: FirebaseService
-    ) {
+  setSearchInput(searchInput: string) {
+    this.searchInput.set(searchInput);
+    console.log(this.searchInput());
   }
+
+  /**
+   *
+   * EVERYTHING BELOW THIS POINT IS JUST FOR BUILDING THE DATABASE
+   *
+   * IT'S NOT USED IN PROD
+   *
+   * */
 
   getDataForDB() {
     this.apiService.getData().subscribe({
@@ -74,11 +86,8 @@ export class PokeDataService {
       )
     );
 
-    // Lade alle Basisdaten parallel
     forkJoin(requests).subscribe(pokemonList => {
       this.pokemonAPIList = pokemonList;
-
-      // Lade Details für jedes Pokémon
       this.getPokemonDetails();
     });
   }
@@ -101,11 +110,8 @@ export class PokeDataService {
       )
     );
 
-    // Lade alle Details parallel
     forkJoin(requests).subscribe(() => {
       console.log('Alle Pokémon-Details geladen:', this.pokemonAPIList);
-
-      // Lade die Evolutionsketten
       this.getEvolutionChains();
     });
   }
@@ -120,11 +126,8 @@ export class PokeDataService {
       )
     );
 
-    // Lade alle Evolutionsketten parallel
     forkJoin(requests).subscribe(() => {
 
-
-      // this.savePokemonToFirestore();
     });
   }
 

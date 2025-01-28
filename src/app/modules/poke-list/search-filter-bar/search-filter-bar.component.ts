@@ -1,48 +1,33 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {MatFormField, MatInput} from '@angular/material/input';
+import {Component, effect, EventEmitter, Input, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {
-  MatDrawer,
-  MatDrawerContainer,
-  MatSidenav,
-  MatSidenavContainer,
-  MatSidenavContent
-} from '@angular/material/sidenav';
 import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component';
-import {MatTooltip} from '@angular/material/tooltip';
+import {PokeDataService} from '../../../core/services/poke-data.service';
+
 
 @Component({
   selector: 'app-search-filter-bar',
   imports: [
-    MatInput,
-    MatFormField,
     MatIcon,
     FormsModule,
-    MatIconButton,
-    MatMenuTrigger,
-    MatMenu,
-    MatMenuItem,
-    MatButton,
-    MatDrawer,
-    MatDrawerContainer,
-    MatSidenav,
-    MatSidenavContainer,
-    MatSidenavContent,
-    FilterSidebarComponent,
-    MatTooltip
+    FilterSidebarComponent
   ],
   templateUrl: './search-filter-bar.component.html',
   styleUrl: './search-filter-bar.component.scss'
 })
 export class SearchFilterBarComponent {
-  searchInput: string = '';
-  @Output() searchInputChange = new EventEmitter<string>();
+  @Input() searchInput: string = '';
+  @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
 
   filterToggled: boolean = false;
   isClosing: boolean = false;
+
+  constructor(private pokeDataService: PokeDataService) {
+    effect(() => {
+      this.searchInput = this.pokeDataService.searchInput();
+      console.log(this.searchInput);
+    });
+  }
 
   toggleFilter(open: boolean) {
     if (!open) {
@@ -63,12 +48,13 @@ export class SearchFilterBarComponent {
   }
 
   onSearchInputChange() {
-    this.searchInputChange.emit(this.searchInput);
+    const searchInput = this.searchInput;
+    this.pokeDataService.setSearchInput(searchInput);
     window.scroll({top: 0, behavior: 'smooth'});
   }
 
   deleteSearchInput() {
     this.searchInput = '';
-    this.searchInputChange.emit(this.searchInput);
+    this.pokeDataService.setSearchInput(this.searchInput);
   }
 }

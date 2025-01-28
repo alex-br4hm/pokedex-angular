@@ -1,8 +1,8 @@
-<app-header (searchInputChange)="updateSearchInput($event)"></app-header>
+<app-header></app-header>
 <app-footer></app-footer>
 
 @if (!isLoading) {
-  <app-search-filter-bar (searchInputChange)="updateSearchInput($event)"></app-search-filter-bar>
+  <app-search-filter-bar></app-search-filter-bar>
 
   <div class="amount-wrapper">
     Pokemon: <span>{{ pokeList.length }}</span>

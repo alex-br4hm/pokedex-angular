@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, effect, OnInit, Output} from '@angular/core';
+import {Component, effect, OnInit, Output} from '@angular/core';
 import {HeaderComponent} from '../../core/components/header/header.component';
 import {PokeCardComponent} from './poke-card/poke-card.component';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
@@ -8,11 +8,6 @@ import {FirebaseService} from '../../core/services/firebase.service';
 import {PokeDataService} from '../../core/services/poke-data.service';
 import {Filter, Pokemon} from '../../core/models/pokemon';
 import {SearchFilterBarComponent} from './search-filter-bar/search-filter-bar.component';
-import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
-import {MatButton} from '@angular/material/button';
-import {PokeNumberPipePipe} from '../../shared/utils/poke-number-pipe.pipe';
-import {object} from '@angular/fire/database';
-import {PokeHeightPipe} from '../../shared/utils/poke-height.pipe';
 import {FilterDisplayComponent} from './filter-display/filter-display.component';
 
 @Component({
@@ -25,29 +20,21 @@ import {FilterDisplayComponent} from './filter-display/filter-display.component'
     RouterLink,
     FooterComponent,
     SearchFilterBarComponent,
-    MatDrawerContainer,
-    MatDrawer,
-    MatButton,
-    MatSidenavContainer,
-    MatSidenav,
-    MatSidenavContent,
-    PokeNumberPipePipe,
-    PokeHeightPipe,
     FilterDisplayComponent,
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
 })
 export class PokeListComponent implements OnInit {
-  searchInput: string = '';
+  @Output() searchInput: string = '';
+
   isLoading: boolean = true;
   pokeList!: Pokemon[];
   initialPokeList: Pokemon[] = [];
 
-  sessionFilter?: string | null;
-  @Output() filterSelection!: any;
+  @Output() filterSelection!: Filter;
+  initialFilterValues!: Filter;
   @Output() excludedTypes!: string[];
-
 
   constructor(
     private fireBaseService: FirebaseService,
@@ -56,46 +43,22 @@ export class PokeListComponent implements OnInit {
 
     effect(() => {
       this.filterSelection = this.pokeDataService.filterSelection();
-      console.log('in der Liste:', this.filterSelection);
-      if (this.filterSelection) {
-        this.filterListAfterSelection();
-      }
+      this.initialFilterValues = this.pokeDataService.initialFilterValues();
+      this.searchInput = this.pokeDataService.searchInput();
+      this.updateSearchInput();
+      this.filterListAfterSelection();
     });
   }
 
-
   ngOnInit() {
     this.isLoading = true;
-    this.loadFromLocalStorage();
-    this.checkFilterSelection();
-
-    // only for building database
-    // this.pokeDataService.getDataForDB();
+    this.loadData();
   }
 
-  checkFilterSelection() {
-    this.sessionFilter = sessionStorage.getItem('filterSelections');
-    if (this.sessionFilter) {
-      this.filterSelection = (JSON.parse(this.sessionFilter));
-      this.filterListAfterSelection();
-    }
-  }
-
-  saveInLocalStorage() {
-    if (this.pokeList) {
-      localStorage.setItem('pokemonList', JSON.stringify(this.pokeList));
-    } else {
-      console.error("Pokémon-Liste ist leer oder nicht definiert.");
-    }
-  }
-
-  loadFromLocalStorage() {
-    const storedList = localStorage.getItem('pokemonList');
+  loadData() {
+    const storedList: string | null = localStorage.getItem('pokemonList');
     if (storedList) {
-      this.pokeList = JSON.parse(storedList);
-      this.initialPokeList = this.pokeList;
-      this.pokeDataService.$pokemonList = this.initialPokeList;
-      this.changeLoadingState();
+      this.loadFromLocalStorage(storedList);
     } else {
       this.getDataFromDB();
     }
@@ -104,10 +67,10 @@ export class PokeListComponent implements OnInit {
   getDataFromDB() {
     this.fireBaseService.getPokemon().subscribe({
       next: data => {
-        this.pokeList = data.sort((a, b) => a.game_index - b.game_index);
-        this.saveInLocalStorage();
-        this.initialPokeList = this.pokeList;
+        this.pokeList                     = data.sort((a, b) => a.game_index - b.game_index);
+        this.initialPokeList              = this.pokeList;
         this.pokeDataService.$pokemonList = this.initialPokeList;
+        this.saveInLocalStorage();
         this.changeLoadingState();
       },
       error: error => {
@@ -117,57 +80,65 @@ export class PokeListComponent implements OnInit {
     });
   }
 
+  saveInLocalStorage() {
+    if (this.pokeList) {
+      localStorage.setItem('pokemonList', JSON.stringify(this.pokeList));
+    } else {
+      console.warn("Pokémon-Liste ist leer oder nicht definiert.");
+    }
+  }
+
+  loadFromLocalStorage(storedList: string) {
+    this.pokeList                     = JSON.parse(storedList);
+    this.initialPokeList              = this.pokeList;
+    this.pokeDataService.$pokemonList = this.initialPokeList;
+    this.changeLoadingState();
+  }
+
   changeLoadingState() {
     setTimeout(() => {
       this.isLoading = false;
     }, 500);
   }
 
-  updateSearchInput(newInput: string) {
-    this.searchInput = newInput;
-    this.filterPokeList();
+  updateSearchInput() {
+    if (this.searchInput.length > 0) {
+      this.filterPokeList();
+    } else {
+      this.pokeList = this.initialPokeList;
+    }
   }
 
   filterPokeList() {
-    if (this.searchInput.length > 0) {
-      this.pokeList = this.initialPokeList;
-      this.filterListAfterSelection();
-      this.pokeList = this.pokeList.filter(pokemon =>
-        pokemon.name.toLowerCase().includes(this.searchInput.toLowerCase())
+    this.pokeList = this.initialPokeList;
+    this.pokeList =
+      this.pokeList.filter(pokemon =>
+        pokemon.name
+          .toLowerCase()
+          .includes(this.searchInput.toLowerCase())
       );
-
-      this.changeLoadingState();
-    } else {
-        this.pokeList = [];
-        this.loadFromLocalStorage();
-        this.checkFilterSelection();
-        this.filterListAfterSelection();
-    }
+    console.log(this.pokeList.length);
   }
 
   filterListAfterSelection() {
-    if (!this.filterSelection) {
-      return;
-    }
-
-    this.pokeList = [];
+    if (!this.filterSelection) return;
 
     const types: string[]   = Object.keys(this.filterSelection.types);
-    this.excludedTypes    = types.filter(type => !this.filterSelection.types[type]);
+    this.excludedTypes      = types.filter(type => !this.filterSelection.types[type]);
     const maxHeight: number = this.filterSelection.heightRange.endValue;
     const minHeight: number = this.filterSelection.heightRange.startValue;
     const maxWeight: number = this.filterSelection.weightRange.endValue;
     const minWeight: number = this.filterSelection.weightRange.startValue;
-    const gen_1: boolean    = this.filterSelection.generation.gen_1;
-    const gen_2: boolean    = this.filterSelection.generation.gen_2;
+    const gen_1: boolean    = this.filterSelection.generation['gen_1'];
+    const gen_2: boolean    = this.filterSelection.generation['gen_2'];
 
     this.pokeDataService.setExcludedTypes(this.excludedTypes);
 
-    this.pokeList = this.initialPokeList.filter(pokemon => {
+    this.pokeList = this.pokeList.filter(pokemon => {
       const pokeHeight: number = pokemon.height / 10;
       const pokeWeight: number = pokemon.weight / 10;
-
       const hasExcludedType = pokemon.types_ger.some(type => this.excludedTypes.includes(type));
+
       if (hasExcludedType) {
         return false;
       }
@@ -188,7 +159,7 @@ export class PokeListComponent implements OnInit {
         return false;
       }
 
-      return true;
+        return true;
     });
   }
 }
