@@ -120,8 +120,8 @@ export class PokeListComponent implements OnInit {
   filterListAfterSelection() {
     if (!this.filterSelection) return;
 
-    const types: string[]   = Object.keys(this.filterSelection.types);
-    this.excludedTypes      = types.filter(type => !this.filterSelection.types[type]);
+    const types: any        = Object.keys(this.filterSelection.types);
+    this.excludedTypes      = types.filter((type: any) => !this.filterSelection.types[type]);
     const maxHeight: number = this.filterSelection.heightRange.endValue;
     const minHeight: number = this.filterSelection.heightRange.startValue;
     const maxWeight: number = this.filterSelection.weightRange.endValue;

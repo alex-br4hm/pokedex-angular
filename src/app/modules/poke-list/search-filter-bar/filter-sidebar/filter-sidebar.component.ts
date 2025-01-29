@@ -3,7 +3,7 @@ import {MatSlider, MatSliderRangeThumb} from '@angular/material/slider';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {Pokemon} from '../../../../core/models/pokemon';
+import {Filter, Pokemon} from '../../../../core/models/pokemon';
 import {PokeDataService} from '../../../../core/services/poke-data.service';
 import {
   CustomLoadingSpinnerComponent
@@ -33,14 +33,15 @@ export class FilterSidebarComponent implements OnInit {
 
   isFormChanged: boolean        = false;
   isInitialFormChanged: boolean = false;
-  sessionFilters?: any;
   resetDialogOpen: boolean      = false;
+  sessionFilters?: any;
+
   @Input() filterToggled!: boolean;
   @Output() filterToggledChange = new EventEmitter<boolean>();
 
   _formBuilder = inject(FormBuilder);
 
-  initialFilterValues = {};
+  initialFilterValues!: Filter;
 
   constructor(private pokeDataService: PokeDataService) {
   }
@@ -167,7 +168,8 @@ export class FilterSidebarComponent implements OnInit {
   useFilterSelection() {
     document.body.style.overflow = 'unset';
     this.filterToggledChange.emit(false);
-    this.pokeDataService.setFilterSelection(this.filterSelections.value);
+    const filterSelections = JSON.stringify(this.filterSelections.value);
+    this.pokeDataService.setFilterSelection(JSON.parse(filterSelections));
     window.scroll({top: 0, behavior: 'smooth'});
   }
 
