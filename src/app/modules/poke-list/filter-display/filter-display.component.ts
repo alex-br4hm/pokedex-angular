@@ -17,8 +17,8 @@ import {MatTooltip} from '@angular/material/tooltip';
  */
 export class FilterDisplayComponent {
   initialFilterValues!: Filter;
-  excludedTypes!: string[];
   filterSelection!: Filter;
+  excludedTypes!: string[];
   searchInput: string = '';
 
   gen_1: boolean | undefined = true;
@@ -74,13 +74,12 @@ export class FilterDisplayComponent {
    * */
   checkChanges() {
     if (this.filterSelection) {
-      this.heightFilterChange =
-        this.heightFilter.max != this.heightFilter.currentEnd ||
-        this.heightFilter.min != this.heightFilter.currentStart;
+      this.heightFilterChange = this.heightFilter.max != this.heightFilter.currentEnd ||
+                                this.heightFilter.min != this.heightFilter.currentStart;
 
-      this.weightFilterChange =
-        this.weightFilter.max != this.weightFilter.currentEnd ||
-        this.weightFilter.min != this.weightFilter.currentStart;
+
+      this.weightFilterChange = this.weightFilter.max != this.weightFilter.currentEnd ||
+                                this.weightFilter.min != this.weightFilter.currentStart;
 
       this.anyFilterSet       = this.isFilterSelectionInitial() || this.searchInput.length > 0;
     }
@@ -96,6 +95,7 @@ export class FilterDisplayComponent {
 
   /**
    * Resets a specific filter category to its initial values.
+   * Need to set new reference for signal.
    * @param {keyof Filter} category - The filter category to reset.
    * @param {string} key - The key of the specific filter within the category.
    */
