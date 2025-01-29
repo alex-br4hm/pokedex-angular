@@ -56,11 +56,17 @@
 
   .evolution-container {
     width: 100%;
+    flex-direction: column;
+    gap: 12px;
     .evolution-stage-container {
       img {
         height: 15vh;
       }
     }
+  }
+
+  mat-icon {
+    transform: rotate(90deg);
   }
 }
 
@@ -74,18 +80,11 @@
   }
 
   .evolution-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     .evolution-stage-container {
       img {
         height: 20vh;
       }
     }
-  }
-
-  mat-icon {
-    transform: rotate(90deg);
   }
 }
 

@@ -8,7 +8,6 @@ import {FirebaseService} from '../../core/services/firebase.service';
 import {PokeDataService} from '../../core/services/poke-data.service';
 import {Filter, Pokemon} from '../../core/models/pokemon';
 import {SearchFilterBarComponent} from './search-filter-bar/search-filter-bar.component';
-import {FilterDisplayComponent} from './filter-display/filter-display.component';
 
 @Component({
   selector: 'app-poke-list',
@@ -20,7 +19,6 @@ import {FilterDisplayComponent} from './filter-display/filter-display.component'
     RouterLink,
     FooterComponent,
     SearchFilterBarComponent,
-    FilterDisplayComponent,
   ],
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.scss'
