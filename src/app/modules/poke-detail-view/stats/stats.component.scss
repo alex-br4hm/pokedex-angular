@@ -55,7 +55,36 @@
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
     }
+  }
+}
 
+@media (max-width: 1170px) {
+  .chart-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats-table-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 680px) {
+  .chart-container {
+  padding: 12px;
+  }
+  .stats-chart {
+    width: 40%;
+    max-width: 320px;
+    min-width: 200px;
+  }
+
+  .stats-table-container {
+    font-size:14px;
+    width: 100%;
+    h3 {
+      font-size: 14px;
+    }
   }
 }
 
