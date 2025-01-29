@@ -75,16 +75,17 @@ input:focus::placeholder {
   align-items: center;
   gap:6px;
   color: lightgray;
+  background-color: rgba(255, 255, 255, 0.25);
   font-weight: 500;
-  padding: 8px 12px;
+  padding: 8px 20px;
   border-radius: 24px;
   cursor: pointer;
-  transition: all 125ms ease-in-out;
+  transition: all 75ms ease-in;
   margin-top: 3px;
-
+  opacity: 0.9;
   &:hover {
-    background-color: rgba(32, 32, 32, 1);
-    color: whitesmoke;
+    opacity: 1;
+    padding: 8px 24px;
   }
 }
 
