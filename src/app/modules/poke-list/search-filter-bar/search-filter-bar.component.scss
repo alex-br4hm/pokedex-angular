@@ -122,6 +122,12 @@ input:focus::placeholder {
   }
 }
 
+@media (max-width: 720px) {
+  .settings-container {
+    width: 100%;
+  }
+}
+
 
 @keyframes slideIn {
   from {

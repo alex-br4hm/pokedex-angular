@@ -1,8 +1,7 @@
 <div class="input-wrapper">
   @if (searchInput.length > 0) {
     <mat-icon class="delete-icon" (click)="deleteSearchInput()">close</mat-icon>
-  }
-  @else {
+  } @else {
     <mat-icon class="placeholder-icon">search</mat-icon>
   }
 
@@ -19,6 +18,7 @@
     <span>Filter</span>
   </div>
 </div>
+
 
 @if (filterToggled) {
     <div class="settings-close-helper"
