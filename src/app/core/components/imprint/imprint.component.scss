@@ -6,13 +6,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
+.icon-wrapper {
+  width: 50%;
+  display: flex;
+  justify-content: end;
 }
 
 mat-icon {
-  position: absolute;
-  right: 0;
-  top:-50%;
+  text-align: start;
   font-size: 48px;
   padding:40px;
   display: flex;
@@ -32,11 +35,54 @@ mat-icon {
   padding:40px;
   border-radius: 12px;
   position: relative;
+
   h2 {
     margin-top: 0;
   }
 
   a {
     color:whitesmoke;
+  }
+
+  .copyright-wrapper {
+    display: flex;
+    align-items: center;
+    gap:6px;
+    text-transform: uppercase;
+    margin-bottom:1.5em;
+  }
+
+  span {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .imprint-container {
+    width: 80% !important;
+  }
+
+  .icon-wrapper {
+    width: 80%;
+  }
+}
+
+@media (max-width: 520px) {
+  :host {
+    justify-content: start;
+  }
+
+  .imprint-container {
+    width: 90% !important;
+  }
+
+  .icon-wrapper {
+    width: 90%;
+  }
+}
+
+@media (max-width: 420px) {
+  .imprint-container {
+    padding:32px 16px !important;
   }
 }
