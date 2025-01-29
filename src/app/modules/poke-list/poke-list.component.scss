@@ -79,7 +79,24 @@ table {
 @media screen and (max-width: 580px) {
   .grid-container {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap:12px;
+    width: 85%;
   }
+}
+
+@media (max-width: 420px) {
+
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  app-poke-card {
+    width: 80%;
+  }
+
+
 }
 
 
