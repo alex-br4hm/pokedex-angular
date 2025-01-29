@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 
-
 @Component({
   selector: 'app-search-filter-bar',
   imports: [
