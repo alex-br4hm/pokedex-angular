@@ -69,15 +69,15 @@
   }
 }
 
+@media (max-width: 920px) {
+  :host {
+    width: 80%;
+  }
+}
+
 @media (max-width: 680px) {
   .chart-container {
     padding: 12px;
-  }
-
-  .stats-chart {
-    width: 40%;
-    max-width: 320px;
-    min-width: 200px;
   }
 
   .stats-table-container {
@@ -86,6 +86,22 @@
     h3 {
       font-size: 14px;
     }
+  }
+}
+
+@media (max-width: 620px) {
+  :host {
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 580px) {
+  .stats-chart {
+    min-width: 240px;
   }
 }
 

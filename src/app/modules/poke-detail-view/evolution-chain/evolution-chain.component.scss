@@ -11,7 +11,7 @@
   border-radius: 12px;
   padding: 24px;
 
-  .evolution-container-second {
+  .evolution-stage-container {
     flex:1;
     display: flex;
     flex-direction: column;
@@ -36,6 +36,56 @@
   }
   h3 {
     margin:0;
+  }
+}
+
+@media (max-width: 1124px) {
+  .evolution-container {
+    .evolution-stage-container {
+      img {
+        height: 15vh;
+      }
+    }
+  }
+}
+
+@media (max-width: 920px) {
+  :host {
+    width: 80%;
+  }
+
+  .evolution-container {
+    width: 100%;
+    .evolution-stage-container {
+      img {
+        height: 15vh;
+      }
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  :host {
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .evolution-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .evolution-stage-container {
+      img {
+        height: 20vh;
+      }
+    }
+  }
+
+  mat-icon {
+    transform: rotate(90deg);
   }
 }
 

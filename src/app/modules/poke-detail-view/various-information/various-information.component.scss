@@ -51,3 +51,23 @@
 p {
   width: 75%;
 }
+
+@media (max-width: 920px) {
+  :host {
+    width: 80%;
+  }
+}
+
+@media (max-width: 620px) {
+  :host {
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .basic-info-wrapper {
+    font-size: 12px;
+  }
+}
