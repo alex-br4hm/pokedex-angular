@@ -22,8 +22,16 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'imprint',
+    loadComponent: () =>
+      import('./core/components/imprint/imprint.component').then(
+        m => m.ImprintComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'pokedex',
-    pathMatch: 'full'},
+    pathMatch: 'full'
+  },
 
 ];

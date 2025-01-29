@@ -1,0 +1,42 @@
+:host {
+  width: 100%;
+  height: 100vh;
+  color:whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+mat-icon {
+  position: absolute;
+  right: 0;
+  top:-50%;
+  font-size: 48px;
+  padding:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 75ms ease;
+
+  &:hover {
+    transform: translateX(-10%);
+  }
+}
+
+.imprint-container {
+  width: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding:40px;
+  border-radius: 12px;
+  position: relative;
+  h2 {
+    margin-top: 0;
+  }
+
+  a {
+    color:whitesmoke;
+  }
+}
