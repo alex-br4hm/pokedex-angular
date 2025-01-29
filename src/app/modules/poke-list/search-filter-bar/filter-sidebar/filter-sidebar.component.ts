@@ -168,6 +168,7 @@ export class FilterSidebarComponent implements OnInit {
     document.body.style.overflow = 'unset';
     this.filterToggledChange.emit(false);
     this.pokeDataService.setFilterSelection(this.filterSelections.value);
+    window.scroll({top: 0, behavior: 'smooth'});
   }
 
   openResetDialog() {

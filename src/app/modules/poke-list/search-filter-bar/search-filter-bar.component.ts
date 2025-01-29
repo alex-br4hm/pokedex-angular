@@ -3,13 +3,15 @@ import {MatIcon} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
 import {FilterSidebarComponent} from './filter-sidebar/filter-sidebar.component';
 import {PokeDataService} from '../../../core/services/poke-data.service';
+import {FilterDisplayComponent} from '../filter-display/filter-display.component';
 
 @Component({
   selector: 'app-search-filter-bar',
   imports: [
     MatIcon,
     FormsModule,
-    FilterSidebarComponent
+    FilterSidebarComponent,
+    FilterDisplayComponent
   ],
   templateUrl: './search-filter-bar.component.html',
   styleUrl: './search-filter-bar.component.scss'

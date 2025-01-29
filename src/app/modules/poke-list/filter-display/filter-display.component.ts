@@ -119,6 +119,7 @@ export class FilterDisplayComponent {
   /** Clear searchInput clicking searchInput-Chip */
   clearSearchInput() {
     this.pokeDataService.setSearchInput('');
+    this.anyFilterSet = false;
   }
 
   /**

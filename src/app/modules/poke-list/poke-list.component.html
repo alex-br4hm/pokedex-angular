@@ -8,8 +8,6 @@
     Pokemon: <span>{{ pokeList.length }}</span>
   </div>
 
-  <app-filter-display></app-filter-display>
-
   @if (pokeList.length > 0) {
   <div class="grid-container">
           @for (card of pokeList; track card.game_index) {
