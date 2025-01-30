@@ -13,21 +13,19 @@
   border-radius: 12px;
 }
 
-
 .poke-detail-row-wrapper {
   display: flex;
   width: 100%;
-  gap:16px;
+  gap: 16px;
 }
 
 .poke-detail-row {
-  //border-bottom: 1px solid rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   align-items: start;
-  flex:1;
-  span {
+  flex: 1;
 
+  span {
   }
 
   h3 {
@@ -37,8 +35,8 @@
 
 .poke-type-wrapper {
   display: flex;
-  gap:8px;
-  margin-top:12px;
+  gap: 8px;
+  margin-top: 12px;
 
   .poke-detail-type {
     font-weight: bold;

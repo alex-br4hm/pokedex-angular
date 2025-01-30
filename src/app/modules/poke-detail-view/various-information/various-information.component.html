@@ -1,48 +1,45 @@
-@if (pokemon) {
-  <h2>Informationen</h2>
+<h2>Informationen</h2>
 
-  <div class="basic-info-wrapper">
-
-    <div class="poke-detail-row-wrapper">
-      <div class="poke-detail-row">
-        <span>Gattung</span>
-        <h3>{{ pokemon.genera }}</h3>
+<div class="basic-info-wrapper">
+  @if (pokemon) {
+      <div class="poke-detail-row-wrapper">
+          <div class="poke-detail-row">
+              <span>Gattung</span>
+              <h3>{{ pokemon.genera }}</h3>
+          </div>
+          <div class="poke-detail-row">
+              <span>Höhe</span>
+              <h3>{{ pokemon.height | pokeHeight }}</h3>
+          </div>
       </div>
-      <div class="poke-detail-row">
-        <span>Höhe</span>
-        <h3>{{ pokemon.height | pokeHeight }}</h3>
+
+      <div class="poke-detail-row-wrapper">
+          <div class="poke-detail-row">
+              <span>Gewicht</span>
+              <h3>{{ pokemon.weight | pokeWeight }}</h3>
+          </div>
+          <div class="poke-detail-row">
+              <span>Poke-Index</span>
+              <h3>{{ pokemon.game_index | pokeNumberPipe }}</h3>
+          </div>
       </div>
-    </div>
 
-    <div class="poke-detail-row-wrapper">
-      <div class="poke-detail-row">
-        <span>Gewicht</span>
-        <h3>{{ pokemon.weight | pokeWeight }}</h3>
+      <div class="poke-detail-row-wrapper poke-type-wrapper">
+          <span class="poke-detail-type {{ pokemon.types_en[0] }}-chip">
+            {{ pokemon.types_ger[0] }}
+          </span>
+
+        @if (pokemon.types_ger[1]) {
+          <span class="poke-detail-type {{ pokemon.types_en[1] }}-chip">
+            {{ pokemon.types_ger[1] }}
+          </span>
+        }
       </div>
-      <div class="poke-detail-row">
-        <span>Poke-Index</span>
-        <h3>{{ pokemon.game_index | pokeNumberPipe }}</h3>
-      </div>
-    </div>
 
-    <!--#############-->
-    <!--    TYPES    -->
-    <!--#############-->
+      <p>{{ pokemon.info_texts[0] }}</p>
 
-    <div class="poke-detail-row-wrapper poke-type-wrapper">
-      <span class="poke-detail-type {{ pokemon.types_en[0] }}-chip">
-        {{ pokemon.types_ger[0] }}
-      </span>
 
-      @if (pokemon.types_ger[1]) {
-        <span class="poke-detail-type {{ pokemon.types_en[1] }}-chip">
-          {{ pokemon.types_ger[1] }}
-        </span>
-      }
-    </div>
-
-    <p>{{ pokemon.info_texts[0] }}</p>
-
-  </div>
-}
-
+  } @else {
+    <p>Keine Informationen vorhanden.</p>
+  }
+</div>
