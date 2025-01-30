@@ -31,7 +31,7 @@ export class PokeDetailViewComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private firebaseService: FirebaseService,
     private pokeDataService: PokeDataService,
@@ -42,41 +42,54 @@ export class PokeDetailViewComponent implements OnInit {
     this.loadPokemon();
   }
 
+  /**
+   * Loads the Pokemon data based on the route parameters.
+   * Retrieves the Pokemon list either from the data service or Firebase.
+   */
   loadPokemon() {
-    this.route.params
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(params => {
-        this.game_index = +params['game_index'];
-        this.name = params['name'];
-        if (this.pokeDataService.$pokemonList) {
-          this.pokeList = this.pokeDataService.$pokemonList;
-          this.findPokemon();
-        } else {
-          this.firebaseService.getPokemon()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-              next: data => {
-                this.pokeList = data;
-                this.findPokemon();
-              },
-              error: Error => {
-                console.log(Error)
-              }});
-        }
-      });
+    this.activatedRoute.params.pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(params => {
+      this.game_index = +params['game_index'];
+      this.name       = params['name'];
+
+      if (this.pokeDataService.$pokemonList) {
+        this.pokeList = this.pokeDataService.$pokemonList;
+        this.findPokemon();
+      } else {
+        this.firebaseService.getPokemon().pipe(
+          takeUntilDestroyed(this.destroyRef)
+        ).subscribe({
+          next: data => {
+            this.pokeList = data;
+            this.findPokemon();
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+      }
+    });
   }
 
+  /**
+   * Finds a specific Pokemon from the list based on the game index.
+   * If found, navigates to the detailed view of the Pokemon.
+   * If not found, navigates back to the start.
+   */
   findPokemon() {
     if (this.game_index && this.pokeList) {
-      this.pokemon = this.pokeList.find(entry => entry.game_index === this.game_index);
+      this.pokemon = this.pokeList.find(
+        pokemon => pokemon.game_index === this.game_index
+      );
 
-        if (this.pokemon) {
-          this.name = this.pokemon.name;
-          this.router.navigate(['/pokedex/pokemon', this.game_index, this.name]);
-        } else {
-          this.navigateToStart();
-        }
+      if (this.pokemon) {
+        this.name = this.pokemon.name;
+        this.router.navigate(['/pokedex/pokemon', this.game_index, this.name]);
       } else {
+        this.navigateToStart();
+      }
+    } else {
       this.navigateToStart();
     }
   }
