@@ -4,7 +4,7 @@
 
 .chart-container {
   width: 100%;
-  gap:5%;
+  gap: 5%;
   display: flex;
   align-items: center;
   position: relative;
@@ -17,6 +17,7 @@
   width: 40%;
   min-width: 360px;
   aspect-ratio: 1 / 1;
+
   #radarChart {
     width: 100% !important;
   }
@@ -26,9 +27,10 @@
   display: flex;
   width: 42.5%;
   height: 100%;
+
   .stats-table {
-    flex:1;
-    gap:4px;
+    flex: 1;
+    gap: 4px;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
@@ -81,8 +83,9 @@
   }
 
   .stats-table-container {
-    font-size:14px;
+    font-size: 14px;
     width: 100%;
+
     h3 {
       font-size: 14px;
     }
@@ -104,5 +107,3 @@
     min-width: 240px;
   }
 }
-
-

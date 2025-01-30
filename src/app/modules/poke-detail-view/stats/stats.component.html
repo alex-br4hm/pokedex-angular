@@ -1,25 +1,23 @@
 <h2>Stats</h2>
-
 <div class="chart-container">
 
   @if (stats) {
-
     <div class="stats-table-container">
-      <div class="stats-table">
-        @for (stat of stats; track $index) {
-          <div class="stats-row">
-            <span>{{ stat.name | statName }}</span>
-            <h3> {{ stat.value }}</h3>
-          </div>
-        }
-      </div>
+        <div class="stats-table">
+            @for (stat of stats; track $index) {
+              <div class="stats-row">
+                  <span>{{ stat.name | statName }}</span>
+                  <h3> {{ stat.value }}</h3>
+              </div>
+            }
+        </div>
     </div>
 
     <div class="stats-chart">
-      <canvas id="radarChart"></canvas>
+        <canvas id="radarChart"></canvas>
     </div>
-
-  } @else {
+  }
+  @else {
     <app-custom-loading-spinner></app-custom-loading-spinner>
   }
 
