@@ -14,63 +14,81 @@ import {RouterLink} from '@angular/router';
   styleUrl: './evolution-chain.component.scss'
 })
 export class EvolutionChainComponent implements OnInit {
-  @Input() evolution_chain: any;
-  @Input() evolution_chain_url: string | undefined;
+  @Input() evolution_chain!: Evolution;
   @Output() scrollToTopEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  pokeList: Pokemon[] = [];
-  evolutions: Evolution[] = [];
+  pokeList: Pokemon[]         = [];
+  evolutionsList: Evolution[] = [];
 
-    constructor(private pokeDataService: PokeDataService) {
-    }
+  pokemon_1: Pokemon | undefined;
+  pokemon_2: Pokemon | undefined;
+  pokemon_3: Pokemon | undefined;
+  evolution_1: any | undefined;
+  evolution_2: Evolution | undefined;
+
+  constructor(private pokeDataService: PokeDataService) {}
 
   ngOnInit() {
     this.pokeList = this.pokeDataService.$pokemonList;
-    this.getEvolution();
+    this.getEvolution()
   }
 
+  /**
+   * Retrieves the evolution steps of a Pokémon and adds them to the `evolutionsList` for display.
+   * This includes the first, second, and third evolutions (if available).
+   *
+   * @returns {void} The method updates the `evolutionsList` in place.
+   */
   getEvolution() {
-    const evolutions: any[] = [];
+      this.pokemon_1   = this.getPokemon(this.evolution_chain?.name);
+      this.evolution_1 = this.evolution_chain?.evolves_to?.[0];
+      this.pokemon_2   = this.getPokemon(this.evolution_1?.name);
 
-    const pokemon_1 : Pokemon | undefined = this.getPokemon(this.evolution_chain?.name);
-    const evolution_1: any                = this.evolution_chain?.evolves_to?.[0];
-    const pokemon_2: Pokemon | undefined  = this.getPokemon(evolution_1?.name);
-    const evolution_2: any                = evolution_1?.evolves_to?.evolves_to?.[0];
-    const pokemon_3: Pokemon | undefined  = this.getPokemon(evolution_2?.name);
-
-    if (pokemon_1 && evolution_1) {
-      evolutions.push(this.createEvolution(pokemon_1, pokemon_1.game_index));
+    if (this.evolution_1?.evolves_to?.evolves_to) {
+      this.evolution_2 = this.evolution_1.evolves_to.evolves_to[0];
+      this.pokemon_3   = this.getPokemon(this.evolution_2?.name);
     }
 
-    if (pokemon_2 && evolution_1) {
-      evolutions.push(this.createEvolution(pokemon_2, pokemon_2.game_index));
+    if (this.pokemon_1 && this.evolution_1) {
+      this.evolutionsList.push(this.createEvolution(this.pokemon_1));
     }
 
-    if (pokemon_3 && evolution_2) {
-      evolutions.push(this.createEvolution(pokemon_3, pokemon_3.game_index));
+    if (this.pokemon_2 && this.evolution_1) {
+      this.evolutionsList.push(this.createEvolution(this.pokemon_2));
     }
 
-    this.evolutions = evolutions.filter(evo => evo !== null);
+    if (this.pokemon_3 && this.evolution_2) {
+      this.evolutionsList.push(this.createEvolution(this.pokemon_3));
+    }
   }
 
-  createEvolution(pokemon: Pokemon | undefined, game_index: number | undefined = undefined): any {
-    if (!pokemon) return null;  // Kein Pokemon gefunden
+  /**
+   * Creates an evolution object from the given Pokémon.
+   *
+   * @param {Pokemon} pokemon - The Pokémon to create the evolution step for.
+   * @returns {Evolution} The evolution object containing the Pokémon's name, image URL, and game index.
+   */
+  createEvolution(pokemon: Pokemon): Evolution {
     return {
-      name: pokemon.name,
-      img_url: pokemon.img_url,
-      game_index: game_index || null,
+      name:       pokemon.name,
+      img_url:    pokemon.img_url,
+      game_index: pokemon.game_index,
     };
   }
 
+  /**
+   * Retrieves a Pokémon from the list based on the provided name.
+   *
+   * @param {string | undefined} path - The name of the Pokémon to search for.
+   * @returns {Pokemon | undefined} The Pokémon object if found, or `undefined` if no Pokémon matches the given name.
+   */
   getPokemon(path: string | undefined): Pokemon | undefined {
-    if (path) {
-      return this.pokeList.find(pokemon => pokemon.name_en === path);
-    }
-    return undefined;
+    if (!path) return undefined;
+
+    return this.pokeList.find(pokemon => pokemon.name_en === path);
   }
 
   triggerScrollToTop(): void {
     this.scrollToTopEvent.emit();
   }
-
 }
