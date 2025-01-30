@@ -19,7 +19,7 @@ export interface Pokemon {
   height:              number;
   genera:              string;
   evolution_chain_url: string;
-  evolution_chain?:    Evolution[];
+  evolution_chain:     Evolution;
 }
 
 export interface Stats {
@@ -29,9 +29,10 @@ export interface Stats {
 }
 
 export interface Evolution {
+  name:        string;
   game_index:  number;
   img_url:     string;
-  name:        string;
+  trigger?:    string;
   evolves_to?: Evolution[];
 }
 
