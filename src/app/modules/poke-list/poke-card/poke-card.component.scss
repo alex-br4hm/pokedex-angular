@@ -1,7 +1,7 @@
 :host {
-  flex:1;
+  flex: 1;
   height: 100%;
-  color:white;
+  color: white;
   user-select: none;
 }
 
@@ -13,14 +13,14 @@
 }
 
 mat-card {
-  flex:1;
+  flex: 1;
   transition: scale 75ms ease-in;
 
   &:hover {
     cursor: pointer;
 
     img {
-      scale: 1;
+      scale: 1.01;
       opacity: 1;
     }
 
@@ -38,9 +38,9 @@ mat-card {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
   padding-bottom: 16px;
-  gap:4px;
+  gap: 4px;
 }
 
 .mat-mdc-card-title {
@@ -70,7 +70,7 @@ img {
 
 .img-loading-placeholder {
   position: absolute;
-  top:0;
+  top: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
@@ -80,9 +80,9 @@ img {
 }
 
 .mat-mdc-card-content {
-  padding-top:16px;
+  padding-top: 16px;
   display: flex;
-  flex:1;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -91,7 +91,7 @@ img {
   padding: 16px 0;
   display: flex;
   justify-content: space-evenly;
-  gap:8px;
+  gap: 8px;
 }
 
 .poke-type {
@@ -106,8 +106,7 @@ img {
 
 .loading-placeholder {
   width: 100%;
-  min-width: 300px;
-  height: 400px;
+  height: 360px;
   border-radius: 12px;
   background: linear-gradient(135deg, black, #111);
   animation: loadingGlimmer 2s infinite;
@@ -115,7 +114,6 @@ img {
   justify-content: center;
   align-items: center;
 }
-
 
 @media screen and (max-width: 580px) {
   :host {
