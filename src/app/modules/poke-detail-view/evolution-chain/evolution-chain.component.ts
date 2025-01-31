@@ -36,8 +36,18 @@ export class EvolutionChainComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['evolution_chain'] && changes['evolution_chain'].currentValue) {
       this.evolutionsList = [];
+      this.resetEvolutions();
       this.getEvolution();
     }
+  }
+
+  resetEvolutions() {
+    this.evolutionsList = [];
+    this.pokemon_1      = undefined;
+    this.pokemon_2      = undefined;
+    this.pokemon_3      = undefined;
+    this.evolution_1    = undefined;
+    this.evolution_2    = undefined;
   }
 
   /**
