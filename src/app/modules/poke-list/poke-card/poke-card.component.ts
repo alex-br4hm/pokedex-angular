@@ -10,7 +10,7 @@ import {
   CustomLoadingSpinnerComponent
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
 import {NgOptimizedImage} from '@angular/common';
-import {PokeNumberPipePipe} from '../../../shared/utils/poke-number-pipe.pipe';
+import {PokeNumberPipe} from '../../../shared/utils/poke-number.pipe';
 import {Pokemon } from '../../../core/models/pokemon';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 
@@ -24,7 +24,7 @@ import {PokeDataService} from '../../../core/services/poke-data.service';
     MatCardTitle,
     MatCardSubtitle,
     NgOptimizedImage,
-    PokeNumberPipePipe,
+    PokeNumberPipe,
     CustomLoadingSpinnerComponent
   ],
   templateUrl: './poke-card.component.html',
