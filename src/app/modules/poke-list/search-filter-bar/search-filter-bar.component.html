@@ -1,29 +1,27 @@
-
 <div class="search-filter-bar-top">
-  <div class="input-wrapper">
-    @if (searchInput.length > 0) {
-      <mat-icon class="delete-icon" (click)="deleteSearchInput()">close</mat-icon>
-    } @else {
-      <mat-icon class="placeholder-icon">search</mat-icon>
-    }
+    <div class="input-wrapper">
+      @if (searchInput.length > 0) {
+        <mat-icon class="delete-icon" (click)="deleteSearchInput()">close</mat-icon>
+      } @else {
+        <mat-icon class="placeholder-icon">search</mat-icon>
+      }
 
-    <input type="text"
-           placeholder="Pokemon suchen"
-           (input)="onSearchInputChange()"
-           [(ngModel)]="searchInput">
-  </div>
-
-
-  <div class="view-filter-container">
-    <div class="filter-wrapper" (click)="toggleFilter(true)">
-      <mat-icon>filter_list</mat-icon>
-      <span>Filter</span>
+      <input type="text"
+             placeholder="Pokemon suchen"
+             (input)="onSearchInputChange()"
+             [(ngModel)]="searchInput">
     </div>
-  </div>
+
+
+    <div class="filter-container">
+      <div class="filter-wrapper" (click)="toggleFilter(true)">
+        <mat-icon>filter_list</mat-icon>
+        <span>Filter</span>
+      </div>
+    </div>
 </div>
 
 <app-filter-display></app-filter-display>
-
 
 @if (filterToggled) {
     <div class="settings-close-helper"

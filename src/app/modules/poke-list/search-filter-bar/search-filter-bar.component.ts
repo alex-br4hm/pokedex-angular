@@ -21,7 +21,7 @@ export class SearchFilterBarComponent {
   @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
 
   filterToggled: boolean = false;
-  isClosing: boolean = false;
+  isClosing: boolean     = false;
 
   constructor(private pokeDataService: PokeDataService) {
     effect(() => {
@@ -29,6 +29,12 @@ export class SearchFilterBarComponent {
     });
   }
 
+  /**
+   * Toggles the visibility of the filter.
+   * Updates the body's overflow style and adjusts the filter's toggled state accordingly.
+   *
+   * @param {boolean} open - A flag to indicate whether the filter should be opened (`true`) or closed (`false`).
+   */
   toggleFilter(open: boolean) {
     if (!open) {
       document.body.style.overflow = 'unset';
@@ -36,23 +42,35 @@ export class SearchFilterBarComponent {
     } else {
       document.body.style.overflow = 'hidden';
       this.filterToggled = true;
-      this.isClosing = false;
+      this.isClosing     = false;
     }
   }
 
+  /**
+   * Handles the end of the filter sidebar animation.
+   * Resets the toggled state and closing flag if the animation is completed.
+   */
   handleAnimationEnd() {
     if (this.isClosing) {
       this.filterToggled = false;
-      this.isClosing = false;
+      this.isClosing     = false;
     }
   }
 
+  /**
+   * Handles the change of the search input.
+   * Set new variable to get new reference to trigger signal correctly.
+   * Sets the search input in the data service and scrolls to the top of the page.
+   */
   onSearchInputChange() {
     const searchInput = this.searchInput;
     this.pokeDataService.setSearchInput(searchInput);
     window.scroll({top: 0, behavior: 'smooth'});
   }
 
+  /**
+   * Clears the search input and updates the data service with the cleared value.
+   */
   deleteSearchInput() {
     this.searchInput = '';
     this.pokeDataService.setSearchInput(this.searchInput);
