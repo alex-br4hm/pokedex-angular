@@ -32,6 +32,12 @@ To start the project on your local machine, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-repo/pokedex.git
+   
+   cd pokedex
+   
+   npm install
+   
+   ng serve 
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
