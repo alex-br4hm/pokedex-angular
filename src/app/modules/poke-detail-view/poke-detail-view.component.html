@@ -20,8 +20,8 @@
       <app-various-information [pokemon]="pokemon"></app-various-information>
       <app-stats [stats]="pokemon.stats"></app-stats>
       <app-evolution-chain
-        [evolution_chain]="pokemon.evolution_chain"
-        (scrollToTopEvent)="handleScrollToTop()">
+          [evolution_chain]="pokemon.evolution_chain"
+          (scrollToTopEvent)="handleScrollToTop()">
       </app-evolution-chain>
     </div>
   } @else {

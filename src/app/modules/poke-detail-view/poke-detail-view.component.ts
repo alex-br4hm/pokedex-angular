@@ -9,6 +9,7 @@ import {FirebaseService} from '../../core/services/firebase.service';
 import {VariousInformationComponent} from './various-information/various-information.component';
 import {EvolutionChainComponent} from './evolution-chain/evolution-chain.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-poke-detail-view',
@@ -52,7 +53,6 @@ export class PokeDetailViewComponent implements OnInit {
     ).subscribe(params => {
       this.game_index = +params['game_index'];
       this.name       = params['name'];
-
       if (this.pokeDataService.$pokemonList) {
         this.pokeList = this.pokeDataService.$pokemonList;
         this.findPokemon();

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Evolution, Pokemon} from '../../../core/models/pokemon';
 import {PokeDataService} from '../../../core/services/poke-data.service';
 import {MatIcon} from '@angular/material/icon';
@@ -13,7 +13,7 @@ import {RouterLink} from '@angular/router';
   templateUrl: './evolution-chain.component.html',
   styleUrl: './evolution-chain.component.scss'
 })
-export class EvolutionChainComponent implements OnInit {
+export class EvolutionChainComponent implements OnInit, OnChanges {
   @Input() evolution_chain!: Evolution;
   @Output() scrollToTopEvent: EventEmitter<void> = new EventEmitter<void>();
 
@@ -33,13 +33,20 @@ export class EvolutionChainComponent implements OnInit {
     this.getEvolution()
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['evolution_chain'] && changes['evolution_chain'].currentValue) {
+      this.evolutionsList = [];
+      this.getEvolution();
+    }
+  }
+
   /**
    * Retrieves the evolution steps of a Pokémon and adds them to the `evolutionsList` for display.
    * This includes the first, second, and third evolutions (if available).
    *
    * @returns {void} The method updates the `evolutionsList` in place.
    */
-  getEvolution() {
+  getEvolution(): void {
       this.pokemon_1   = this.getPokemon(this.evolution_chain?.name);
       this.evolution_1 = this.evolution_chain?.evolves_to?.[0];
       this.pokemon_2   = this.getPokemon(this.evolution_1?.name);

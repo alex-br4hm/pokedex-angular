@@ -1,19 +1,22 @@
 <h2>Entwicklung</h2>
 
-<div class="evolution-container">
-  @if (evolutionsList.length > 1) {
-    @for (evolution of evolutionsList; track $index) {
-          <div class="evolution-stage-container"
-               (click)="triggerScrollToTop()"
-               [routerLink]="['/pokedex/pokemon', evolution.game_index, evolution.name]">
-                  <img [src]="evolution.img_url" alt="image of {{evolution.name}}">
-                  <h3> {{ evolution.name }}</h3>
-          </div>
+@if (evolution_chain) {
+  <div class="evolution-container">
+    @if (evolutionsList.length > 1) {
+      @for (evolution of evolutionsList; track $index) {
+        <div class="evolution-stage-container"
+             (click)="triggerScrollToTop()"
+             [routerLink]="['/pokedex/pokemon', evolution.game_index, evolution.name]">
+          <img [src]="evolution.img_url" alt="image of {{evolution.name}}">
+          <h3> {{ evolution.name }}</h3>
+        </div>
         @if ($index < evolutionsList.length - 1) {
           <mat-icon>arrow_right_alt</mat-icon>
         }
-    }
-  } @else { <p>Keine Entwicklung vorhanden</p> }
-</div>
+      }
+    } @else { <p>Keine Entwicklung vorhanden</p> }
+  </div>
+}
+
 
 
