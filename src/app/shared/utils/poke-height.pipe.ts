@@ -12,5 +12,4 @@ export class PokeHeightPipe implements PipeTransform {
 
     return value / 10 + ' m';
   }
-
 }
