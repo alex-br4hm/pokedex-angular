@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'pokeNumberPipe'
 })
-export class PokeNumberPipePipe implements PipeTransform {
+export class PokeNumberPipe implements PipeTransform {
 
   transform(value: number) {
     if (!value) {
@@ -21,7 +21,5 @@ export class PokeNumberPipePipe implements PipeTransform {
     else {
       return '#' + value;
     }
-
   }
-
 }
