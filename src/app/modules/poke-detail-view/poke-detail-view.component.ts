@@ -9,7 +9,6 @@ import {FirebaseService} from '../../core/services/firebase.service';
 import {VariousInformationComponent} from './various-information/various-information.component';
 import {EvolutionChainComponent} from './evolution-chain/evolution-chain.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-poke-detail-view',
