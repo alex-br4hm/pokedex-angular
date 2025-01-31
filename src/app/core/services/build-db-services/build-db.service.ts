@@ -9,7 +9,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 })
 /**
  * ########################################
- * THIS CLASS IS ONLY FOR BUILDING THE
+ * THIS SERVICE IS ONLY FOR BUILDING THE
  * DATABASE. IT'S NEVER USED IN PRODUCTION.
  * #########################################
  * */
@@ -60,6 +60,7 @@ export class BuildDbService {
     );
 
     forkJoin(requests).subscribe(pokemonList => {
+      // @ts-ignore
       this.pokemonAPIList = pokemonList;
       this.getPokemonDetails();
     });
