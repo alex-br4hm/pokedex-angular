@@ -41,6 +41,11 @@ export class EvolutionChainComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Resets all Pokémon and evolution-related properties.
+   * This ensures that outdated or incorrect evolution data is not displayed
+   * when the evolution chain changes or when the data is refreshed.
+   */
   resetEvolutions() {
     this.evolutionsList = [];
     this.pokemon_1      = undefined;
