@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   CustomLoadingSpinnerComponent
 } from '../../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
@@ -17,12 +17,13 @@ import {StatNamePipe} from '../../../shared/utils/stat-name.pipe';
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss'
 })
-export class StatsComponent implements OnInit, AfterViewInit {
+export class StatsComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() stats: Stats[] = [];
 
   ctx!: HTMLCanvasElement;
+  chart!: any;
   labels!: string[];
-  data!: (number | undefined)[];
+  data!: (number | undefined)[] | null;
 
   constructor() {}
 
@@ -40,6 +41,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
     this.loadChart();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['stats'] && changes['stats'].currentValue) {
+      this.updateChartData();
+    }
+  }
+
   /**
    * Loads and initializes the radar chart using Chart.js.
    * It sets the context, labels, and data for the chart, and configures the chart options.
@@ -49,7 +56,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
     this.labels = ['HP', 'Angriff', 'Verteidig.', 'Sp. Angr.', 'Sp. Verteid.', 'Geschwindigk.'];
     this.data   = this.stats.map(stat => stat.value);
 
-    new Chart(this.ctx, {
+    this.chart = new Chart(this.ctx, {
       type: 'radar',
       data: {
         labels: this.labels,
@@ -67,7 +74,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
             angleLines: { display: true, color: 'rgba(255, 255, 255, 0.75)' },
             grid: { color: 'rgba(255, 255, 255, 0.75)' },
             suggestedMin: 0,
-            suggestedMax: 120,
+            suggestedMax: 100,
           },
         },
         plugins: {
@@ -75,5 +82,16 @@ export class StatsComponent implements OnInit, AfterViewInit {
         },
       },
     });
+  }
+
+  /**
+   * Updates the chart data and redraws the chart.
+   */
+  updateChartData() {
+    if (this.chart) {
+      this.data = this.stats.map(stat => stat.value);
+      this.chart.data.datasets[0].data = this.data;
+      this.chart.update();
+    }
   }
 }
