@@ -1,4 +1,4 @@
-import {Component, DestroyRef, effect, inject, OnInit, Output} from '@angular/core';
+import {Component, DestroyRef, effect, inject, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../core/components/header/header.component';
 import {PokeCardComponent} from './poke-card/poke-card.component';
 import {CustomLoadingSpinnerComponent} from '../../shared/ui/custom-loading-spinner/custom-loading-spinner.component';
@@ -25,13 +25,13 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   styleUrl: './poke-list.component.scss'
 })
 export class PokeListComponent implements OnInit {
+  searchInput: string = '';
+  filterSelection!: Filter;
+  excludedTypes!: string[];
   pokeList!: Pokemon[];
   initialPokeList: Pokemon[] = [];
   isLoading: boolean = true;
-  @Output() searchInput: string = '';
-  @Output() filterSelection!: Filter;
   initialFilterValues!: Filter;
-  @Output() excludedTypes!: string[];
   destroyRef = inject(DestroyRef);
 
   constructor(
