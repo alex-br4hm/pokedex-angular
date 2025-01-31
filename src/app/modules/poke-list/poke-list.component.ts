@@ -94,11 +94,22 @@ export class PokeListComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads Pokémon data from localStorage.
+   * If parsing fails, it fetches data from the database.
+   *
+   * @param storedList The JSON string from localStorage.
+   */
   loadFromLocalStorage(storedList: string) {
+    try {
     this.pokeList                     = JSON.parse(storedList);
     this.initialPokeList              = this.pokeList;
     this.pokeDataService.$pokemonList = this.initialPokeList;
     this.changeLoadingState();
+    } catch(error) {
+      console.error(error);
+      this.getDataFromDB();
+    }
   }
 
   changeLoadingState() {
