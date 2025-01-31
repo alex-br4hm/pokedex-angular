@@ -12,5 +12,4 @@ export class PokeWeightPipe implements PipeTransform {
 
     return value / 10 + ' kg';
   }
-
 }
